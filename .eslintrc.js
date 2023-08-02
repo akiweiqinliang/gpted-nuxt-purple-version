@@ -11,5 +11,8 @@ module.exports = {
   extends: ['@nuxtjs', 'plugin:nuxt/recommended', 'prettier'],
   plugins: [],
   // add your custom rules here
-  rules: {},
+  rules: {
+    'spaced-comment': ['error', 'always', { exceptions: ['-', '+'] }],
+    'vue/no-v-html': 'off',
+  },
 };

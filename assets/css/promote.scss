@@ -1,0 +1,27 @@
+$top-bg-url: '@/assets/promote/purple-top-bg.jpg';
+$top-right-img: '@/assets/promote/top-right-img.png';
+
+$common-left-right-margin: 0 100px;
+//页面主题色
+$theme-color: #7f45f3;
+//新手活动背景颜色
+$new-event-bg-color: #f5f8ff;
+//每个活动页面的样式
+%event-common-style {
+  padding: 100px 0;
+  height: 100vh;
+}
+//标题下的内容样式
+%event-common-inner-style {
+  display: flex;
+  margin: 0 160px;
+}
+//活动大标题样式
+%event-title-style {
+  font-size: 36px;
+}
+//活动大标题下小字样式
+%event-title-bottom-p-style {
+  color: $theme-color;
+  margin: 20px 0 40px 0;
+}

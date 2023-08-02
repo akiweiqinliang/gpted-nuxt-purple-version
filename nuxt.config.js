@@ -15,10 +15,24 @@ export default {
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
-  css: ['view-design/dist/styles/iview.css'],
+  css: [
+    'view-design/dist/styles/iview.css',
+    'swiper/css/swiper.css',
+    '@/assets/css/promote.scss',
+    '@/assets/css/customFlatpickr.scss',
+    '@/assets/css/global.scss',
+    '@/assets/css/globalColor.scss',
+    '@/assets/css/page404.scss',
+  ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: ['@/plugins/view-ui'],
+  plugins: [
+    '@/plugins/view-ui',
+    {
+      src: '@/plugins/swiper.js',
+      ssr: false,
+    },
+  ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,

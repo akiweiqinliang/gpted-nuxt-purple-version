@@ -1,0 +1,74 @@
+$start-end-date-bg-color: #eff5fe;
+$start-end-date-color: #649cf0;
+.flatpickr-calendar.inline {
+  width: 100%;
+  .flatpickr-rContainer {
+    width: 100%;
+  }
+  .flatpickr-days {
+    width: 100%;
+  }
+  .dayContainer {
+    width: 100%;
+    //max-width: 100%;
+    min-width: initial;
+  }
+  .flatpickr-current-month input.cur-year,
+  .cur-month,
+  .flatpickr-current-month span.cur-month:hover {
+    background: white;
+  }
+  .arrowUp,
+  .arrowDown {
+    display: none;
+  }
+}
+.flatpickr-calendar {
+  box-shadow: none;
+}
+.flatpickr-day {
+  line-height: 34px;
+  height: 34px;
+  //max-width: 34px;
+}
+//日期选择器起末样式
+.flatpickr-day.inRange,
+.flatpickr-day.prevMonthDay.inRange {
+  background-color: $start-end-date-bg-color;
+  color: $start-end-date-color;
+  border-color: $start-end-date-bg-color;
+}
+@media (max-width: 1600px) {
+  .flatpickr-day.inRange {
+    -webkit-box-shadow: -2px 0 0 $start-end-date-bg-color,
+      2px 0 0 $start-end-date-bg-color;
+    box-shadow: -2px 0 0 $start-end-date-bg-color,
+      2px 0 0 $start-end-date-bg-color;
+  }
+}
+@media (min-width: 1600px) {
+  .flatpickr-day.inRange {
+    -webkit-box-shadow: -5px 0 0 $start-end-date-bg-color,
+      5px 0 0 $start-end-date-bg-color;
+    box-shadow: -5px 0 0 $start-end-date-bg-color,
+      5px 0 0 $start-end-date-bg-color;
+  }
+}
+
+.flatpickr-months .flatpickr-prev-month:hover svg,
+.flatpickr-months .flatpickr-next-month:hover svg {
+  fill: $start-end-date-color;
+}
+.flatpickr-current-month span.cur-month {
+  font-weight: initial;
+  font-size: 12px;
+}
+.flatpickr-current-month {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row-reverse;
+}
+.rangeMode .flatpickr-day {
+  margin-top: 4px;
+}

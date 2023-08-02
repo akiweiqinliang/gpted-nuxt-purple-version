@@ -1,0 +1,37 @@
+//悬浮图片效果动画
+@keyframes profit-hover {
+  0% {
+    transform: translateY(10px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(10px);
+  }
+}
+@keyframes profit-shadow {
+  0% {
+    box-shadow: 0 55px 70px -20px rgba(50, 50, 93, 0.55),
+      0 20px 30px -10px rgba(0, 0, 0, 0.14);
+  }
+  50% {
+    box-shadow: 0 65px 80px -20px rgba(50, 50, 93, 0.55),
+      0 30px 40px -10px rgba(0, 0, 0, 0.14);
+  }
+  100% {
+    box-shadow: 0 55px 70px -20px rgba(50, 50, 93, 0.55),
+      0 20px 30px -10px rgba(0, 0, 0, 0.14);
+  }
+}
+//常用阴影效果
+$useful-box-shadow-without-color: 0 55px 70px -20px rgba(0, 0, 0, 0),
+  0 20px 30px -10px rgba(0, 0, 0, 0);
+$useful-box-shadow-with-color: 0 55px 70px -20px rgba(50, 50, 93, 0.55),
+  0 20px 30px -10px rgba(0, 0, 0, 0.14);
+//页面配色
+$card-title-color1: #fff;
+$card-title-color2: #000;
+
+$card-bg-color1: #c2476b;
+$card-bg-color2: #febe7c;
