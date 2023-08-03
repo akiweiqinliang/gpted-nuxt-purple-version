@@ -21,7 +21,7 @@
       </div>
       <div class="right">
         <div class="imgBox">
-          <img class="hovering-photo" src="~assets/discoverPage.png" />
+          <img class="hovering-photo" src="~~/assets/discoverPage.png" />
         </div>
       </div>
     </Row>
@@ -30,13 +30,13 @@
       <div class="colorCard color1">
         <div class="miniBoxs">
           <div class="miniBox rotate1">
-            <img src="~assets/discoverPage.png" alt="发现页" />
+            <img src="~~/assets/discoverPage.png" alt="发现页" />
           </div>
           <div class="miniBox rotate2">
-            <img src="~assets/discoverPage.png" alt="" />
+            <img src="~~/assets/discoverPage.png" alt="" />
           </div>
           <div class="miniBox rotate3">
-            <img src="~assets/discoverPage.png" alt="" />
+            <img src="~~/assets/discoverPage.png" alt="" />
           </div>
         </div>
         <h1>title1</h1>
@@ -57,7 +57,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import '@/assets/css/page404.scss';
+@import '~/assets/css/page404.scss';
 
 .left {
   width: 50%;

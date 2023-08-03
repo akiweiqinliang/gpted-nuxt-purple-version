@@ -28,6 +28,7 @@
     "view-design": "^4.7.0",
     "vue": "^2.7.10",
     "vue-awesome-swiper": "^4.1.1",
+    "vue-flatpickr-component": "^8.1.8",
     "vue-server-renderer": "^2.7.10",
     "vue-template-compiler": "^2.7.10"
   },

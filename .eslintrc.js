@@ -14,5 +14,7 @@ module.exports = {
   rules: {
     'spaced-comment': ['error', 'always', { exceptions: ['-', '+'] }],
     'vue/no-v-html': 'off',
+    'js/new-cap': 'off',
+    'no-console': 'off',
   },
 };

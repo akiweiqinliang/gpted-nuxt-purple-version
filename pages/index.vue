@@ -1,7 +1,6 @@
 <template>
   <div class="container">
     <div>
-      <NuxtLogo />
       <h1 class="title">test-nuxt</h1>
       <h2 class="subtitle">Welcome to the View UI + Nuxt.js template</h2>
       <div class="links">
