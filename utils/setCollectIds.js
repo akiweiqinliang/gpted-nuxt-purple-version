@@ -1,6 +1,7 @@
 // 用户登录时localStorage.setItem('collectIds',JSON.parse(user.collectIds));
 // const collectionIds = JSON.parse(localStorage.getItem('collectIds')) || [];
 const collectionIds = [];
+
 function addCollection(id) {
   if (this.collectionIds.includes(id)) {
     this.$Message.info({ content: '已取消收藏', duration: 3 });

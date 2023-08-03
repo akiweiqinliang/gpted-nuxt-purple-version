@@ -1,7 +1,6 @@
 $top-bg-url: '@/assets/promote/purple-top-bg.jpg';
 $top-right-img: '@/assets/promote/top-right-img.png';
 
-$common-left-right-margin: 0 100px;
 //页面主题色
 $theme-color: #7f45f3;
 //新手活动背景颜色
@@ -10,6 +9,7 @@ $new-event-bg-color: #f5f8ff;
 %event-common-style {
   padding: 100px 0;
   height: 100vh;
+  //height: env(viewport-height);
 }
 //标题下的内容样式
 %event-common-inner-style {

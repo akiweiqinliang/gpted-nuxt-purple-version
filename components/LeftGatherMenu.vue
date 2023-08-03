@@ -12,8 +12,8 @@
       <MenuItem
         v-for="item in subscribeMenu"
         :key="item.code"
-        :name="'gather-' + item.code.toLowerCase()"
-        :to="{ name: 'gather-' + item.code.toLowerCase() }"
+        :name="item.code"
+        :to="{ name: item.code }"
         @click="handleActiveName(item.code)"
       >
         <Icon :type="item.icon" />
@@ -27,7 +27,7 @@
 import subscribeMenu from '@/enums/subscribeMenu';
 export default {
   name: 'LeftGatherMenu',
-  // layout: 'GatherLayout',
+  layout: 'GatherLayout',
   data() {
     return {
       subscribeMenu,

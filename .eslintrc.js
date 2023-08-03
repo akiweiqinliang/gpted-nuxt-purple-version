@@ -16,5 +16,6 @@ module.exports = {
     'vue/no-v-html': 'off',
     'js/new-cap': 'off',
     'no-console': 'off',
+    'vue/attribute-hyphenation': 'off',
   },
 };

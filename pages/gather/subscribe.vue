@@ -71,12 +71,7 @@
         <Col :span="rightCardOpen ? 18 : 23" style="transition: all 0.5s">
           推送列表
         </Col>
-        <Col :span="rightCardOpen ? 6 : 1" style="transition: all 0.5s">
-          <!--          <Row type="flex" justify="space-between" align="middle" v-if="rightCardOpen">-->
-          <!--              筛选条件-->
-          <!--              <Icon type="ios-refresh" @click="refresh" class="refreshIcon"/>-->
-          <!--          </Row>-->
-        </Col>
+        <Col :span="rightCardOpen ? 6 : 1" style="transition: all 0.5s"> </Col>
       </Row>
       <Row type="flex" :wrap="false" class="bottomBidList" :gutter="16">
         <Col :span="rightCardOpen ? 18 : 22" style="transition: all 0.5s">
@@ -119,9 +114,14 @@
                       </div>
                     </Col>
                     <Col flex="1" class="bidContent">
-                      <span class="bidTitle" @click="toDetail(bid.id)">{{
-                        bid.title
-                      }}</span>
+                      <nuxt-link
+                        class="bidTitle"
+                        :to="{
+                          name: pageCode.DETAIL_BID,
+                          params: { bidId: bid.id },
+                        }"
+                        >{{ bid.title }}</nuxt-link
+                      >
                       <p class="singleLine">
                         This is description, this is description.Improving
                         Growth bala balabal abala Improving Growth balabalab
@@ -350,7 +350,6 @@
 </template>
 
 <script>
-// import {mapActions, mapGetters,} from "vuex";
 import flatPickr from 'vue-flatpickr-component';
 import { Mandarin } from 'flatpickr/dist/l10n/zh';
 
@@ -402,23 +401,14 @@ export default {
       regionData,
       organizationData,
       countryOptions,
+      pageCode,
     };
-  },
-  computed: {
-    // ...mapGetters(['getCollectIds']),
   },
   methods: {
     addCollection,
-    // ...mapActions(['setCollectIds']),
     doSomethingOnChange() {
       console.log('date1', this.selectDateValue);
       console.log('date2', this.selectDateValue2);
-    },
-    toDetail(bidId) {
-      this.$router.push({
-        name: pageCode.DETAIL,
-        params: { bidId },
-      });
     },
     refresh() {
       this.selectDateValue = '';

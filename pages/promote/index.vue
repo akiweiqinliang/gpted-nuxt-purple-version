@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="promote">
     <!--  推广页-->
     <Row>
       <Col span="24" class="topContent">
@@ -139,8 +139,7 @@ export default {
         loop: true,
         mousewheel: false,
         navigation: {
-          nextEl: '.swiper-button-next',
-          prevEl: '.swiper-button-prev',
+          nextEl: '#promote .swiper-button-next',
         },
       },
       leftSwiperOption: {
@@ -154,8 +153,7 @@ export default {
         autoHeight: 'true',
         direction: 'vertical', // 纵向
         navigation: {
-          nextEl: '.swiper-button-next',
-          prevEl: '.swiper-button-prev',
+          nextEl: '#promote .swiper-button-next',
         },
         on: {
           init() {
@@ -183,7 +181,6 @@ export default {
   }
   .innerContent {
     width: 100%;
-    margin: $common-left-right-margin;
     @extend %event-common-inner-style;
     display: flex;
   }

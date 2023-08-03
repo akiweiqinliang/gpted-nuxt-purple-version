@@ -1,3 +1,5 @@
+import pageCode from '~/enums/pageCodes';
+
 class MenuItem {
   constructor(name, icon, code) {
     this.name = name;
@@ -24,14 +26,18 @@ class SubscribeItems {
   }
 }
 const subscribeMenu = new SubscribeItems([
-  new MenuItem('我的订阅', 'ios-heart-outline', 'SUBSCRIBE'),
-  new MenuItem('项目推荐', 'ios-bookmark-outline', 'RECOMMEND'),
-  new MenuItem('我的收藏', 'ios-star-outline', 'COLLECTION'),
-  new MenuItem('我的跟踪', 'ios-locate-outline', 'FOLLOW'),
-  new MenuItem('我的消息', 'ios-notifications-outline', 'MESSAGE'),
-  new MenuItem('推广奖励', 'ios-trophy-outline', 'REWARD'),
-  new MenuItem('会员中心', 'ios-cube-outline', 'CENTER'),
-  new MenuItem('历史记录', 'ios-time-outline', 'HISTORY'),
-  new MenuItem('账户信息', 'ios-person-outline', 'ACCOUNT'),
+  new MenuItem('我的订阅', 'ios-heart-outline', pageCode.GATHER_SUBSCRIBE),
+  new MenuItem('项目推荐', 'ios-bookmark-outline', pageCode.GATHER_RECOMMEND),
+  new MenuItem('我的收藏', 'ios-star-outline', pageCode.GATHER_COLLECTION),
+  new MenuItem('我的跟踪', 'ios-locate-outline', pageCode.GATHER_FOLLOW),
+  new MenuItem(
+    '我的消息',
+    'ios-notifications-outline',
+    pageCode.GATHER_MESSAGE
+  ),
+  new MenuItem('推广奖励', 'ios-trophy-outline', pageCode.GATHER_REWARD),
+  new MenuItem('会员中心', 'ios-cube-outline', pageCode.GATHER_CENTER),
+  new MenuItem('历史记录', 'ios-time-outline', pageCode.GATHER_HISTORY),
+  new MenuItem('账户信息', 'ios-person-outline', pageCode.GATHER_ACCOUNT),
 ]);
 export default subscribeMenu;

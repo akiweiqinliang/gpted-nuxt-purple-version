@@ -16,7 +16,7 @@
             <MenuItem name="discoverPage" :to="{ name: pageCode.DISCOVER }">
               <Icon type="ios-search-outline" />
             </MenuItem>
-            <MenuItem name="globalPage">
+            <MenuItem name="globalPage" :to="{ name: pageCode.PROMOTE }">
               <Icon type="ios-globe-outline" />
             </MenuItem>
             <MenuItem name="subscribePage">
