@@ -18,11 +18,12 @@ export default {
   css: [
     'view-design/dist/styles/iview.css',
     'swiper/css/swiper.css',
+    'flatpickr/dist/flatpickr.min.css',
     '@/assets/css/promote.scss',
-    '@/assets/css/customFlatpickr.scss',
     '@/assets/css/global.scss',
     '@/assets/css/globalColor.scss',
     '@/assets/css/page404.scss',
+    '@/assets/css/customFlatpickr.scss',
   ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
@@ -30,6 +31,10 @@ export default {
     '@/plugins/view-ui',
     {
       src: '@/plugins/swiper.js',
+      ssr: false,
+    },
+    {
+      src: '@/plugins/flatPickr.js',
       ssr: false,
     },
   ],

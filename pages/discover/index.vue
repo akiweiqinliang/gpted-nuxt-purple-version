@@ -316,7 +316,7 @@ export default {
   data() {
     return {
       searchData: cardData,
-      latestMsg: ' 今日最新资讯',
+      latestMsg: '今日最新资讯',
       keyWords,
       regionData,
       ruleValidate,
@@ -387,7 +387,6 @@ export default {
       return countryOptions;
     },
     searchCard() {
-      // console.log('params:',this.searchParams)
       if (this.searchParams.searchText === '') {
         this.searchData = cardData;
         return;

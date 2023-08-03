@@ -4,9 +4,12 @@ $start-end-date-color: #649cf0;
   width: 100%;
   .flatpickr-rContainer {
     width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
   }
   .flatpickr-days {
-    width: 100%;
+    //width: 100%;
   }
   .dayContainer {
     width: 100%;
@@ -26,24 +29,38 @@ $start-end-date-color: #649cf0;
 .flatpickr-calendar {
   box-shadow: none;
 }
+.flatpickr-weekdays {
+  max-width: 307.875px;
+}
 .flatpickr-day {
   line-height: 34px;
   height: 34px;
-  //max-width: 34px;
 }
 //日期选择器起末样式
 .flatpickr-day.inRange,
-.flatpickr-day.prevMonthDay.inRange {
+.flatpickr-day.prevMonthDay.inRange,
+.flatpickr-day.nextMonthDay.inRange,
+.flatpickr-day.today.inRange {
   background-color: $start-end-date-bg-color;
   color: $start-end-date-color;
   border-color: $start-end-date-bg-color;
 }
+
 @media (max-width: 1600px) {
   .flatpickr-day.inRange {
     -webkit-box-shadow: -2px 0 0 $start-end-date-bg-color,
       2px 0 0 $start-end-date-bg-color;
     box-shadow: -2px 0 0 $start-end-date-bg-color,
       2px 0 0 $start-end-date-bg-color;
+  }
+  .flatpickr-day.selected.startRange + .endRange:not(:nth-child(7n + 1)),
+  .flatpickr-day.startRange.startRange + .endRange:not(:nth-child(7n + 1)),
+  .flatpickr-day.endRange.startRange + .endRange:not(:nth-child(7n + 1)) {
+    box-shadow: -2px 0 0 $start-end-date-bg-color;
+  }
+  .flatpickr-day {
+    line-height: 34px;
+    height: 34px;
   }
 }
 @media (min-width: 1600px) {
@@ -52,6 +69,15 @@ $start-end-date-color: #649cf0;
       5px 0 0 $start-end-date-bg-color;
     box-shadow: -5px 0 0 $start-end-date-bg-color,
       5px 0 0 $start-end-date-bg-color;
+  }
+  .flatpickr-day.selected.startRange + .endRange:not(:nth-child(7n + 1)),
+  .flatpickr-day.startRange.startRange + .endRange:not(:nth-child(7n + 1)),
+  .flatpickr-day.endRange.startRange + .endRange:not(:nth-child(7n + 1)) {
+    box-shadow: -5px 0 0 $start-end-date-bg-color;
+  }
+  .flatpickr-day {
+    line-height: 38px;
+    height: 38px;
   }
 }
 
@@ -71,4 +97,34 @@ $start-end-date-color: #649cf0;
 }
 .rangeMode .flatpickr-day {
   margin-top: 4px;
+}
+
+.flatpickr-day.selected.startRange + .endRange:not(:nth-child(7n + 1)),
+.flatpickr-day.startRange.startRange + .endRange:not(:nth-child(7n + 1)),
+.flatpickr-day.endRange.startRange + .endRange:not(:nth-child(7n + 1)) {
+  //box-shadow: none;
+}
+
+.flatpickr-day.selected,
+.flatpickr-day.startRange,
+.flatpickr-day.endRange,
+.flatpickr-day.selected.inRange,
+.flatpickr-day.startRange.inRange,
+.flatpickr-day.endRange.inRange,
+.flatpickr-day.selected:focus,
+.flatpickr-day.startRange:focus,
+.flatpickr-day.endRange:focus,
+.flatpickr-day.selected:hover,
+.flatpickr-day.startRange:hover,
+.flatpickr-day.endRange:hover,
+.flatpickr-day.selected.prevMonthDay,
+.flatpickr-day.startRange.prevMonthDay,
+.flatpickr-day.endRange.prevMonthDay,
+.flatpickr-day.selected.nextMonthDay,
+.flatpickr-day.startRange.nextMonthDay,
+.flatpickr-day.endRange.nextMonthDay {
+  background: $start-end-date-bg-color;
+  border-color: $start-end-date-color;
+  color: $start-end-date-color;
+  border: 0;
 }

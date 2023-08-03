@@ -68,13 +68,13 @@
       </Row>
       <Button @click="rightCardOpen = !rightCardOpen">收起/展开</Button>
       <Row class="cardListSmallTitle" :gutter="16">
-        <Col :span="rightCardOpen ? 18 : 23" style="transition: all 0.5s">
+        <Col :span="rightCardOpen ? 18 : 23" class="spanTransition">
           推送列表
         </Col>
-        <Col :span="rightCardOpen ? 6 : 1" style="transition: all 0.5s"> </Col>
+        <Col :span="rightCardOpen ? 6 : 1" class="spanTransition"> </Col>
       </Row>
       <Row type="flex" :wrap="false" class="bottomBidList" :gutter="16">
-        <Col :span="rightCardOpen ? 18 : 22" style="transition: all 0.5s">
+        <Col :span="rightCardOpen ? 18 : 22" class="spanTransition">
           <Card :padding="0" class="tabCard" :dis-hover="true">
             <Divider :dashed="true" class="dividerStyle"
               ><p class="dividerText">16:00更新</p></Divider
@@ -166,13 +166,17 @@
             </List>
           </Card>
         </Col>
-        <Col :span="rightCardOpen ? 6 : 2" style="transition: all 0.5s">
+        <Col :span="rightCardOpen ? 6 : 2" class="spanTransition">
           <Card
             v-show="!rightCardOpen"
-            style="margin: 0 0 12px"
-            class="rightSettingCard"
+            class="rightSettingCard refreshCardIcon"
           >
-            <Icon type="ios-refresh" size="24" @click="refresh" />
+            <img
+              src="~assets/gatherIcons/arrow-refresh.svg"
+              alt="刷新"
+              @click="refresh"
+            />
+            <!--            <Icon type="ios-refresh" size="24" @click="refresh" />-->
           </Card>
           <Card :dis-hover="true" class="rightSettingCard">
             <Icon
@@ -317,23 +321,36 @@
                   split-panels
                   @on-ok="doSomethingOnChange"
                 >
-                  <Icon type="md-calendar" @click="open = !open" />
+                  <img
+                    src="~assets/gatherIcons/calendar.svg"
+                    alt="日期"
+                    @click="open = !open"
+                  />
+                  <!--                  <Icon type="md-calendar" @click="open = !open" />-->
                 </DatePicker>
               </div>
               <div class="rightCloseIcon">
-                <Icon type="ios-apps-outline" />
+                <img src="~assets/gatherIcons/grid.svg" alt="类型" />
+                <!--                <Icon type="ios-apps-outline" />-->
               </div>
               <div class="rightCloseIcon">
-                <Icon type="ios-pricetags-outline" />
+                <img src="~assets/gatherIcons/global.svg" alt="区域" />
+                <!--                <Icon type="md-globe" />-->
               </div>
               <div class="rightCloseIcon">
-                <Icon type="md-globe" />
+                <img src="~assets/gatherIcons/country.svg" alt="国家" />
+                <!--                <Icon type="ios-home-outline" />-->
               </div>
               <div class="rightCloseIcon">
-                <Icon type="ios-home-outline" />
+                <img src="~assets/gatherIcons/building.svg" alt="组织" />
               </div>
               <div class="rightCloseIcon">
-                <Icon type="ios-cart-outline" />
+                <img src="~assets/gatherIcons/price.svg" alt="价格" />
+                <!--                <Icon type="ios-pricetags-outline" />-->
+              </div>
+              <div class="rightCloseIcon">
+                <img src="~assets/gatherIcons/cart.svg" alt="方式" />
+                <!--                <Icon type="ios-cart-outline" />-->
               </div>
             </div>
           </Card>
@@ -357,7 +374,6 @@ import { tagOptions, countryOptions } from '@/enums/common';
 import { addCollection, collectionIds } from '@/utils/setCollectIds';
 import { ruleValidate } from '@/utils/ruleValidate';
 
-import 'flatpickr/dist/flatpickr.min.css';
 import '@/assets/css/customFlatpickr.scss';
 
 import pageCode from '@/enums/pageCodes';
@@ -365,7 +381,7 @@ import cardData from '@/enums/cardData';
 import regionData from '@/enums/regionData';
 import organizationData from '@/enums/organizationData';
 export default {
-  name: 'SubscribePage2',
+  name: 'SubscribePage',
   components: {
     flatPickr,
   },
@@ -588,7 +604,7 @@ export default {
 .rightSettingCard {
   border-radius: $subscribe-border-radius;
   position: sticky;
-  top: 80px;
+  top: 160px;
   .form-control {
     display: none;
   }
@@ -610,10 +626,25 @@ export default {
     text-align: center;
     margin: 40px 0;
     cursor: pointer;
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      max-width: 44px;
+      max-height: 44px;
+    }
   }
   .rightCloseIcon:hover {
     color: $subscribe-underline-color;
   }
+}
+.refreshCardIcon {
+  margin: 0 0 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: sticky;
+  top: 80px;
 }
 .rightCardOpenArrow {
   position: absolute;
@@ -633,5 +664,8 @@ export default {
 }
 .fade-out {
   @extend %fade-out;
+}
+.spanTransition {
+  transition: all 0.5s;
 }
 </style>
