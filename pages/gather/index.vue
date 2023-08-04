@@ -10,11 +10,6 @@ export default {
   asyncData({ redirect }) {
     return redirect('/gather/subscribe');
   },
-
-  mounted() {
-    // const activePage = localStorage.getItem('pageCode') ? localStorage.getItem('pageCode') : subscribeMenu.getSubscribeMenu()[0].code;
-    // this.$router.replace({ name: 'gather-' + activePage.toLowerCase() })
-  },
 };
 </script>
 

@@ -4,11 +4,11 @@
 
 <script>
 export default {
-  name: 'IndexPage',
+  name: 'Index',
   asyncData({ redirect }) {
-    return redirect('gather');
+    return redirect('error');
   },
 };
 </script>
 
-<style></style>
+<style scoped></style>

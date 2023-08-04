@@ -1,5 +1,8 @@
 <template>
   <div>
+    <!--    <div v-for="(response, index) in successfulResponses" :key="index">-->
+    <!--      Response {{ index + 1 }}: {{ response }}-->
+    <!--    </div>-->
     <Row class="topSelectOptions">
       <div
         class="pageSmallTitle"
@@ -24,7 +27,7 @@
         <Col :lg="6" :md="12">
           <div class="countCard card1">
             <div class="leftIcon">
-              <img src="../../assets/logos/regionIcon.png" />
+              <img src="~assets/logos/regionIcon.png" />
             </div>
             <div class="rightNumber">
               <span>25</span>
@@ -35,7 +38,7 @@
         <Col :lg="6" :md="12">
           <div class="countCard card2">
             <div class="leftIcon">
-              <img src="../../assets/logos/regionIcon.png" />
+              <img src="~assets/logos/regionIcon.png" />
             </div>
             <div class="rightNumber">
               <span>25</span>
@@ -46,7 +49,7 @@
         <Col :lg="6" :md="12">
           <div class="countCard card3">
             <div class="leftIcon">
-              <img src="../../assets/logos/regionIcon.png" />
+              <img src="~assets/logos/regionIcon.png" />
             </div>
             <div class="rightNumber">
               <span>25</span>
@@ -57,7 +60,7 @@
         <Col :lg="6" :md="12">
           <div class="countCard card4">
             <div class="leftIcon">
-              <img src="../../assets/logos/regionIcon.png" />
+              <img src="~assets/logos/regionIcon.png" />
             </div>
             <div class="rightNumber">
               <span>25</span>
@@ -88,11 +91,11 @@
                 <div class="bidStateTarget">
                   <img
                     v-if="bid.type === 1"
-                    src="../../assets/logos/red-target.png"
+                    src="~assets/logos/red-target.png"
                   />
                   <img
                     v-if="bid.type === 0"
-                    src="../../assets/logos/green-target.png"
+                    src="~assets/logos/green-target.png"
                   />
                 </div>
                 <div class="bidStateLabel">
@@ -105,11 +108,11 @@
                       <div class="bidStateImg">
                         <img
                           v-if="bid.type === 1"
-                          src="../../assets/logos/cubeRedBid.png"
+                          src="~assets/logos/cubeRedBid.png"
                         />
                         <img
                           v-if="bid.type === 0"
-                          src="../../assets/logos/cubeGreenBid.png"
+                          src="~assets/logos/cubeGreenBid.png"
                         />
                       </div>
                     </Col>
@@ -178,7 +181,11 @@
             />
             <!--            <Icon type="ios-refresh" size="24" @click="refresh" />-->
           </Card>
-          <Card :dis-hover="true" class="rightSettingCard">
+          <Card
+            :dis-hover="true"
+            class="rightSettingCard"
+            :class="rightCardOpen ? '' : 'lowerCard'"
+          >
             <Icon
               class="rightCardOpenArrow"
               :class="rightCardOpen ? 'rightCardCloseArrow' : ''"
@@ -326,31 +333,43 @@
                     alt="日期"
                     @click="open = !open"
                   />
-                  <!--                  <Icon type="md-calendar" @click="open = !open" />-->
                 </DatePicker>
               </div>
-              <div class="rightCloseIcon">
+              <div
+                class="rightCloseIcon"
+                @click="rightCardOpen = !rightCardOpen"
+              >
                 <img src="~assets/gatherIcons/grid.svg" alt="类型" />
-                <!--                <Icon type="ios-apps-outline" />-->
               </div>
-              <div class="rightCloseIcon">
+              <div
+                class="rightCloseIcon"
+                @click="rightCardOpen = !rightCardOpen"
+              >
                 <img src="~assets/gatherIcons/global.svg" alt="区域" />
-                <!--                <Icon type="md-globe" />-->
               </div>
-              <div class="rightCloseIcon">
+              <div
+                class="rightCloseIcon"
+                @click="rightCardOpen = !rightCardOpen"
+              >
                 <img src="~assets/gatherIcons/country.svg" alt="国家" />
-                <!--                <Icon type="ios-home-outline" />-->
               </div>
-              <div class="rightCloseIcon">
+              <div
+                class="rightCloseIcon"
+                @click="rightCardOpen = !rightCardOpen"
+              >
                 <img src="~assets/gatherIcons/building.svg" alt="组织" />
               </div>
-              <div class="rightCloseIcon">
+              <div
+                class="rightCloseIcon"
+                @click="rightCardOpen = !rightCardOpen"
+              >
                 <img src="~assets/gatherIcons/price.svg" alt="价格" />
-                <!--                <Icon type="ios-pricetags-outline" />-->
               </div>
-              <div class="rightCloseIcon">
+              <div
+                class="rightCloseIcon"
+                @click="rightCardOpen = !rightCardOpen"
+              >
                 <img src="~assets/gatherIcons/cart.svg" alt="方式" />
-                <!--                <Icon type="ios-cart-outline" />-->
               </div>
             </div>
           </Card>
@@ -386,14 +405,53 @@ export default {
     flatPickr,
   },
   layout: 'GatherLayout',
+  async asyncData({ $axios }) {
+    // 1.
+    // return Promise.all([
+    //   $axios.get('/getCardData'),
+    //   $axios.get('/getCollectIds')
+    // ]).then(([cardDataRes, collectIdsRes]) => {
+    //   const abc = cardDataRes.data;
+    //   const collects111 = collectIdsRes.data;
+    //   return { abc, collects111 };
+    // });
+    //   2
+    //   try {
+    //     const cardDataRes = await $axios.get('/goods', { params: { pagenum: 1, pagesize: 1 }});
+    //     const collectIdsRes = await $axios.post('https://123.com/goods', { params: { pagenum: 1, pagesize: 1 }});
+    //     return { abc: cardDataRes.data.meta.status, collects111: collectIdsRes.data.meta.msg };
+    //   }catch (error) {
+    //     console.log(error);
+    //     return { abc: [], collects111: [] };
+    //   }
+    // 3
+    try {
+      const requests = [
+        $axios.get('/goods', { params: { pagenum: 1, pagesize: 1 } }),
+        $axios.get('/orders', { params: { pagenum: 1, pagesize: 1 } }),
+        $axios.post('https://123.com/goods', {
+          params: { pagenum: 1, pagesize: 1 },
+        }),
+      ];
+      const responses = await Promise.allSettled(requests);
+      const successfulResponses = responses
+        .filter((response) => response.status === 'fulfilled')
+        .map((response) => response.value.data);
+      return {
+        successfulResponses,
+      };
+    } catch (error) {
+      console.error('Error:', error);
+      return {
+        successfulResponses: [],
+      };
+    }
+  },
   data() {
     return {
       open: false,
       selectDateValue: '',
       selectDateValue2: null,
-      collectionIds,
-      tagOptions,
-      cardData,
       pageContent: 0,
       monthsRange: [],
       rightCardOpen: true,
@@ -413,6 +471,10 @@ export default {
         highestPrice: null,
         buy: '',
       },
+
+      collectionIds,
+      tagOptions,
+      cardData,
       ruleValidate,
       regionData,
       organizationData,
@@ -604,7 +666,7 @@ export default {
 .rightSettingCard {
   border-radius: $subscribe-border-radius;
   position: sticky;
-  top: 160px;
+  top: 80px;
   .form-control {
     display: none;
   }
@@ -630,8 +692,8 @@ export default {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      max-width: 44px;
-      max-height: 44px;
+      max-width: 30px;
+      max-height: 30px;
     }
   }
   .rightCloseIcon:hover {
@@ -643,8 +705,10 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  position: sticky;
   top: 80px;
+}
+.lowerCard {
+  top: 160px;
 }
 .rightCardOpenArrow {
   position: absolute;
