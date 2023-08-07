@@ -13,8 +13,10 @@
             class="searchInput"
             clearable
             placeholder="请输入中英文关键词"
+            size="large"
+            search
+            @on-search="searchCard"
           >
-            <Button slot="append" icon="ios-search"> </Button>
           </Input>
         </Row>
         <Row type="flex">
