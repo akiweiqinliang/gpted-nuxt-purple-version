@@ -10,7 +10,7 @@
       <Menu mode="horizontal" active-name="subscribePage" class="rightTopMenu">
         <Row type="flex" justify="space-between">
           <Col>
-            <MenuItem name="homePage" :to="{ name: pageCode.DISCOVER }">
+            <MenuItem name="homePage" :to="{ name: pageCode.HOME }">
               <Icon type="ios-home-outline" />
             </MenuItem>
             <MenuItem name="discoverPage" :to="{ name: pageCode.DISCOVER }">

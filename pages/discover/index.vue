@@ -312,6 +312,7 @@ import organizationData from '~/enums/organizationData';
 export default {
   name: 'DiscoverPage',
   components: { SpinLoad, RightBox },
+  layout: 'CommonLayout',
 
   data() {
     return {

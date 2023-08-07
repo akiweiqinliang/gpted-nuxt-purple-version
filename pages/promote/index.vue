@@ -98,6 +98,7 @@ export default {
     Swiper,
     SwiperSlide,
   },
+  layout: 'CommonLayout',
   data() {
     return {
       newHandEventSteps: [

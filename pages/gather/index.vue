@@ -3,8 +3,6 @@
 </template>
 
 <script>
-// import subscribeMenu from "~/enums/subscribeMenu";
-
 export default {
   name: 'Gather',
   asyncData({ redirect }) {

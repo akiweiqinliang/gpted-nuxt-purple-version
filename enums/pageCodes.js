@@ -1,4 +1,5 @@
 const pageCode = {
+  HOME: 'home',
   DISCOVER: 'discover',
   PROMOTE: 'promote',
 
