@@ -52,11 +52,12 @@ const tagOptions = new TagEnum([
 ]);
 // country
 class CountryEnumItem {
-  constructor(id, name, value, region) {
+  constructor(id, name, value, region, bidNumber) {
     this.id = id;
     this.name = name;
     this.value = value;
     this.region = region;
+    this.bidNumber = bidNumber;
   }
 }
 class CountryEnum {
@@ -78,9 +79,14 @@ class CountryEnum {
   }
 }
 const countryOptions = new CountryEnum([
-  new CountryEnumItem(1, '美国', 'America', ''),
-  new CountryEnumItem(2, '法国', 'France', ''),
-  new CountryEnumItem(3, '英国', 'US', ''),
+  new CountryEnumItem(1, '美国', 'America', '', 24),
+  new CountryEnumItem(2, '法国', 'France', '', 43),
+  new CountryEnumItem(3, '英国', 'US', '', 22),
+  new CountryEnumItem(4, '中国', 'China', '', 42),
+  new CountryEnumItem(5, '德国', 'America', '', 18),
+  new CountryEnumItem(6, '西班牙', 'France', '', 6),
+  new CountryEnumItem(7, '巴西', 'US', '', 70),
+  new CountryEnumItem(8, '俄罗斯', 'China', '', 56),
 ]);
 
 export { tagOptions, countryOptions };

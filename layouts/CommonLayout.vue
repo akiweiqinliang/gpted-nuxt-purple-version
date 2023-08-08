@@ -3,7 +3,7 @@
     <Menu mode="horizontal" :active-name="activeRouterName">
       <Row type="flex" justify="space-around">
         <Col class="commonLogo"> LOGO </Col>
-        <Col>
+        <Col class="commonMenuContainer">
           <MenuItem :name="pageCode.HOME" :to="{ name: pageCode.HOME }">
             <Icon type="ios-home-outline" />首页
           </MenuItem>
@@ -82,7 +82,35 @@ export default {
   .ivu-menu-light.ivu-menu-horizontal .ivu-menu-submenu-active,
   .ivu-menu-light.ivu-menu-horizontal .ivu-menu-submenu:hover {
     color: $home-login-btn-bg-color;
-    border-bottom: 2px solid $home-login-btn-bg-color;
+    border-bottom: 0;
+  }
+  .commonMenuContainer {
+    position: relative;
+    .ivu-menu-item > i:after {
+      content: '';
+      height: 3px;
+      width: 0;
+      margin: auto;
+      transition: width 0.3s;
+      position: absolute;
+      //border-radius: 3px;
+      bottom: 12px;
+      left: 0;
+      background: $home-login-btn-bg-color;
+    }
+    .ivu-menu-item-selected > i:after {
+      width: 100%;
+    }
+    .ivu-menu-light.ivu-menu-horizontal .ivu-menu-item,
+    .ivu-menu-light.ivu-menu-horizontal .ivu-menu-submenu {
+      border-bottom: 0;
+    }
+    .ivu-menu-light.ivu-menu-horizontal .ivu-menu-item-active,
+    .ivu-menu-light.ivu-menu-horizontal .ivu-menu-item:hover,
+    .ivu-menu-light.ivu-menu-horizontal .ivu-menu-submenu-active,
+    .ivu-menu-light.ivu-menu-horizontal .ivu-menu-submenu:hover {
+      border: 0;
+    }
   }
 }
 .commonLogo {

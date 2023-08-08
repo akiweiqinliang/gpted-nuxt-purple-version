@@ -93,13 +93,15 @@
                     </Col>
                     <Col span="12" class="ivu-col-offset-1">
                       <div class="hotKeyWordStyle">
-                        <Badge text="hot" class-name="hotBadge"
-                          ><span>东南亚</span></Badge
-                        >
-                        <Badge text="hot" class-name="hotBadge"
-                          ><span>南非</span></Badge
-                        >
-                        <Badge class-name="hotBadge"><span>北美</span></Badge>
+                        <Badge text="hot" class-name="hotBadge">
+                          <span>东南亚</span>
+                        </Badge>
+                        <Badge text="hot" class-name="hotBadge">
+                          <span>南非</span>
+                        </Badge>
+                        <Badge class-name="hotBadge">
+                          <span>北美</span>
+                        </Badge>
                       </div>
                     </Col>
                   </Row>
@@ -120,16 +122,19 @@
                           ) in countryOptions().getCountryArray()"
                           :key="`country-${index}-${country.id}`"
                           :value="country.value"
-                          >{{ country.name }}</Option
                         >
+                          {{ country.name }}
+                        </Option>
                       </Select>
                     </Col>
                     <Col span="12" class="ivu-col-offset-1">
                       <div class="hotKeyWordStyle">
-                        <Badge text="hot" class-name="hotBadge"
-                          ><span>英国</span></Badge
-                        >
-                        <Badge class-name="hotBadge"><span>意大利</span></Badge>
+                        <Badge text="hot" class-name="hotBadge">
+                          <span>英国</span>
+                        </Badge>
+                        <Badge class-name="hotBadge">
+                          <span>意大利</span>
+                        </Badge>
                       </div>
                     </Col>
                   </Row>
@@ -211,24 +216,26 @@
                     <Col span="4">
                       <Button type="text" size="small">全部</Button>
                     </Col>
-                    <Col span="8" class="ivu-col-offset-1">
+                    <Col span="9" class="ivu-col-offset-0">
                       <form-item prop="lowestPrice">
                         <Input-number
                           v-model="searchParams.lowestPrice"
                           placeholder="万元"
                           size="small"
+                          class="fullWidth"
                         ></Input-number>
                       </form-item>
                     </Col>
-                    <Col span="3"
+                    <Col span="2"
                       ><Row type="flex" justify="center">一</Row></Col
                     >
-                    <Col span="8">
+                    <Col span="9">
                       <form-item prop="highestPrice">
                         <Input-number
                           v-model="searchParams.highestPrice"
                           placeholder="万元"
                           size="small"
+                          class="fullWidth"
                         ></Input-number>
                       </form-item>
                     </Col>
@@ -240,7 +247,7 @@
                       <FormItem prop="startDate">
                         <Date-picker
                           v-model="searchParams.startDate"
-                          class="datePickerStyle"
+                          class="fullWidth"
                           type="datetime"
                           placeholder="开始日期"
                           size="small"
@@ -254,7 +261,7 @@
                       <FormItem prop="endDate">
                         <Date-picker
                           v-model="searchParams.endDate"
-                          class="datePickerStyle"
+                          class="fullWidth"
                           type="datetime"
                           placeholder="截止日期"
                           size="small"
@@ -496,7 +503,7 @@ export default {
   font-size: 12px;
   margin-top: 2px;
 }
-.datePickerStyle {
+.fullWidth {
   width: 100%;
 }
 .selectOptionsWidth {
