@@ -79,7 +79,9 @@
             <div class="promoteImg"></div>
           </Col>
           <Col class="promoteRight">
-            <Button class="promoteBtn">我要推广</Button>
+            <nuxt-link to="/ToPromote"
+              ><Button class="promoteBtn">我要推广</Button></nuxt-link
+            >
             <p>邀请一名新用户</p>
             <p>可获最长67天会员特权</p>
             <p>即刻享受10%的现金返还</p>
@@ -92,6 +94,7 @@
 
 <script>
 import { Swiper, SwiperSlide } from 'vue-awesome-swiper';
+
 export default {
   name: 'PromotePage',
   components: {
@@ -308,6 +311,11 @@ export default {
       background: $theme-color;
       color: #ffffff;
       margin-bottom: 34px;
+      border: 0;
+    }
+    .promoteBtn:hover,
+    .promoteBtn:focus {
+      box-shadow: none;
     }
     p {
       margin: 10px 0;

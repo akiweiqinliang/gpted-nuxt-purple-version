@@ -1,5 +1,13 @@
 <template>
   <div class="commonLayout">
+    <BackTop :height="1" :bottom="320" :right="80">
+      <div class="backToTop">
+        <Icon type="ios-arrow-up" />
+      </div>
+    </BackTop>
+    <div class="customerService">
+      <Icon type="md-headset" />
+    </div>
     <Menu mode="horizontal" :active-name="activeRouterName">
       <Row type="flex" justify="space-around">
         <Col class="commonLogo"> LOGO </Col>
@@ -76,7 +84,43 @@ export default {
 
 <style scoped lang="scss">
 @import 'assets/css/globalColor.scss';
+.backToTop {
+  width: 54px;
+  height: 54px;
+  background: $white;
+  border-radius: 50%;
+  z-index: 40;
+  cursor: pointer;
+  i {
+    transform: translate(-50%, -50%);
+    left: 50%;
+    top: 50%;
+    color: $home-login-btn-bg-color;
+    font-size: 30px;
+    position: relative;
+  }
+}
+.customerService {
+  z-index: 40;
+  position: fixed;
+  right: 80px;
+  bottom: 250px;
+  width: 54px;
+  height: 54px;
+  background: $white;
+  border-radius: 50%;
+  cursor: pointer;
+  i {
+    transform: translate(-50%, -50%);
+    left: 50%;
+    top: 50%;
+    color: $home-login-btn-bg-color;
+    font-size: 30px;
+    position: relative;
+  }
+}
 .commonLayout {
+  position: relative;
   .ivu-menu-light.ivu-menu-horizontal .ivu-menu-item-active,
   .ivu-menu-light.ivu-menu-horizontal .ivu-menu-item:hover,
   .ivu-menu-light.ivu-menu-horizontal .ivu-menu-submenu-active,
@@ -84,22 +128,28 @@ export default {
     color: $home-login-btn-bg-color;
     border-bottom: 0;
   }
+  .ivu-menu-light.ivu-menu-horizontal .ivu-menu-item,
+  .ivu-menu-light.ivu-menu-horizontal .ivu-menu-submenu {
+    border: 0;
+  }
   .commonMenuContainer {
     position: relative;
     .ivu-menu-item > i:after {
       content: '';
       height: 3px;
-      width: 0;
       margin: auto;
-      transition: width 0.3s;
+      transition: all 0.3s ease-in-out 0s;
       position: absolute;
-      //border-radius: 3px;
       bottom: 12px;
-      left: 0;
+      left: calc(10% + 6px);
       background: $home-login-btn-bg-color;
+      transform: scaleX(0);
+      visibility: hidden;
+      width: 80%;
     }
     .ivu-menu-item-selected > i:after {
-      width: 100%;
+      transform: scaleX(1);
+      visibility: visible;
     }
     .ivu-menu-light.ivu-menu-horizontal .ivu-menu-item,
     .ivu-menu-light.ivu-menu-horizontal .ivu-menu-submenu {

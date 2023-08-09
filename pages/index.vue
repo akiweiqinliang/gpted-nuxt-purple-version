@@ -6,7 +6,7 @@
 export default {
   name: 'IndexPage',
   asyncData({ redirect }) {
-    return redirect('gather');
+    return redirect('home');
   },
 };
 </script>

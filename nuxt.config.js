@@ -29,7 +29,6 @@ export default {
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
     '@/plugins/view-ui',
-    '@/plugins/chart.js',
     {
       src: '@/plugins/swiper.js',
       ssr: false,
@@ -38,6 +37,7 @@ export default {
       src: '@/plugins/flatPickr.js',
       ssr: false,
     },
+    { src: '@/plugins/chart.js', ssr: false },
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components

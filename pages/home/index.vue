@@ -1,13 +1,5 @@
 <template>
   <div id="home" class="homePage">
-    <BackTop :height="1" :bottom="320" :right="80">
-      <div class="backToTop">
-        <Icon type="ios-arrow-up" />
-      </div>
-    </BackTop>
-    <div class="customerService">
-      <Icon type="md-headset" />
-    </div>
     <Row class="homeCommonMargin top" type="flex" :wrap="false">
       <div class="leftSearchBox">
         <h1>GPTED全球招标</h1>
@@ -255,8 +247,7 @@ export default {
   methods: {
     async handleSearch() {
       try {
-        // eslint-disable-next-line no-unused-vars
-        const res = await this.$axios.post('/getBidsBySearchText', {
+        await this.$axios.post('/getBidsBySearchText', {
           searchText: this.searchText,
         });
       } catch (e) {
@@ -282,39 +273,6 @@ export default {
 @import 'assets/css/global.scss';
 @import 'assets/css/globalColor.scss';
 @import 'assets/css/page404.scss';
-.backToTop {
-  width: 54px;
-  height: 54px;
-  background: $white;
-  border-radius: 50%;
-  cursor: pointer;
-  i {
-    transform: translate(-50%, -50%);
-    left: 50%;
-    top: 50%;
-    color: $home-login-btn-bg-color;
-    font-size: 30px;
-    position: relative;
-  }
-}
-.customerService {
-  position: fixed;
-  right: 80px;
-  bottom: 250px;
-  width: 54px;
-  height: 54px;
-  background: $white;
-  border-radius: 50%;
-  cursor: pointer;
-  i {
-    transform: translate(-50%, -50%);
-    left: 50%;
-    top: 50%;
-    color: $home-login-btn-bg-color;
-    font-size: 30px;
-    position: relative;
-  }
-}
 .homePage {
   background-image: url($home-bg-img-url);
   background-position: top;

@@ -1,4 +1,7 @@
 @use 'globalColor';
+html {
+  scroll-behavior: smooth;
+}
 //文本行数省略样式
 @mixin ellipsis-style($line: 1) {
   display: -webkit-box;
