@@ -1,7 +1,7 @@
 <template>
   <Row type="flex" justify="center" class-name="bgColor">
-    <Col span="6" style="position: relative">
-      <div style="position: sticky; top: 50px">
+    <Col span="6" class="discoverLeftBox">
+      <div class="innerLeftBox">
         <!------------------------left start-------------------->
         <Radio-group v-model="searchParams.selectOption" class="radioStyle">
           <Radio label="标题搜索"></Radio>
@@ -93,13 +93,15 @@
                     </Col>
                     <Col span="12" class="ivu-col-offset-1">
                       <div class="hotKeyWordStyle">
-                        <Badge text="hot" class-name="hotBadge"
-                          ><span>东南亚</span></Badge
-                        >
-                        <Badge text="hot" class-name="hotBadge"
-                          ><span>南非</span></Badge
-                        >
-                        <Badge class-name="hotBadge"><span>北美</span></Badge>
+                        <Badge text="hot" class-name="hotBadge">
+                          <span>东南亚</span>
+                        </Badge>
+                        <Badge text="hot" class-name="hotBadge">
+                          <span>南非</span>
+                        </Badge>
+                        <Badge class-name="hotBadge">
+                          <span>北美</span>
+                        </Badge>
                       </div>
                     </Col>
                   </Row>
@@ -120,16 +122,19 @@
                           ) in countryOptions().getCountryArray()"
                           :key="`country-${index}-${country.id}`"
                           :value="country.value"
-                          >{{ country.name }}</Option
                         >
+                          {{ country.name }}
+                        </Option>
                       </Select>
                     </Col>
                     <Col span="12" class="ivu-col-offset-1">
                       <div class="hotKeyWordStyle">
-                        <Badge text="hot" class-name="hotBadge"
-                          ><span>英国</span></Badge
-                        >
-                        <Badge class-name="hotBadge"><span>意大利</span></Badge>
+                        <Badge text="hot" class-name="hotBadge">
+                          <span>英国</span>
+                        </Badge>
+                        <Badge class-name="hotBadge">
+                          <span>意大利</span>
+                        </Badge>
                       </div>
                     </Col>
                   </Row>
@@ -211,24 +216,26 @@
                     <Col span="4">
                       <Button type="text" size="small">全部</Button>
                     </Col>
-                    <Col span="8" class="ivu-col-offset-1">
+                    <Col span="9" class="ivu-col-offset-0">
                       <form-item prop="lowestPrice">
                         <Input-number
                           v-model="searchParams.lowestPrice"
                           placeholder="万元"
                           size="small"
+                          class="fullWidth"
                         ></Input-number>
                       </form-item>
                     </Col>
-                    <Col span="3"
+                    <Col span="2"
                       ><Row type="flex" justify="center">一</Row></Col
                     >
-                    <Col span="8">
+                    <Col span="9">
                       <form-item prop="highestPrice">
                         <Input-number
                           v-model="searchParams.highestPrice"
                           placeholder="万元"
                           size="small"
+                          class="fullWidth"
                         ></Input-number>
                       </form-item>
                     </Col>
@@ -240,7 +247,7 @@
                       <FormItem prop="startDate">
                         <Date-picker
                           v-model="searchParams.startDate"
-                          class="datePickerStyle"
+                          class="fullWidth"
                           type="datetime"
                           placeholder="开始日期"
                           size="small"
@@ -254,7 +261,7 @@
                       <FormItem prop="endDate">
                         <Date-picker
                           v-model="searchParams.endDate"
-                          class="datePickerStyle"
+                          class="fullWidth"
                           type="datetime"
                           placeholder="截止日期"
                           size="small"
@@ -288,7 +295,9 @@
         <div class="rightTop">
           <span v-if="!searchParams.searchText">{{ latestMsg }}</span>
           <span v-else>搜索"{{ searchParams.searchText }}" 结果如下</span>
-          <span><Icon type="ios-refresh" size="18"></Icon>换一换</span>
+          <span class="changeList"
+            ><Icon type="ios-refresh" size="18"></Icon>换一换</span
+          >
         </div>
         <RightBox
           :search-data1="searchData"
@@ -301,10 +310,7 @@
 </template>
 
 <script>
-import { throttle } from 'lodash';
-import RightBox from '@/components/RightBox.vue';
 import cardData from '@/enums/cardData';
-import SpinLoad from '@/components/SpinLoad.vue';
 import keyWords from '~/enums/keyWords';
 import { ruleValidate } from '~/utils/ruleValidate';
 import regionData from '~/enums/regionData';
@@ -313,7 +319,6 @@ import organizationData from '~/enums/organizationData';
 
 export default {
   name: 'DiscoverPage',
-  components: { SpinLoad, RightBox },
   layout: 'CommonLayout',
 
   data() {
@@ -344,7 +349,6 @@ export default {
       },
     };
   },
-
   watch: {
     searchParams: {
       handler() {
@@ -356,31 +360,24 @@ export default {
     'searchParams.type': function (val) {
       this.searchByType(val);
     },
-    'searchParams.highestPrice': throttle(function (val) {
-      if (
-        this.searchParams.lowestPrice !== null &&
-        this.searchParams.lowestPrice > val
-      ) {
-        this.$Message.info({ content: '不能低于最小价格' });
-      }
-    }, 300),
-    'searchParams.lowestPrice': throttle(function (val) {
-      if (
-        this.searchParams.highestPrice !== null &&
-        this.searchParams.highestPrice < val
-      ) {
-        this.$Message.info({ content: '不能高于最高价格' });
-      }
-    }, 300),
+
     searchData: {
       handler() {
         this.$refs.spinLoad.start();
         setTimeout(() => {
-          this.$refs.spinLoad.finish();
+          try {
+            this.$refs.spinLoad.finish();
+          } catch {}
         }, 2000);
       },
       deep: true,
     },
+  },
+  mounted() {
+    if (this.$route.params.searchText) {
+      console.log(this.$route.params.searchText);
+      this.searchParams.searchText = this.$route.params.searchText;
+    }
   },
   methods: {
     organizationData() {
@@ -448,8 +445,21 @@ export default {
 .rightTop {
   display: flex;
   justify-content: space-between;
+  .changeList {
+    cursor: pointer;
+  }
+  .changeList:hover {
+    color: $home-theme-color;
+  }
 }
 /*left*/
+.discoverLeftBox {
+  position: relative;
+  .innerLeftBox {
+    position: sticky;
+    top: 50px;
+  }
+}
 .keyWordStyle {
   display: flex;
   flex-wrap: wrap;
@@ -496,7 +506,7 @@ export default {
   font-size: 12px;
   margin-top: 2px;
 }
-.datePickerStyle {
+.fullWidth {
   width: 100%;
 }
 .selectOptionsWidth {

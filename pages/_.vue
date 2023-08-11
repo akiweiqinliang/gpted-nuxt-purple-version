@@ -57,7 +57,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import '~/assets/css/page404.scss';
+@import '@/assets/css/page404.scss';
 
 .left {
   width: 50%;
@@ -68,15 +68,16 @@ export default {
 }
 .hovering-photo {
   width: 100%;
-  perspective: 200px;
-  perspective-origin: 40%;
   border-radius: 2px;
-  box-shadow: 0 55px 70px -20px rgba(50, 50, 93, 0.55),
-    0 20px 30px -10px rgba(0, 0, 0, 0.14);
-  -webkit-animation: profit-hover 3.5s ease-in-out infinite,
-    profit-shadow 3.5s ease-in-out infinite;
-  animation: profit-hover 3.5s ease-in-out infinite,
-    profit-shadow 3.5s ease-in-out infinite;
+  @extend %hoveringStyle;
+  //perspective: 200px;
+  //perspective-origin: 40%;
+  //box-shadow: 0 55px 70px -20px rgba(50, 50, 93, 0.55),
+  //  0 20px 30px -10px rgba(0, 0, 0, 0.14);
+  //-webkit-animation: profit-hover 3.5s ease-in-out infinite,
+  //  profit-shadow 3.5s ease-in-out infinite;
+  //animation: profit-hover 3.5s ease-in-out infinite,
+  //  profit-shadow 3.5s ease-in-out infinite;
 }
 
 .colorCards {

@@ -42,7 +42,7 @@
       <!--      右侧下方跳转内容-->
       <div class="containerPadding">
         <!--        <router-view />-->
-        <nuxt />
+        <nuxt keep-alive />
       </div>
     </Col>
   </Row>

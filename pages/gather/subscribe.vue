@@ -1,5 +1,6 @@
 <template>
   <div>
+    <!--    {{ successfulResponses1 }}-->
     <!--    <div v-for="(response, index) in successfulResponses" :key="index">-->
     <!--      Response {{ index + 1 }}: {{ response }}-->
     <!--    </div>-->
@@ -69,19 +70,19 @@
           </div>
         </Col>
       </Row>
-      <Button @click="rightCardOpen = !rightCardOpen">收起/展开</Button>
+      <!--      <Button @click="rightCardOpen = !rightCardOpen">收起/展开</Button>-->
       <Row class="cardListSmallTitle" :gutter="16">
-        <Col :span="rightCardOpen ? 18 : 23" class="spanTransition">
+        <Col :span="rightCardOpen ? 18 : 24" class="spanTransition">
           推送列表
         </Col>
-        <Col :span="rightCardOpen ? 6 : 1" class="spanTransition"> </Col>
+        <!--        <Col :span="rightCardOpen ? 6 : 1" class="spanTransition" v-if="rightCardOpen">筛选条件</Col>-->
       </Row>
       <Row type="flex" :wrap="false" class="bottomBidList" :gutter="16">
         <Col :span="rightCardOpen ? 18 : 22" class="spanTransition">
           <Card :padding="0" class="tabCard" :dis-hover="true">
-            <Divider :dashed="true" class="dividerStyle"
-              ><p class="dividerText">16:00更新</p></Divider
-            >
+            <Divider :dashed="true" class="dividerStyle">
+              <p class="dividerText">16:00更新</p>
+            </Divider>
             <List>
               <ListItem
                 v-for="bid in cardData"
@@ -179,22 +180,25 @@
               alt="刷新"
               @click="refresh"
             />
-            <!--            <Icon type="ios-refresh" size="24" @click="refresh" />-->
           </Card>
           <Card
             :dis-hover="true"
             class="rightSettingCard"
             :class="rightCardOpen ? '' : 'lowerCard'"
           >
-            <Icon
-              class="rightCardOpenArrow"
-              :class="rightCardOpen ? 'rightCardCloseArrow' : ''"
-              size="20"
-              type="ios-arrow-back"
-              @click="rightCardOpen = !rightCardOpen"
-            />
             <div v-show="rightCardOpen">
-              日期：
+              <!--              日期：-->
+              <Row type="flex" justify="space-between">
+                <Button size="small" shape="circle" @click="refresh"
+                  >重置</Button
+                >
+                <Button
+                  size="small"
+                  shape="circle"
+                  @click="rightCardOpen = !rightCardOpen"
+                  >收起</Button
+                >
+              </Row>
               <flatPickr
                 v-model="selectDateValue"
                 :config="datePickerConfig"
@@ -281,22 +285,24 @@
                 </Form-item>
                 <Form-item label="价格：" class="formItem">
                   <Row type="flex">
-                    <Col span="10">
+                    <Col span="11">
                       <form-item prop="lowestPrice">
                         <Input-number
                           v-model="searchForm.lowestPrice"
+                          class="fullWidth"
                           placeholder="万元"
                           size="small"
                         ></Input-number>
                       </form-item>
                     </Col>
-                    <Col span="3">
+                    <Col span="2">
                       <Row type="flex" justify="center">-</Row>
                     </Col>
-                    <Col span="10">
+                    <Col span="11">
                       <form-item prop="highestPrice">
                         <Input-number
                           v-model="searchForm.highestPrice"
+                          class="fullWidth"
                           placeholder="万元"
                           size="small"
                         ></Input-number>
@@ -317,6 +323,15 @@
               </Form>
             </div>
             <div v-show="!rightCardOpen">
+              <div class="rightCloseIcon2">
+                <Icon
+                  v-show="!rightCardOpen"
+                  class="rightCardOpenArrow"
+                  size="24"
+                  type="ios-arrow-back"
+                  @click="rightCardOpen = !rightCardOpen"
+                />
+              </div>
               <div class="rightCloseIcon">
                 <DatePicker
                   v-model="selectDateValue2"
@@ -389,7 +404,7 @@
 import flatPickr from 'vue-flatpickr-component';
 import { Mandarin } from 'flatpickr/dist/l10n/zh';
 
-import { tagOptions, countryOptions } from '@/enums/common';
+import { countryOptions, tagOptions } from '@/enums/common';
 import { addCollection, collectionIds } from '@/utils/setCollectIds';
 import { ruleValidate } from '@/utils/ruleValidate';
 
@@ -399,6 +414,7 @@ import pageCode from '@/enums/pageCodes';
 import cardData from '@/enums/cardData';
 import regionData from '@/enums/regionData';
 import organizationData from '@/enums/organizationData';
+
 export default {
   name: 'SubscribePage',
   components: {
@@ -415,23 +431,13 @@ export default {
     //   const collects111 = collectIdsRes.data;
     //   return { abc, collects111 };
     // });
-    //   2
-    //   try {
-    //     const cardDataRes = await $axios.get('/goods', { params: { pagenum: 1, pagesize: 1 }});
-    //     const collectIdsRes = await $axios.post('https://123.com/goods', { params: { pagenum: 1, pagesize: 1 }});
-    //     return { abc: cardDataRes.data.meta.status, collects111: collectIdsRes.data.meta.msg };
-    //   }catch (error) {
-    //     console.log(error);
-    //     return { abc: [], collects111: [] };
-    //   }
-    // 3
     try {
       const requests = [
         $axios.get('/goods', { params: { pagenum: 1, pagesize: 1 } }),
         $axios.get('/orders', { params: { pagenum: 1, pagesize: 1 } }),
-        $axios.post('https://123.com/goods', {
-          params: { pagenum: 1, pagesize: 1 },
-        }),
+        // $axios.post('https://123.com/goods', {
+        //   params: { pagenum: 1, pagesize: 1 },
+        // }),
       ];
       const responses = await Promise.allSettled(requests);
       const successfulResponses = responses
@@ -449,9 +455,10 @@ export default {
   },
   data() {
     return {
+      successfulResponses1: '',
       open: false,
       selectDateValue: '',
-      selectDateValue2: null,
+      selectDateValue2: '',
       pageContent: 0,
       monthsRange: [],
       rightCardOpen: true,
@@ -482,6 +489,17 @@ export default {
       pageCode,
     };
   },
+  // async fetch() {
+  //   this.successfulResponses1 = await this.$axios.get('/goodsqq', {params: {pagenum: 1, pagesize: 1}}).then(res => {
+  //       return res.data;
+  //     })
+  // },
+  // activated() {
+  //   // Call fetch again if last fetch more than 30 sec ago
+  //   if (this.$fetchState.timestamp <= Date.now() - 30000) {
+  //     this.$fetch()
+  //   }
+  // },
   methods: {
     addCollection,
     doSomethingOnChange() {
@@ -490,6 +508,8 @@ export default {
     },
     refresh() {
       this.selectDateValue = '';
+      this.selectDateValue2 = '';
+      this.monthsRange = [];
       this.$refs.searchForm.resetFields();
     },
   },
@@ -534,7 +554,7 @@ export default {
     //border-radius: 10px;
     justify-content: center;
     border-radius: $subscribe-border-radius;
-    padding: 16px 16px;
+    //padding: 16px 16px;
     .leftIcon {
       @extend %flex-all-center;
       img {
@@ -547,7 +567,7 @@ export default {
       //flex: 1;
       margin-left: 10px;
       display: flex;
-      align-items: flex-end;
+      align-items: baseline;
       span {
         display: inline;
         font-size: 50px;
@@ -647,6 +667,7 @@ export default {
   .bidContent {
     margin-right: 16px;
     .singleLine {
+      margin: 8px 0;
       @include ellipsis-style(1);
     }
     .bidTitle {
@@ -683,6 +704,9 @@ export default {
   }
 
   //  关闭效果
+  .rightCloseIcon2 {
+    text-align: center;
+  }
   .rightCloseIcon {
     font-size: 24px;
     text-align: center;
@@ -706,14 +730,17 @@ export default {
   justify-content: center;
   align-items: center;
   top: 80px;
+  img {
+    cursor: pointer;
+  }
 }
 .lowerCard {
   top: 160px;
 }
 .rightCardOpenArrow {
-  position: absolute;
-  top: 50%;
-  left: -20px;
+  //position: absolute;
+  //top: 0%;
+  //right: -20px;
   color: $subscribe-underline-color;
   transform: rotateY(0deg);
   cursor: pointer;
@@ -731,5 +758,8 @@ export default {
 }
 .spanTransition {
   transition: all 0.5s;
+}
+.fullWidth {
+  width: 100%;
 }
 </style>

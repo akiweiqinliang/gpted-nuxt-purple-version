@@ -1,9 +1,20 @@
 <template>
   <div class="commonLayout">
+    <BackTop :height="1" :bottom="320" :right="60">
+      <div class="backToTop">
+        <Icon type="ios-arrow-up" />
+      </div>
+    </BackTop>
+    <div
+      class="customerService"
+      @click="customerServiceModal = !customerServiceModal"
+    >
+      <Icon type="md-headset" />
+    </div>
     <Menu mode="horizontal" :active-name="activeRouterName">
       <Row type="flex" justify="space-around">
         <Col class="commonLogo"> LOGO </Col>
-        <Col>
+        <Col class="commonMenuContainer">
           <MenuItem :name="pageCode.HOME" :to="{ name: pageCode.HOME }">
             <Icon type="ios-home-outline" />首页
           </MenuItem>
@@ -34,20 +45,20 @@
               <Button shape="circle" class="loginBtn">登录</Button>
             </Col>
             <Col>
-              <div>
-                <Icon type="ios-repeat" class="topMenuIcon" />
+              <div class="topMenuIcon">
+                <Icon type="ios-repeat" />
               </div>
             </Col>
-            <Col class="icon-margin-right">
-              <div>
-                <Icon type="ios-help-circle-outline" class="topMenuIcon" />
+            <Col>
+              <div class="topMenuIcon">
+                <Icon type="ios-help-circle-outline" />
               </div>
             </Col>
           </Row>
         </Col>
       </Row>
     </Menu>
-    <nuxt />
+    <nuxt keep-alive />
   </div>
 </template>
 
@@ -59,6 +70,7 @@ export default {
   data() {
     return {
       activeRouterName: this.$route.name,
+      customerServiceModal: false,
     };
   },
   computed: {
@@ -76,13 +88,89 @@ export default {
 
 <style scoped lang="scss">
 @import 'assets/css/globalColor.scss';
+.backToTop {
+  width: 54px;
+  height: 54px;
+  background: $white;
+  border-radius: 50%;
+  z-index: 40;
+  cursor: pointer;
+  i {
+    transform: translate(-50%, -50%);
+    left: 50%;
+    top: 50%;
+    color: $home-theme-color;
+    font-size: 30px;
+    position: relative;
+  }
+}
+.customerService {
+  z-index: 40;
+  position: fixed;
+  right: 60px;
+  bottom: 250px;
+  width: 54px;
+  height: 54px;
+  background: $white;
+  border-radius: 50%;
+  cursor: pointer;
+  i {
+    transform: translate(-50%, -50%);
+    left: 50%;
+    top: 50%;
+    color: $home-theme-color;
+    font-size: 30px;
+    position: relative;
+  }
+}
 .commonLayout {
+  .topMenuIcon {
+    cursor: pointer;
+  }
+  .topMenuIcon:hover > i {
+    color: $home-theme-color;
+  }
+  position: relative;
   .ivu-menu-light.ivu-menu-horizontal .ivu-menu-item-active,
   .ivu-menu-light.ivu-menu-horizontal .ivu-menu-item:hover,
   .ivu-menu-light.ivu-menu-horizontal .ivu-menu-submenu-active,
   .ivu-menu-light.ivu-menu-horizontal .ivu-menu-submenu:hover {
-    color: $home-login-btn-bg-color;
-    border-bottom: 2px solid $home-login-btn-bg-color;
+    color: $home-theme-color;
+    border-bottom: 0;
+  }
+  .ivu-menu-light.ivu-menu-horizontal .ivu-menu-item,
+  .ivu-menu-light.ivu-menu-horizontal .ivu-menu-submenu {
+    border: 0;
+  }
+  .commonMenuContainer {
+    position: relative;
+    .ivu-menu-item > i:after {
+      content: '';
+      height: 3px;
+      margin: auto;
+      transition: all 0.3s ease-in-out 0s;
+      position: absolute;
+      bottom: 12px;
+      left: calc(10% + 6px);
+      background: $home-theme-color;
+      transform: scaleX(0);
+      visibility: hidden;
+      width: 80%;
+    }
+    .ivu-menu-item-selected > i:after {
+      transform: scaleX(1);
+      visibility: visible;
+    }
+    .ivu-menu-light.ivu-menu-horizontal .ivu-menu-item,
+    .ivu-menu-light.ivu-menu-horizontal .ivu-menu-submenu {
+      border-bottom: 0;
+    }
+    .ivu-menu-light.ivu-menu-horizontal .ivu-menu-item-active,
+    .ivu-menu-light.ivu-menu-horizontal .ivu-menu-item:hover,
+    .ivu-menu-light.ivu-menu-horizontal .ivu-menu-submenu-active,
+    .ivu-menu-light.ivu-menu-horizontal .ivu-menu-submenu:hover {
+      border: 0;
+    }
   }
 }
 .commonLogo {
@@ -90,7 +178,7 @@ export default {
   font-weight: bold;
 }
 .loginBtn {
-  background: $home-login-btn-bg-color;
+  background: $home-theme-color;
   border: 0;
   color: $white;
 }

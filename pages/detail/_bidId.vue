@@ -286,7 +286,7 @@ export default {
     console.log(params);
     try {
       return $axios.post(`/detail/${params.bidId}`).then((res) => {
-        return { currentObj1: res };
+        return { currentObj1: res.data };
       });
     } catch (e) {
       console.log(e);
@@ -295,6 +295,7 @@ export default {
   data() {
     return {
       floatBtnActive: 0,
+      currentObj1: '',
     };
   },
   computed: {
@@ -342,6 +343,13 @@ export default {
       return progressObj;
     },
   },
+  // async mounted() {
+  //   try {
+  //     this.currentObj1 = await this.$axios.post(`/detail/${this.$route.params.bidId}`);
+  //   } catch (e) {
+  //     console.log(e);
+  //   }
+  // },
   methods: {
     formatTime,
     showCompareArticle() {

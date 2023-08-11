@@ -5,10 +5,12 @@
         <h1>GPTED全球招标</h1>
         <span>这里是slogan</span>
         <Input
-          search
+          v-model.trim="searchText"
+          icon="ios-search"
           placeholder="请输入中英文关键词"
           class="leftSearchInput"
           size="large"
+          @on-click="handleSearch"
         />
         <Row type="flex" justify="space-between" class="contactMsg">
           <Col>微信公众号：123456</Col>
@@ -26,31 +28,32 @@
       justify="space-around"
     >
       <Col class="numberBox">
-        <span
-          >32,607
-          <p>条</p></span
-        >
+        <span>
+          {{ allBidNum }}
+          <p>条</p>
+        </span>
         <p>更新标讯</p>
       </Col>
       <Col class="numberBox">
-        <span
-          >4,530
-          <p>件</p></span
-        >
+        <span>
+          4,530
+          {{ projectCount }}
+          <p>件</p>
+        </span>
         <p>收录项目</p>
       </Col>
       <Col class="numberBox">
-        <span
-          >205
-          <p>个</p></span
-        >
+        <span>
+          205
+          <p>个</p>
+        </span>
         <p>覆盖国家</p>
       </Col>
       <Col class="numberBox">
-        <span
-          >309
-          <p>个</p></span
-        >
+        <span>
+          309
+          <p>个</p>
+        </span>
         <p>覆盖行业</p>
       </Col>
     </Row>
@@ -86,10 +89,10 @@
       </Col>
     </Row>
     <Row class="homeCommonMargin bottom">
-      <h1>
+      <h2>
         全球超过13000+企业正在使用GPTED
         <nuxt-link to="/more"><span>查看更多客户案例</span></nuxt-link>
-      </h1>
+      </h2>
       <div class="swiperBox">
         <div class="swiper-button-next nextBtn arrowBtn"></div>
         <div class="swiper-button-prev prevBtn arrowBtn"></div>
@@ -98,8 +101,8 @@
             v-for="i in 6"
             :key="`bottom-swiper-item-${i}`"
             class="caseSlide"
-            >{{ i }}</SwiperSlide
-          >
+            >{{ i }}
+          </SwiperSlide>
         </Swiper>
       </div>
       <ul class="companyList">
@@ -120,7 +123,7 @@
 <script>
 import { Swiper, SwiperSlide } from 'vue-awesome-swiper';
 import pageCode from '~/enums/pageCodes';
-
+import { countryOptions } from '~/enums/common';
 export default {
   name: 'Home',
   components: {
@@ -128,8 +131,26 @@ export default {
     SwiperSlide,
   },
   layout: 'CommonLayout',
+  async asyncData({ $axios }) {
+    // 标讯条数
+    const projectCount = await $axios.get('/getProjectCount').then((res) => {
+      return res.data.meta.status;
+    });
+    const allBidNum = await new Promise((resolve) => resolve(32607)).then(
+      (value) => {
+        return value.toLocaleString();
+      }
+    );
+    const countryArray = countryOptions.getCountryArray();
+    const chartData = countryArray.map((item) => {
+      return { name: item.name, num: item.bidNumber };
+    });
+    chartData.sort((a, b) => b.num - a.num);
+    return { chartData, allBidNum, projectCount, countryArray };
+  },
   data() {
     return {
+      searchText: '',
       companyList: 20,
       swiperOption: {
         slidesPerView: 3,
@@ -157,11 +178,11 @@ export default {
     const barChart = new this.$Chart(this.$refs.barChart, {
       type: 'horizontalBar',
       data: {
-        labels: ['法国', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        labels: this.chartData.map(({ name }) => name),
         datasets: [
           {
             label: '招标发布数量',
-            data: [40, 60, 29, 15, 7, 3],
+            data: this.chartData.map(({ num }) => num),
             backgroundColor: [
               'rgba(255, 99, 132, 0.2)',
               'rgba(54, 162, 235, 0.2)',
@@ -170,6 +191,7 @@ export default {
               'rgba(153, 102, 255, 0.2)',
               'rgba(255, 159, 64, 0.2)',
             ],
+            // backgroundColor: this.createBarBgColor(),
             borderColor: [
               'rgba(255, 99, 132, 1)',
               'rgba(54, 162, 235, 1)',
@@ -178,7 +200,7 @@ export default {
               'rgba(153, 102, 255, 1)',
               'rgba(255, 159, 64, 1)',
             ],
-            borderWidth: 1,
+            borderWidth: 0,
           },
         ],
       },
@@ -200,14 +222,15 @@ export default {
         },
       },
     });
+
     // eslint-disable-next-line no-unused-vars
     const doughnutChart = new this.$Chart(this.$refs.doughnutChart, {
       type: 'doughnut',
       data: {
-        labels: ['法国', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        labels: this.chartData.map(({ name }) => name),
         datasets: [
           {
-            data: [4, 5, 6, 7, 8, 1],
+            data: this.chartData.map(({ num }) => num),
             backgroundColor: [
               'rgba(255, 99, 132, 0.2)',
               'rgba(54, 162, 235, 0.2)',
@@ -231,15 +254,42 @@ export default {
       },
     });
   },
+  methods: {
+    handleSearch() {
+      this.$router.push({
+        name: pageCode.DISCOVER,
+        params: { searchText: this.searchText },
+      });
+      // try {
+      //   this.$axios.post('/getBidsBySearchText', {
+      //     searchText: this.searchText,
+      //   });
+      // } catch (e) {
+      //   console.log(e);
+      // }
+    },
+    createBarBgColor() {
+      const backgroundColor = [
+        'rgba(54, 99, 232, 1)',
+        'rgba(54, 162, 235, 1)',
+        'rgba(54,100,236,0.59)',
+        'rgba(81,126,178,0.69)',
+        'rgba(46,57,92,0.66)',
+        'rgba(53,10,210,0.61)',
+      ];
+      return backgroundColor;
+    },
+  },
 };
 </script>
 
 <style scoped lang="scss">
 @import 'assets/css/global.scss';
 @import 'assets/css/globalColor.scss';
+@import 'assets/css/page404.scss';
 .homePage {
   background-image: url($home-bg-img-url);
-  background-position: center;
+  background-position: top;
   background-repeat: no-repeat;
   background-size: cover;
   position: relative;
@@ -263,7 +313,7 @@ export default {
         width: 100%;
         text-align: center;
         margin: 0 0 60px;
-        color: $home-login-btn-bg-color;
+        color: $home-theme-color;
       }
       .leftSearchInput {
         width: 60%;
@@ -342,11 +392,15 @@ export default {
       color: $home-contact-msg-color;
     }
     span {
-      color: $home-login-btn-bg-color;
+      color: $home-theme-color;
     }
     .concludeImgBox {
       width: 60%;
       margin: 0 auto;
+      border-radius: 10px;
+      overflow: hidden;
+      @extend %hoveringStyle;
+
       img {
         width: 100%;
         height: 100%;
@@ -363,13 +417,13 @@ export default {
     }
   }
   .bottom {
-    h1 {
+    h2 {
       width: 100%;
       text-align: center;
       font-weight: initial;
       span {
         margin-left: 20px;
-        color: $home-login-btn-bg-color;
+        color: $home-theme-color;
       }
     }
     .swiperBox {
@@ -383,7 +437,7 @@ export default {
         position: absolute;
       }
       .arrowBtn:after {
-        color: $home-login-btn-bg-color;
+        color: $home-theme-color;
         font-size: 30px;
       }
       .nextBtn {
