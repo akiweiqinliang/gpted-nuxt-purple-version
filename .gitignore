@@ -88,3 +88,8 @@ sw.*
 
 # Vim swap files
 *.swp
+
+
+
+# test page
+pages/-play.html

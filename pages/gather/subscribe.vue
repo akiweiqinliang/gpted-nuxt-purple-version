@@ -1,5 +1,6 @@
 <template>
   <div>
+    <!--    {{ successfulResponses1 }}-->
     <!--    <div v-for="(response, index) in successfulResponses" :key="index">-->
     <!--      Response {{ index + 1 }}: {{ response }}-->
     <!--    </div>-->
@@ -403,7 +404,7 @@
 import flatPickr from 'vue-flatpickr-component';
 import { Mandarin } from 'flatpickr/dist/l10n/zh';
 
-import { tagOptions, countryOptions } from '@/enums/common';
+import { countryOptions, tagOptions } from '@/enums/common';
 import { addCollection, collectionIds } from '@/utils/setCollectIds';
 import { ruleValidate } from '@/utils/ruleValidate';
 
@@ -413,6 +414,7 @@ import pageCode from '@/enums/pageCodes';
 import cardData from '@/enums/cardData';
 import regionData from '@/enums/regionData';
 import organizationData from '@/enums/organizationData';
+
 export default {
   name: 'SubscribePage',
   components: {
@@ -429,16 +431,6 @@ export default {
     //   const collects111 = collectIdsRes.data;
     //   return { abc, collects111 };
     // });
-    //   2
-    //   try {
-    //     const cardDataRes = await $axios.get('/goods', { params: { pagenum: 1, pagesize: 1 }});
-    //     const collectIdsRes = await $axios.post('https://123.com/goods', { params: { pagenum: 1, pagesize: 1 }});
-    //     return { abc: cardDataRes.data.meta.status, collects111: collectIdsRes.data.meta.msg };
-    //   }catch (error) {
-    //     console.log(error);
-    //     return { abc: [], collects111: [] };
-    //   }
-    // 3
     try {
       const requests = [
         $axios.get('/goods', { params: { pagenum: 1, pagesize: 1 } }),
@@ -463,6 +455,7 @@ export default {
   },
   data() {
     return {
+      successfulResponses1: '',
       open: false,
       selectDateValue: '',
       selectDateValue2: '',
@@ -496,6 +489,17 @@ export default {
       pageCode,
     };
   },
+  // async fetch() {
+  //   this.successfulResponses1 = await this.$axios.get('/goodsqq', {params: {pagenum: 1, pagesize: 1}}).then(res => {
+  //       return res.data;
+  //     })
+  // },
+  // activated() {
+  //   // Call fetch again if last fetch more than 30 sec ago
+  //   if (this.$fetchState.timestamp <= Date.now() - 30000) {
+  //     this.$fetch()
+  //   }
+  // },
   methods: {
     addCollection,
     doSomethingOnChange() {

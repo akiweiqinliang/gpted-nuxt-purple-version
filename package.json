@@ -23,7 +23,6 @@
     "core-js": "^3.25.3",
     "fullpage.js": "^3.1.2",
     "lodash": "^4.17.21",
-    "node-sass": "^8.0.0",
     "nuxt": "^2.15.8",
     "sass": "^1.64.2",
     "sass-loader": "^10.4.1",

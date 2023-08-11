@@ -1,7 +1,19 @@
 export default {
+  env: {
+    baseURL: process.env.BASE_URL || 'http://localhost:3000',
+  },
+  dev: process.env.NODE_ENV !== 'production',
   // Global page headers: https://go.nuxtjs.dev/config-head
+  pageTransition: {
+    name: 'fade',
+    mode: 'out-in', // default
+  },
+  layoutTransition: {
+    name: 'layout',
+    mode: 'out-in',
+  },
   head: {
-    title: 'test-nuxt',
+    title: 'GPTED全球招标',
     htmlAttrs: {
       lang: 'en',
     },
@@ -10,6 +22,7 @@ export default {
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { hid: 'description', name: 'description', content: '' },
       { name: 'format-detection', content: 'telephone=no' },
+      { name: '招标', content: 'GPTED全球招标' },
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
   },
@@ -38,6 +51,7 @@ export default {
       ssr: false,
     },
     { src: '@/plugins/chart.js', ssr: false },
+    '@/plugins/axios',
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -58,11 +72,22 @@ export default {
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
-    baseURL: 'https://test.gpted.cn/api/private/v1/',
+    baseURL: process.env.BASE_URL || 'https://test.gpted.cn/api/private/v1/',
   },
   loading: {
     color: '#348fed',
   },
   // Build Configuration: https://go.nuxtjs.dev/config-build
-  build: {},
+  build: {
+    extend(config, { isDev, isClient }) {
+      // config.module.rules.push({
+      //   test: /\.(ttf|eot|svg|woff(2)?)(\?[a-z0-9=&.]+)?$/,
+      //   loader: 'file-loader',
+      // })
+      if (isDev) {
+        config.mode = 'development';
+      }
+    },
+  },
+  ignore: ['pages/-play.html'],
 };

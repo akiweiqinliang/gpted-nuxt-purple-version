@@ -5,7 +5,7 @@
         <h1>GPTED全球招标</h1>
         <span>这里是slogan</span>
         <Input
-          v-model="searchText"
+          v-model.trim="searchText"
           icon="ios-search"
           placeholder="请输入中英文关键词"
           class="leftSearchInput"
@@ -29,14 +29,15 @@
     >
       <Col class="numberBox">
         <span>
-          32,607
+          {{ allBidNum }}
           <p>条</p>
         </span>
         <p>更新标讯</p>
       </Col>
       <Col class="numberBox">
-        <span
-          >4,530
+        <span>
+          4,530
+          {{ projectCount }}
           <p>件</p>
         </span>
         <p>收录项目</p>
@@ -130,13 +131,22 @@ export default {
     SwiperSlide,
   },
   layout: 'CommonLayout',
-  asyncData() {
+  async asyncData({ $axios }) {
+    // 标讯条数
+    const projectCount = await $axios.get('/getProjectCount').then((res) => {
+      return res.data.meta.status;
+    });
+    const allBidNum = await new Promise((resolve) => resolve(32607)).then(
+      (value) => {
+        return value.toLocaleString();
+      }
+    );
     const countryArray = countryOptions.getCountryArray();
     const chartData = countryArray.map((item) => {
       return { name: item.name, num: item.bidNumber };
     });
     chartData.sort((a, b) => b.num - a.num);
-    return { chartData };
+    return { chartData, allBidNum, projectCount, countryArray };
   },
   data() {
     return {
@@ -245,14 +255,18 @@ export default {
     });
   },
   methods: {
-    async handleSearch() {
-      try {
-        await this.$axios.post('/getBidsBySearchText', {
-          searchText: this.searchText,
-        });
-      } catch (e) {
-        console.log(e);
-      }
+    handleSearch() {
+      this.$router.push({
+        name: pageCode.DISCOVER,
+        params: { searchText: this.searchText },
+      });
+      // try {
+      //   this.$axios.post('/getBidsBySearchText', {
+      //     searchText: this.searchText,
+      //   });
+      // } catch (e) {
+      //   console.log(e);
+      // }
     },
     createBarBgColor() {
       const backgroundColor = [
@@ -299,7 +313,7 @@ export default {
         width: 100%;
         text-align: center;
         margin: 0 0 60px;
-        color: $home-login-btn-bg-color;
+        color: $home-theme-color;
       }
       .leftSearchInput {
         width: 60%;
@@ -378,7 +392,7 @@ export default {
       color: $home-contact-msg-color;
     }
     span {
-      color: $home-login-btn-bg-color;
+      color: $home-theme-color;
     }
     .concludeImgBox {
       width: 60%;
@@ -409,7 +423,7 @@ export default {
       font-weight: initial;
       span {
         margin-left: 20px;
-        color: $home-login-btn-bg-color;
+        color: $home-theme-color;
       }
     }
     .swiperBox {
@@ -423,7 +437,7 @@ export default {
         position: absolute;
       }
       .arrowBtn:after {
-        color: $home-login-btn-bg-color;
+        color: $home-theme-color;
         font-size: 30px;
       }
       .nextBtn {
