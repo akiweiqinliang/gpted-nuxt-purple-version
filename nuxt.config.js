@@ -79,6 +79,7 @@ export default {
   },
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
+    analyse: true,
     extend(config, { isDev, isClient }) {
       // config.module.rules.push({
       //   test: /\.(ttf|eot|svg|woff(2)?)(\?[a-z0-9=&.]+)?$/,

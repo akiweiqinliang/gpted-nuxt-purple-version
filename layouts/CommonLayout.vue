@@ -88,13 +88,21 @@ export default {
 
 <style scoped lang="scss">
 @import 'assets/css/globalColor.scss';
-.backToTop {
+%float-btn-style {
   width: 54px;
   height: 54px;
   background: $white;
   border-radius: 50%;
   z-index: 40;
+  box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+  transition: all 0.3s;
   cursor: pointer;
+}
+%float-btn-style:hover {
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+}
+.backToTop {
+  @extend %float-btn-style;
   i {
     transform: translate(-50%, -50%);
     left: 50%;
@@ -105,15 +113,10 @@ export default {
   }
 }
 .customerService {
-  z-index: 40;
   position: fixed;
   right: 60px;
   bottom: 250px;
-  width: 54px;
-  height: 54px;
-  background: $white;
-  border-radius: 50%;
-  cursor: pointer;
+  @extend %float-btn-style;
   i {
     transform: translate(-50%, -50%);
     left: 50%;
