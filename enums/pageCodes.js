@@ -2,6 +2,9 @@ const pageCode = {
   HOME: 'home',
   DISCOVER: 'discover',
   PROMOTE: 'promote',
+  ERROR: 'error',
+  LOGIN: 'login',
+  SIGNUP: 'signup',
 
   GATHER_SUBSCRIBE: 'gather-subscribe',
   GATHER_RECOMMEND: 'gather-recommend',

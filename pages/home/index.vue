@@ -174,6 +174,7 @@ export default {
     },
   },
   mounted() {
+    this.$store.dispatch('initToken');
     // eslint-disable-next-line no-unused-vars
     const barChart = new this.$Chart(this.$refs.barChart, {
       type: 'horizontalBar',
@@ -260,13 +261,6 @@ export default {
         name: pageCode.DISCOVER,
         params: { searchText: this.searchText },
       });
-      // try {
-      //   this.$axios.post('/getBidsBySearchText', {
-      //     searchText: this.searchText,
-      //   });
-      // } catch (e) {
-      //   console.log(e);
-      // }
     },
     createBarBgColor() {
       const backgroundColor = [
@@ -435,16 +429,21 @@ export default {
       }
       .arrowBtn {
         position: absolute;
+        width: 40px;
+        height: 40px;
+        background: white;
+        border-radius: 50%;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
       }
       .arrowBtn:after {
         color: $home-theme-color;
-        font-size: 30px;
+        font-size: 18px;
       }
       .nextBtn {
-        right: 0;
+        right: -20px;
       }
       .prevBtn {
-        left: 0;
+        left: -20px;
       }
       .caseSlide {
         height: 300px;
