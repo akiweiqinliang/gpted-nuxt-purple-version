@@ -1,15 +1,30 @@
 import cardData from '@/enums/cardData';
 export const state = () => ({
   showData: cardData,
+  token: '',
 });
-export const actions = () => ({});
-export const mutations = () => ({
+export const actions = {
+  initToken({ commit }) {
+    const token = sessionStorage.getItem('token');
+    console.log('initToken');
+    if (token) {
+      commit('setToken', token);
+    }
+  },
+};
+export const mutations = {
   setShowData(state, data) {
     state.showData = data;
   },
-});
-export const getters = () => ({
-  getShowData: (state) => {
+  setToken(state, data) {
+    state.token = data;
+  },
+};
+export const getters = {
+  getShowData(state) {
     return state.showData;
   },
-});
+  getToken(state) {
+    return state.token;
+  },
+};

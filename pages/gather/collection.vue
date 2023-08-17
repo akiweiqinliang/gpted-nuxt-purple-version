@@ -20,6 +20,7 @@ export default {
   },
   methods: {
     getCollectList() {
+      console.log(this.$store.getters.getToken);
       this.$axios
         .get('/goods', { params: { pagenum: 1, pagesize: 1 } })
         .then((res) => {

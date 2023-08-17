@@ -1,6 +1,6 @@
 <template>
   <div class="commonLayout">
-    <BackTop :height="1" :bottom="320" :right="60">
+    <BackTop :height="600" :bottom="320" :right="60">
       <div class="backToTop">
         <Icon type="ios-arrow-up" />
       </div>
@@ -42,7 +42,14 @@
               /></nuxt-link>
             </Col>
             <Col>
-              <Button shape="circle" class="loginBtn">登录</Button>
+              <nuxt-link v-if="loginActive" :to="{ name: pageCode.LOGIN }"
+                ><Button shape="circle" class="loginBtn"
+                  >登录</Button
+                ></nuxt-link
+              >
+              <Button v-else shape="circle" class="loginBtn" @click="logout"
+                >退出登录</Button
+              >
             </Col>
             <Col>
               <div class="topMenuIcon">
@@ -77,10 +84,20 @@ export default {
     pageCode() {
       return pageCode;
     },
+    loginActive() {
+      return this.$store.getters.getToken === '';
+    },
   },
   watch: {
     $route(to, from) {
       this.activeRouterName = to.name;
+    },
+  },
+  methods: {
+    logout() {
+      this.$store.commit('setToken', '');
+      sessionStorage.setItem('token', '');
+      this.$router.push({ name: pageCode.HOME });
     },
   },
 };
@@ -88,32 +105,35 @@ export default {
 
 <style scoped lang="scss">
 @import 'assets/css/globalColor.scss';
-.backToTop {
-  width: 54px;
-  height: 54px;
+%float-btn-style {
+  width: 44px;
+  height: 44px;
   background: $white;
   border-radius: 50%;
   z-index: 40;
+  box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+  transition: all 0.3s;
   cursor: pointer;
+}
+%float-btn-style:hover {
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+}
+.backToTop {
+  @extend %float-btn-style;
   i {
     transform: translate(-50%, -50%);
     left: 50%;
     top: 50%;
     color: $home-theme-color;
-    font-size: 30px;
+    font-size: 28px;
     position: relative;
   }
 }
 .customerService {
-  z-index: 40;
   position: fixed;
   right: 60px;
   bottom: 250px;
-  width: 54px;
-  height: 54px;
-  background: $white;
-  border-radius: 50%;
-  cursor: pointer;
+  @extend %float-btn-style;
   i {
     transform: translate(-50%, -50%);
     left: 50%;
@@ -194,6 +214,7 @@ export default {
   align-items: center;
   a {
     display: flex;
+    transform: translateY(2px);
   }
   img {
     width: 30px;
