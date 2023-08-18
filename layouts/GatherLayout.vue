@@ -24,7 +24,7 @@
             </MenuItem>
           </Col>
           <Col>
-            <Row type="flex" :gutter="20">
+            <Row type="flex">
               <Col>
                 <div>
                   <Icon type="ios-repeat" class="topMenuIcon" />
@@ -89,8 +89,12 @@ export default {
     font-size: 20px;
     cursor: pointer;
   }
+  .topMenuIcon:hover {
+    color: $subscribe-underline-color;
+  }
   .icon-margin-right {
-    margin-right: 20px;
+    margin-left: 20px;
+    margin-right: 24px;
   }
 }
 .rightContainer {

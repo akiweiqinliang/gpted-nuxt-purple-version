@@ -214,7 +214,20 @@
                 <Form-item label="价格区间：" class="formItem">
                   <Row type="flex">
                     <Col span="4">
-                      <Button type="text" size="small">全部</Button>
+                      <Button
+                        type="text"
+                        size="small"
+                        :class="
+                          searchParams.lowestPrice || searchParams.highestPrice
+                            ? ''
+                            : 'active'
+                        "
+                        @click="
+                          searchParams.lowestPrice = searchParams.highestPrice =
+                            null
+                        "
+                        >全部
+                      </Button>
                     </Col>
                     <Col span="9" class="ivu-col-offset-0">
                       <form-item prop="lowestPrice">

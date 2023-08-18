@@ -1,122 +1,155 @@
 <template>
-  <div id="home" class="homePage">
-    <Row class="homeCommonMargin top" type="flex" :wrap="false">
-      <div class="leftSearchBox">
-        <h1>GPTED全球招标</h1>
-        <span>这里是slogan</span>
-        <Input
-          v-model.trim="searchText"
-          icon="ios-search"
-          placeholder="请输入中英文关键词"
-          class="leftSearchInput"
-          size="large"
-          @on-click="handleSearch"
-        />
-        <Row type="flex" justify="space-between" class="contactMsg">
-          <Col>微信公众号：123456</Col>
-          <Col>新浪微博：GPTED招标</Col>
-        </Row>
-      </div>
-      <div class="rightGlobalImgBox">
-        <img src="~assets/home/home-global-img.png" alt="全球招标" />
-      </div>
-    </Row>
-    <Row
-      class="homeCommonMargin number"
-      type="flex"
-      align="middle"
-      justify="space-around"
+  <div id="home" class="homePage aaa">
+    <div
+      v-show="homeSlideActiveIndex !== 0"
+      ref="homeBackToTopBtn"
+      class="backToTop"
+      @click="handleBackToTop"
     >
-      <Col class="numberBox">
-        <span>
-          {{ allBidNum }}
-          <p>条</p>
-        </span>
-        <p>更新标讯</p>
-      </Col>
-      <Col class="numberBox">
-        <span>
-          4,530
-          {{ projectCount }}
-          <p>件</p>
-        </span>
-        <p>收录项目</p>
-      </Col>
-      <Col class="numberBox">
-        <span>
-          205
-          <p>个</p>
-        </span>
-        <p>覆盖国家</p>
-      </Col>
-      <Col class="numberBox">
-        <span>
-          309
-          <p>个</p>
-        </span>
-        <p>覆盖行业</p>
-      </Col>
-    </Row>
-    <Row class="homeCommonMargin map">
-      <span>请在这里输入文本文本这里是文本</span>
-      <div class="mapBox"></div>
-    </Row>
-    <Row class="homeCommonMargin bidOrigin">
-      <h2>标讯来源网站展示</h2>
-    </Row>
-    <Row class="homeCommonMargin conclusion">
-      <h1>深耕海外市场，助力企业探寻商机</h1>
-      <p>
-        GPTED汇集来自全球各国、机构和组织的信息，深入挖掘海外市场潜在的巨大商机，协助企业进军国际招标的广阔市场，开拓新的商机，追寻全新的发展机遇。
-        <nuxt-link to="/more"><span>了解更多</span></nuxt-link>
-      </p>
-      <div class="concludeImgBox">
-        <img
-          src="~assets/discoverPage.png"
-          alt="深耕海外市场，助力企业探寻商机"
-        />
-      </div>
-    </Row>
-    <!--    conclusion * 3-->
-    <Row class="homeCommonMargin count">
-      <Col class="countChart">
-        <canvas ref="barChart"></canvas>
-      </Col>
-      <Col class="countChart">
-        <div class="rightDoughnutChart">
-          <canvas ref="doughnutChart"></canvas>
-        </div>
-      </Col>
-    </Row>
-    <Row class="homeCommonMargin bottom">
-      <h2>
-        全球超过13000+企业正在使用GPTED
-        <nuxt-link to="/more"><span>查看更多客户案例</span></nuxt-link>
-      </h2>
-      <div class="swiperBox">
-        <div class="swiper-button-next nextBtn arrowBtn"></div>
-        <div class="swiper-button-prev prevBtn arrowBtn"></div>
-        <Swiper :options="swiperOption" class="swiper-container">
-          <SwiperSlide
-            v-for="i in 6"
-            :key="`bottom-swiper-item-${i}`"
-            class="caseSlide"
-            >{{ i }}
-          </SwiperSlide>
-        </Swiper>
-      </div>
-      <ul class="companyList">
-        <li
-          v-for="item in companyList"
-          :key="`company-${item}`"
-          class="companyItem"
+      <Icon type="ios-arrow-up" />
+    </div>
+    <Swiper
+      ref="homeSwiper"
+      :options="homeSwiperOption"
+      class="homeSwiperContainer"
+      @slideChange="handleHomeSlideChange"
+    >
+      <SwiperSlide>
+        <Row class="homeCommonMargin top" type="flex" :wrap="false">
+          <div class="leftSearchBox">
+            <h1>GPTED全球招标</h1>
+            <span>这里是slogan</span>
+            <Input
+              v-model.trim="searchText"
+              icon="ios-search"
+              placeholder="请输入中英文关键词"
+              class="leftSearchInput"
+              size="large"
+              @on-click="handleSearch"
+            />
+            <Row type="flex" justify="space-between" class="contactMsg">
+              <Col>微信公众号：123456</Col>
+              <Col>新浪微博：GPTED招标</Col>
+            </Row>
+          </div>
+          <div class="rightGlobalImgBox">
+            <img src="~assets/home/home-global-img.png" alt="全球招标" />
+          </div>
+        </Row>
+        <Row
+          class="homeCommonMargin number"
+          type="flex"
+          align="middle"
+          justify="space-around"
         >
-          logo{{ item }}
-          <!--          <div style="width: 100px;height: 40px;"></div>-->
-          <!--          <img src="" alt="公司名">-->
-        </li>
-      </ul>
-    </Row>
+          <Col class="numberBox">
+            <span>
+              {{ allBidNum }}
+              <p>条</p>
+            </span>
+            <p>更新标讯</p>
+          </Col>
+          <Col class="numberBox">
+            <span>
+              4,530
+              {{ projectCount }}
+              <p>件</p>
+            </span>
+            <p>收录项目</p>
+          </Col>
+          <Col class="numberBox">
+            <span>
+              205
+              <p>个</p>
+            </span>
+            <p>覆盖国家</p>
+          </Col>
+          <Col class="numberBox">
+            <span>
+              309
+              <p>个</p>
+            </span>
+            <p>覆盖行业</p>
+          </Col>
+        </Row>
+      </SwiperSlide>
+      <SwiperSlide
+        ><Row class="homeCommonMargin map">
+          <span>请在这里输入文本文本这里是文本</span>
+          <div class="mapBox"></div> </Row
+      ></SwiperSlide>
+      <SwiperSlide
+        ><Row
+          data-swiper-parallax-opacity="0.5"
+          data-swiper-parallax-y="300"
+          data-swiper-parallax-duration="600"
+          class="homeCommonMargin bidOrigin"
+        >
+          <h2>标讯来源网站展示</h2>
+        </Row></SwiperSlide
+      >
+      <SwiperSlide
+        ><Row
+          data-swiper-parallax-opacity="0.5"
+          data-swiper-parallax-y="-300"
+          data-swiper-parallax-duration="600"
+          class="homeCommonMargin conclusion"
+        >
+          <h1>深耕海外市场，助力企业探寻商机</h1>
+          <p>
+            GPTED汇集来自全球各国、机构和组织的信息，深入挖掘海外市场潜在的巨大商机，协助企业进军国际招标的广阔市场，开拓新的商机，追寻全新的发展机遇。
+            <nuxt-link to="/more"><span>了解更多</span></nuxt-link>
+          </p>
+          <div class="concludeImgBox">
+            <img
+              src="~assets/discoverPage.png"
+              alt="深耕海外市场，助力企业探寻商机"
+            />
+          </div> </Row
+      ></SwiperSlide>
+      <SwiperSlide
+        ><Row class="homeCommonMargin count">
+          <Col class="countChart">
+            <canvas ref="barChart"></canvas>
+          </Col>
+          <Col class="countChart">
+            <div class="rightDoughnutChart">
+              <canvas ref="doughnutChart"></canvas>
+            </div>
+          </Col> </Row
+      ></SwiperSlide>
+      <SwiperSlide
+        ><Row class="homeCommonMargin bottom">
+          <h2>
+            全球超过13000+企业正在使用GPTED
+            <nuxt-link to="/more"><span>查看更多客户案例</span></nuxt-link>
+          </h2>
+          <div class="swiperBox">
+            <div class="swiper-button-next nextBtn arrowBtn"></div>
+            <div class="swiper-button-prev prevBtn arrowBtn"></div>
+            <Swiper :options="swiperOption" class="swiper-container">
+              <SwiperSlide
+                v-for="i in 6"
+                :key="`bottom-swiper-item-${i}`"
+                class="caseSlide"
+                >{{ i }}
+              </SwiperSlide>
+            </Swiper>
+          </div>
+          <ul class="companyList">
+            <li
+              v-for="item in companyList"
+              :key="`company-${item}`"
+              class="companyItem"
+            >
+              logo{{ item }}
+              <!--          <div style="width: 100px;height: 40px;"></div>-->
+              <!--          <img src="" alt="公司名">-->
+            </li>
+          </ul>
+        </Row></SwiperSlide
+      >
+    </Swiper>
   </div>
 </template>
 
@@ -141,7 +174,9 @@ export default {
         return value.toLocaleString();
       }
     );
-    const countryArray = countryOptions.getCountryArray();
+    const countryArray = JSON.parse(
+      JSON.stringify(countryOptions.getCountryArray())
+    );
     const chartData = countryArray.map((item) => {
       return { name: item.name, num: item.bidNumber };
     });
@@ -150,6 +185,14 @@ export default {
   },
   data() {
     return {
+      homeSlideActiveIndex: 0,
+      homeSwiperOption: {
+        direction: 'vertical', // 设置为垂直方向展示
+        slidesPerView: 'auto',
+        mousewheel: true, // 启用鼠标滚轮控制
+        spaceBetween: 0,
+        speed: 800,
+      },
       searchText: '',
       companyList: 20,
       swiperOption: {
@@ -255,7 +298,14 @@ export default {
       },
     });
   },
+
   methods: {
+    handleHomeSlideChange() {
+      this.homeSlideActiveIndex = this.$refs.homeSwiper.$swiper.activeIndex;
+    },
+    handleBackToTop() {
+      this.$refs.homeSwiper.$swiper.slideTo(0, 1000, false);
+    },
     handleSearch() {
       this.$router.push({
         name: pageCode.DISCOVER,
@@ -281,6 +331,38 @@ export default {
 @import 'assets/css/global.scss';
 @import 'assets/css/globalColor.scss';
 @import 'assets/css/page404.scss';
+.homeSwiperContainer {
+  height: 100vh;
+}
+.aaa {
+  %float-btn-style {
+    width: 44px;
+    height: 44px;
+    background: $white;
+    border-radius: 50%;
+    z-index: 40;
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+    transition: all 0.3s;
+    cursor: pointer;
+    position: fixed;
+    right: 60px;
+    bottom: 320px;
+  }
+  %float-btn-style:hover {
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+  }
+  .backToTop {
+    @extend %float-btn-style;
+    i {
+      transform: translate(-50%, -50%);
+      left: 50%;
+      top: 50%;
+      color: $home-theme-color;
+      font-size: 28px;
+      position: relative;
+    }
+  }
+}
 .homePage {
   background-image: url($home-bg-img-url);
   background-position: top;

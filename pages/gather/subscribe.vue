@@ -20,8 +20,8 @@
       v-show="pageContent === 0"
       :class="pageContent === 0 ? 'fade-in' : 'fade-out'"
     >
-      <Row class="countCards" :gutter="16">
-        <Col :lg="6" :md="12">
+      <Row class="countCards" :gutter="16" type="flex" :wrap="true">
+        <Col :xs="24" :sm="12" :lg="6">
           <div class="countCard card1">
             <div class="leftIcon">
               <img src="~assets/logos/regionIcon.png" />
@@ -32,7 +32,7 @@
             </div>
           </div>
         </Col>
-        <Col :lg="6" :md="12">
+        <Col :xs="24" :sm="12" :lg="6">
           <div class="countCard card2">
             <div class="leftIcon">
               <img src="~assets/logos/regionIcon.png" />
@@ -43,7 +43,7 @@
             </div>
           </div>
         </Col>
-        <Col :lg="6" :md="12">
+        <Col :xs="24" :sm="12" :lg="6">
           <div class="countCard card3">
             <div class="leftIcon">
               <img src="~assets/logos/regionIcon.png" />
@@ -54,7 +54,7 @@
             </div>
           </div>
         </Col>
-        <Col :lg="6" :md="12">
+        <Col :xs="24" :sm="12" :lg="6">
           <div class="countCard card4">
             <div class="leftIcon">
               <img src="~assets/logos/regionIcon.png" />
@@ -66,7 +66,7 @@
           </div>
         </Col>
       </Row>
-      <Row class="cardListSmallTitle" :gutter="16">
+      <Row class="cardListSmallTitle">
         <Col :span="rightCardOpen ? 18 : 24" class="spanTransition">
           推送列表
         </Col>
@@ -126,7 +126,7 @@
                         alabal aImprovi ng Growth bala balab alabala Improving
                         Growth balabalab alabala
                       </p>
-                      <Row type="flex" justify="space-between">
+                      <Row type="flex" justify="space-between" :wrap="false">
                         <Col>
                           <Tag
                             v-for="(tag, index) in tagOptions.getTagById(
@@ -168,6 +168,7 @@
           <Card
             v-show="!rightCardOpen"
             class="rightSettingCard refreshCardIcon"
+            :dis-hover="true"
             @click.native="refresh"
           >
             <svg
@@ -185,19 +186,14 @@
                 stroke-linejoin="round"
               />
             </svg>
-            <!--            <img-->
-            <!--              src="~assets/gatherIcons/arrow-refresh.svg"-->
-            <!--              alt="刷新"-->
-            <!--              @click="refresh"-->
-            <!--            />-->
           </Card>
           <Card
             :dis-hover="true"
             class="rightSettingCard"
             :class="rightCardOpen ? '' : 'lowerCard'"
+            :padding="rightCardOpen ? 16 : 4"
           >
             <div v-show="rightCardOpen">
-              <!--              日期：-->
               <Row type="flex" justify="space-between">
                 <Button size="small" shape="circle" @click="refresh"
                   >重置</Button
@@ -369,11 +365,6 @@
                       stroke-linejoin="round"
                     />
                   </svg>
-                  <!--                  <img-->
-                  <!--                    src="~assets/gatherIcons/calendar.svg"-->
-                  <!--                    alt="日期"-->
-                  <!--                    @click="open = !open"-->
-                  <!--                  />-->
                 </DatePicker>
               </div>
               <div
@@ -706,10 +697,10 @@ export default {
 .countCards {
   .countCard {
     display: flex;
-    //border-radius: 10px;
     justify-content: center;
     border-radius: $subscribe-border-radius;
-    //padding: 16px 16px;
+    margin-bottom: 12px;
+    padding: 4px 0;
     .leftIcon {
       @extend %flex-all-center;
       img {
@@ -720,14 +711,17 @@ export default {
     }
     .rightNumber {
       //flex: 1;
-      margin-left: 10px;
+      margin: 0 10px;
       display: flex;
       align-items: baseline;
+      @media (min-width: 1200px) {
+        span {
+          font-size: 50px;
+        }
+      }
       span {
         display: inline;
-        font-size: 50px;
         font-weight: 600;
-        padding-bottom: 8px;
       }
       p {
         font-size: 12px;
@@ -762,7 +756,7 @@ export default {
 }
 
 .cardListSmallTitle {
-  margin-top: 24px;
+  margin-top: 12px;
 }
 .bottomBidList {
   margin: 12px 0;
@@ -792,6 +786,14 @@ export default {
     }
     .bidStateImg {
       @extend %flex-all-center;
+      padding: 0 8px;
+      img {
+        max-width: 60px;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        //margin: 0 8px;
+      }
     }
     .bidStateLabel {
       position: absolute;
@@ -831,11 +833,11 @@ export default {
     cursor: pointer;
   }
 }
-
 .rightSettingCard {
   border-radius: $subscribe-border-radius;
   position: sticky;
   top: 80px;
+  min-width: 44px;
   .form-control {
     display: none;
   }
@@ -853,23 +855,25 @@ export default {
 
   //  关闭效果
   .rightCloseIcon2 {
+    margin-top: 34px;
     text-align: center;
+    i {
+      font-size: 30px;
+    }
   }
   .rightCloseIcon {
-    font-size: 24px;
     text-align: center;
-    margin: 40px 0;
+    margin: 34px 0;
     cursor: pointer;
+    svg {
+      width: 100%;
+      height: 100%;
+      max-width: 30px;
+      max-height: 30px;
+    }
     svg path {
       stroke: $subscribe-close-icon-color;
     }
-    //img {
-    //  width: 100%;
-    //  height: 100%;
-    //  object-fit: cover;
-    //  max-width: 30px;
-    //  max-height: 30px;
-    //}
   }
   .rightCloseIcon:hover svg path {
     stroke: $subscribe-underline-color;
@@ -915,5 +919,21 @@ export default {
 }
 .fullWidth {
   width: 100%;
+}
+
+@media (max-width: 1200px) {
+  .rightNumber span {
+    font-size: 40px;
+  }
+}
+@media (max-width: 1000px) {
+  .rightNumber span {
+    font-size: 30px;
+  }
+}
+@media (max-width: 768px) {
+  .rightNumber span {
+    font-size: 28px;
+  }
 }
 </style>
