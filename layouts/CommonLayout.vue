@@ -42,11 +42,9 @@
               /></nuxt-link>
             </Col>
             <Col>
-              <nuxt-link v-if="loginActive" :to="{ name: pageCode.LOGIN }"
-                ><Button shape="circle" class="loginBtn"
-                  >登录</Button
-                ></nuxt-link
-              >
+              <nuxt-link v-if="loginActive" :to="{ name: pageCode.LOGIN }">
+                <Button shape="circle" class="loginBtn"> 登录 </Button>
+              </nuxt-link>
               <Button v-else shape="circle" class="loginBtn" @click="logout"
                 >退出登录</Button
               >
