@@ -79,12 +79,22 @@
           <div class="mapBox"></div> </Row
       ></SwiperSlide>
       <SwiperSlide
-        ><Row class="homeCommonMargin bidOrigin">
+        ><Row
+          data-swiper-parallax-opacity="0.5"
+          data-swiper-parallax-y="300"
+          data-swiper-parallax-duration="600"
+          class="homeCommonMargin bidOrigin"
+        >
           <h2>标讯来源网站展示</h2>
         </Row></SwiperSlide
       >
       <SwiperSlide
-        ><Row class="homeCommonMargin conclusion">
+        ><Row
+          data-swiper-parallax-opacity="0.5"
+          data-swiper-parallax-y="-300"
+          data-swiper-parallax-duration="600"
+          class="homeCommonMargin conclusion"
+        >
           <h1>深耕海外市场，助力企业探寻商机</h1>
           <p>
             GPTED汇集来自全球各国、机构和组织的信息，深入挖掘海外市场潜在的巨大商机，协助企业进军国际招标的广阔市场，开拓新的商机，追寻全新的发展机遇。

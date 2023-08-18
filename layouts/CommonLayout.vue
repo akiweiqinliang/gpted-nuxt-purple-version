@@ -199,12 +199,14 @@ export default {
   background: $home-theme-color;
   border: 0;
   color: $white;
+  transition: all 0.3s;
 }
 .loginBtn:hover,
 .loginBtn:active,
 .loginBtn:focus {
   border: 0;
   box-shadow: none;
+  background: rgba($home-theme-color, 0.7);
 }
 .promoteImgBtn {
   display: flex;

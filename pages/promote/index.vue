@@ -257,7 +257,8 @@ export default {
   }
   //新手
   .newLeft {
-    width: 40%;
+    width: calc(40% - 20px);
+    margin-right: 20px;
     position: relative;
   }
   .newLeft:before {
