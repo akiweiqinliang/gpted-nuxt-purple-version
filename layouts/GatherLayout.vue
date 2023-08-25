@@ -1,10 +1,9 @@
 <template>
-  <Row type="flex" :wrap="false">
-    <Col class="leftNav" span="4">
+  <Row type="flex" :wrap="false" class="gatherLayout">
+    <Col class="leftNav" span="4" :xs="0" :sm="4">
       <!--      左侧导航-->
       <LeftGatherMenu />
     </Col>
-
     <Col class="rightContainer" flex="1">
       <!--      右侧顶部小导航-->
       <Menu mode="horizontal" active-name="subscribePage" class="rightTopMenu">
@@ -68,6 +67,14 @@ export default {
 @import '@/assets/css/globalColor.scss';
 .containerPadding {
   padding: 28px;
+}
+.gatherLayout {
+  position: relative;
+  .leftNav {
+    position: relative;
+    left: 0;
+    top: 0;
+  }
 }
 .rightContainer {
   background-image: url($gather-bg-img-url);

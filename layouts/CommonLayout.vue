@@ -64,6 +64,7 @@
       </Row>
     </Menu>
     <nuxt keep-alive />
+    <CommonFooter />
   </div>
 </template>
 

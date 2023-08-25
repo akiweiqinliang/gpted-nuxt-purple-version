@@ -828,9 +828,25 @@ export default {
   .collectIcon {
     cursor: pointer;
     color: #fdb642;
+    transition: all 0.3s;
+    i {
+      transition: all 0.3s;
+      transform: scale(1, 1);
+    }
   }
   .collectIcon2 {
     cursor: pointer;
+    transition: all 0.3s;
+    i {
+      transition: all 0.3s;
+      transform: scale(1, 1);
+    }
+  }
+  .collectIcon:hover,
+  .collectIcon2:hover {
+    i {
+      transform: scale(1.5, 1.5);
+    }
   }
 }
 .rightSettingCard {
