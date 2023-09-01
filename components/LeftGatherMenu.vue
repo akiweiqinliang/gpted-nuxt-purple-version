@@ -16,8 +16,11 @@
         :to="{ name: item.code }"
         @click="handleActiveName(item.code)"
       >
-        <Icon :type="item.icon" />
-        {{ item.name }}
+        <div class="leftMenuItem">
+          <!--          <Icon :type="item.icon" />-->
+          <SvgIcon :svgIcon="item.svgIcon"></SvgIcon>
+          {{ item.name }}
+        </div>
       </MenuItem>
     </div>
   </Menu>
@@ -41,7 +44,6 @@ export default {
   },
   mounted() {
     this.firstMenuActiveName = this.$route.name;
-    // this.firstMenuActiveName = localStorage.getItem('pageCode') ? localStorage.getItem('pageCode') : subscribeMenu.getSubscribeMenu()[0].code;
   },
   methods: {
     handleActiveName(name) {
@@ -53,6 +55,7 @@ export default {
 
 <style scoped lang="scss">
 @import '@/assets/css/globalColor.scss';
+@import '@/assets/css/global.scss';
 .leftGatherMenuStyle {
   min-height: 100vh;
   height: 100%;
@@ -69,6 +72,7 @@ export default {
       display: flex;
       justify-content: center;
       align-items: center;
+      margin-top: 0;
     }
     .menuTitle {
       font-weight: bold;
@@ -76,13 +80,32 @@ export default {
     }
   }
 }
+.ivu-menu-vertical .ivu-menu-item,
+.ivu-menu-vertical .ivu-menu-submenu-title {
+  padding: 12px;
+  margin: 16px 0;
+}
 .ivu-menu-light.ivu-menu-vertical
   .ivu-menu-item-active:not(.ivu-menu-submenu):after {
   border-radius: 4px;
   width: 4px;
   right: 1px;
+  display: none;
 }
 .ivu-menu-light.ivu-menu-vertical .ivu-menu-item-active:not(.ivu-menu-submenu) {
   background: $gather-menu-active-bg-color;
+  border-radius: $subscribe-border-radius;
+  margin: 0 24px;
+  color: $black;
+  font-weight: 600;
+}
+.ivu-menu-vertical .ivu-menu-item:hover,
+.ivu-menu-vertical .ivu-menu-submenu-title:hover {
+  color: $black;
+  font-weight: 600;
+}
+.ivu-menu-vertical .ivu-menu-item,
+.ivu-menu-vertical .ivu-menu-submenu-title {
+  transition: color 0.2s ease-in-out;
 }
 </style>

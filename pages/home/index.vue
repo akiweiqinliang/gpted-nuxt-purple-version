@@ -24,7 +24,7 @@
           </Row>
         </div>
         <div class="rightGlobalImgBox">
-          <img src="~assets/home/home-global-img.png" alt="全球招标" />
+          <img src="~assets/home/home-earth-shadow.png" alt="全球招标" />
         </div>
         <div class="topNumberBox">
           <Row
@@ -74,7 +74,7 @@
         <span>请在这里输入文本文本这里是文本</span>
         <div
           class="mapBox"
-          data-aos="zoom-in"
+          data-aos="fade-in"
           data-aos-easing="linear"
           data-aos-duration="800"
         ></div>
@@ -399,6 +399,7 @@ export default {
         width: 65%;
         height: auto;
         object-fit: contain;
+        transform: scale(1.3);
       }
     }
     .topNumberBox {
@@ -437,9 +438,13 @@ export default {
       font-weight: bold;
     }
     .mapBox {
+      background-image: url($home-map-url);
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
       height: 500px;
       width: 100%;
-      background: $white;
+      //background: $white;
       overflow: hidden;
       img {
         width: 100%;

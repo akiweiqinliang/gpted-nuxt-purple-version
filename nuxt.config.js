@@ -37,8 +37,9 @@ export default {
     '@/assets/css/globalColor.scss',
     '@/assets/css/page404.scss',
     '@/assets/css/customFlatpickr.scss',
+    '@/assets/css/theme/index.less',
   ],
-
+  // less: ['@/assets/css/theme/index.less'],
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
     '@/plugins/view-ui',
@@ -75,10 +76,15 @@ export default {
     baseURL: process.env.BASE_URL || 'https://test.gpted.cn/api/private/v1/',
   },
   loading: {
-    color: '#348fed',
+    color: '#7E3AF7',
   },
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
+    loaders: {
+      less: {
+        javascriptEnabled: true,
+      },
+    },
     analyse: true,
     extend(config, { isDev, isClient }) {
       // config.module.rules.push({

@@ -15,6 +15,7 @@
             placeholder="请输入中英文关键词"
             size="large"
             search
+            :border="false"
             @on-search="searchCard"
           >
           </Input>
@@ -36,7 +37,7 @@
           </Col>
         </Row>
         <Row>
-          <Card class="ivu-col ivu-col-span-24">
+          <Card class="ivu-col ivu-col-span-24" :dis-hover="true">
             <p slot="title">筛选条件</p>
             <Button
               slot="extra"
@@ -450,9 +451,14 @@ export default {
 </script>
 
 <style scoped lang="scss">
+@import '@/assets/css/global.scss';
 @import '@/assets/css/globalColor.scss';
 .bgColor {
-  background-color: $discover-bg-color;
+  background-image: url($home-bg-img-url);
+  background-position: top;
+  background-repeat: no-repeat;
+  background-size: cover;
+  //background-color: $discover-bg-color;
   padding: 50px 0;
 }
 .rightTop {
@@ -502,6 +508,7 @@ export default {
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   margin: 0 0 12px 0;
+  overflow: hidden;
 }
 .withHotTag {
   width: 100%;
