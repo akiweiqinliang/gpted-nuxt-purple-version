@@ -333,23 +333,15 @@ export default {
       const distanceStart = Math.floor((start - now) / (1000 * 60 * 60 * 24)); // 距离开始还有多少的天数
       const distanceEnd = Math.floor((end - now) / (1000 * 60 * 60 * 24)); // 距离结束还有多少的天数
 
-      const progressObj = {
+      return {
         percent,
         distanceStart,
         distanceEnd,
         stateMsg,
         state,
       };
-      return progressObj;
     },
   },
-  // async mounted() {
-  //   try {
-  //     this.currentObj1 = await this.$axios.post(`/detail/${this.$route.params.bidId}`);
-  //   } catch (e) {
-  //     console.log(e);
-  //   }
-  // },
   methods: {
     formatTime,
     showCompareArticle() {

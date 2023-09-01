@@ -19,6 +19,7 @@
     <div
       v-show="pageContent === 0"
       :class="pageContent === 0 ? 'fade-in' : 'fade-out'"
+      class="subscribeDataPage"
     >
       <Row class="countCards" :gutter="16" type="flex" :wrap="true">
         <Col :xs="24" :sm="12" :lg="6">
@@ -540,8 +541,37 @@
     <div
       v-show="pageContent === 1"
       :class="pageContent === 1 ? 'fade-in' : 'fade-out'"
+      class="settingPage"
     >
-      设置
+      <Card class="settingSwitchCard" :dis-hover="true" :bordered="false">
+        <Row :gutter="8">
+          <Col class="openSubscribeText">开启推送</Col
+          ><Col flex="1"
+            ><i-switch
+              v-model="settingSwitch"
+              true-color="#7433f6"
+              size="small"
+              @on-change="setSwitch"
+          /></Col>
+        </Row>
+      </Card>
+      <Card
+        v-show="!settingSwitch"
+        :class="!settingSwitch ? 'fade-in' : 'fade-out'"
+        :bordered="false"
+        class="card-border"
+      >
+        settingOptions
+      </Card>
+      <Card
+        v-show="settingSwitch"
+        :class="settingSwitch ? 'fade-in' : 'fade-out'"
+        class="card-border"
+        :dis-hover="true"
+        :bordered="false"
+      >
+        <SubscribeSettingCard />
+      </Card>
     </div>
   </div>
 </template>
@@ -568,22 +598,10 @@ export default {
   },
   layout: 'GatherLayout',
   async asyncData({ $axios }) {
-    // 1.
-    // return Promise.all([
-    //   $axios.get('/getCardData'),
-    //   $axios.get('/getCollectIds')
-    // ]).then(([cardDataRes, collectIdsRes]) => {
-    //   const abc = cardDataRes.data;
-    //   const collects111 = collectIdsRes.data;
-    //   return { abc, collects111 };
-    // });
     try {
       const requests = [
         $axios.get('/goods', { params: { pagenum: 1, pagesize: 1 } }),
         $axios.get('/orders', { params: { pagenum: 1, pagesize: 1 } }),
-        // $axios.post('https://123.com/goods', {
-        //   params: { pagenum: 1, pagesize: 1 },
-        // }),
       ];
       const responses = await Promise.allSettled(requests);
       const successfulResponses = responses
@@ -601,6 +619,9 @@ export default {
   },
   data() {
     return {
+      // 设置
+      settingSwitch: true,
+      // 推送
       successfulResponses1: '',
       open: false,
       selectDateValue: '',
@@ -635,17 +656,6 @@ export default {
       pageCode,
     };
   },
-  // async fetch() {
-  //   this.successfulResponses1 = await this.$axios.get('/goodsqq', {params: {pagenum: 1, pagesize: 1}}).then(res => {
-  //       return res.data;
-  //     })
-  // },
-  // activated() {
-  //   // Call fetch again if last fetch more than 30 sec ago
-  //   if (this.$fetchState.timestamp <= Date.now() - 30000) {
-  //     this.$fetch()
-  //   }
-  // },
   methods: {
     addCollection,
     doSomethingOnChange() {
@@ -657,6 +667,9 @@ export default {
       this.selectDateValue2 = '';
       this.monthsRange = [];
       this.$refs.searchForm.resetFields();
+    },
+    setSwitch(status) {
+      this.settingSwitch = status;
     },
   },
 };
@@ -682,230 +695,264 @@ export default {
     content: '';
     height: 4px;
     width: 0;
-    background: $subscribe-underline-color;
+    background: $home-theme-color;
     transition: all 0.3s;
     border-radius: 4px;
   }
   .pageActive {
-    color: $subscribe-underline-color;
+    //color: $home-theme-color;
   }
   .pageActive span:after {
     width: 100%;
   }
 }
-
-.countCards {
-  .countCard {
-    display: flex;
-    justify-content: center;
-    border-radius: $subscribe-border-radius;
-    margin-bottom: 12px;
-    padding: 4px 0;
-    .leftIcon {
-      @extend %flex-all-center;
-      img {
-        width: 80%;
-        height: 100%;
-        object-fit: contain;
-      }
-    }
-    .rightNumber {
-      //flex: 1;
-      margin: 0 10px;
+//推送页
+.subscribeDataPage {
+  .countCards {
+    .countCard {
       display: flex;
-      align-items: baseline;
-      @media (min-width: 1200px) {
-        span {
-          font-size: 50px;
+      justify-content: center;
+      border-radius: $subscribe-border-radius;
+      margin-bottom: 12px;
+      padding: 4px 0;
+      .leftIcon {
+        @extend %flex-all-center;
+        img {
+          width: 80%;
+          height: 100%;
+          object-fit: contain;
         }
       }
-      span {
-        display: inline;
-        font-weight: 600;
+      .rightNumber {
+        //flex: 1;
+        margin: 0 10px;
+        display: flex;
+        align-items: baseline;
+        @media (min-width: 1200px) {
+          span {
+            font-size: 50px;
+          }
+        }
+        span {
+          display: inline;
+          font-weight: 600;
+        }
+        p {
+          font-size: 12px;
+          margin-left: 10px;
+        }
       }
+    }
+    .card1 {
+      background: $subscribe-card-bg-color;
       p {
-        font-size: 12px;
-        margin-left: 10px;
+        color: $subscribe-card-p-color1;
+      }
+    }
+    .card2 {
+      background: $subscribe-card-bg-color;
+      p {
+        color: $subscribe-card-p-color2;
+      }
+    }
+    .card3 {
+      background: $subscribe-card-bg-color;
+      p {
+        color: $subscribe-card-p-color3;
+      }
+    }
+    .card4 {
+      background: $subscribe-card-bg-color;
+      p {
+        color: $subscribe-card-p-color4;
       }
     }
   }
-  .card1 {
-    background: $subscribe-card-bg-color;
-    p {
-      color: $subscribe-card-p-color1;
+  .cardListSmallTitle {
+    margin-top: 12px;
+  }
+  .bottomBidList {
+    margin: 12px 0;
+    .tabCard {
+      padding: 16px;
+      border-radius: $subscribe-border-radius;
+      background: $card-list-bg-color;
+    }
+    .dividerStyle {
+      margin: 0;
+      .dividerText {
+        font-size: 12px;
+        color: $divider-text-color;
+      }
+    }
+    .bottomBidItem {
+      position: relative;
+      border-radius: $subscribe-border-radius;
+      margin: 0px 20px 12px;
+      padding: 24px 12px;
+      box-shadow: 0 10px 20px $card-box-shadow-color;
+      background: $card-item-bg-color;
+      .bidStateTarget {
+        position: absolute;
+        right: 0;
+        top: 0;
+      }
+      .bidStateImg {
+        @extend %flex-all-center;
+        padding: 0 8px;
+        img {
+          max-width: 60px;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          //margin: 0 8px;
+        }
+      }
+      .bidStateLabel {
+        position: absolute;
+        top: 0;
+        left: 0;
+        .greenBidLabel,
+        .redBidLabel {
+          padding: 4px;
+          border-radius: $subscribe-border-radius;
+        }
+        .greenBidLabel {
+          background: $bid-green-bg-color;
+          color: $bid-green-text-color;
+        }
+        .redBidLabel {
+          background: $bid-red-bg-color;
+          color: $bid-red-text-color;
+        }
+      }
+    }
+    .bidContent {
+      margin-right: 16px;
+      .singleLine {
+        margin: 8px 0;
+        @include ellipsis-style(1);
+      }
+      .bidTitle {
+        @extend %card-title-style;
+        @include ellipsis-style(1);
+      }
+    }
+    .collectIcon {
+      cursor: pointer;
+      color: #fdb642;
+      transition: all 0.3s;
+      i {
+        transition: all 0.3s;
+        transform: scale(1, 1);
+      }
+    }
+    .collectIcon2 {
+      cursor: pointer;
+      transition: all 0.3s;
+      i {
+        transition: all 0.3s;
+        transform: scale(1, 1);
+      }
+    }
+    .collectIcon:hover,
+    .collectIcon2:hover {
+      i {
+        transform: scale(1.5, 1.5);
+      }
     }
   }
-  .card2 {
-    background: $subscribe-card-bg-color;
-    p {
-      color: $subscribe-card-p-color2;
+  .rightSettingCard {
+    border-radius: $subscribe-border-radius;
+    position: sticky;
+    top: 80px;
+    min-width: 44px;
+    .form-control {
+      display: none;
     }
-  }
-  .card3 {
-    background: $subscribe-card-bg-color;
-    p {
-      color: $subscribe-card-p-color3;
+    .checkboxStyle {
+      margin: 10px 0;
+      display: flex;
+      justify-content: space-between;
+      .ivu-checkbox-wrapper {
+        font-size: 12px;
+      }
     }
-  }
-  .card4 {
-    background: $subscribe-card-bg-color;
-    p {
-      color: $subscribe-card-p-color4;
+    .formItem {
+      margin-bottom: 8px;
     }
-  }
-}
 
-.cardListSmallTitle {
-  margin-top: 12px;
-}
-.bottomBidList {
-  margin: 12px 0;
-  .tabCard {
-    padding: 16px;
-    border-radius: $subscribe-border-radius;
-    background: $card-list-bg-color;
-  }
-  .dividerStyle {
-    margin: 0;
-    .dividerText {
-      font-size: 12px;
-      color: $divider-text-color;
+    //  关闭效果
+    .rightCloseIcon2 {
+      margin-top: 34px;
+      text-align: center;
+      i {
+        font-size: 30px;
+      }
     }
-  }
-  .bottomBidItem {
-    position: relative;
-    border-radius: $subscribe-border-radius;
-    margin: 0px 20px 12px;
-    padding: 24px 12px;
-    box-shadow: 0 10px 20px $card-box-shadow-color;
-    background: $card-item-bg-color;
-    .bidStateTarget {
-      position: absolute;
-      right: 0;
-      top: 0;
-    }
-    .bidStateImg {
-      @extend %flex-all-center;
-      padding: 0 8px;
-      img {
-        max-width: 60px;
+    .rightCloseIcon {
+      text-align: center;
+      margin: 34px 0;
+      cursor: pointer;
+      svg {
         width: 100%;
         height: 100%;
-        object-fit: cover;
-        //margin: 0 8px;
+        max-width: 30px;
+        max-height: 30px;
+      }
+      svg path {
+        stroke: $subscribe-close-icon-color;
       }
     }
-    .bidStateLabel {
-      position: absolute;
-      top: 0;
-      left: 0;
-      .greenBidLabel,
-      .redBidLabel {
-        padding: 4px;
-        border-radius: $subscribe-border-radius;
-      }
-      .greenBidLabel {
-        background: $bid-green-bg-color;
-        color: $bid-green-text-color;
-      }
-      .redBidLabel {
-        background: $bid-red-bg-color;
-        color: $bid-red-text-color;
-      }
+    .rightCloseIcon:hover svg path {
+      stroke: $subscribe-underline-color;
     }
   }
-  .bidContent {
-    margin-right: 16px;
-    .singleLine {
-      margin: 8px 0;
-      @include ellipsis-style(1);
-    }
-    .bidTitle {
-      @extend %card-title-style;
-      @include ellipsis-style(1);
-    }
-  }
-  .collectIcon {
-    cursor: pointer;
-    color: #fdb642;
-  }
-  .collectIcon2 {
-    cursor: pointer;
-  }
-}
-.rightSettingCard {
-  border-radius: $subscribe-border-radius;
-  position: sticky;
-  top: 80px;
-  min-width: 44px;
-  .form-control {
-    display: none;
-  }
-  .checkboxStyle {
-    margin: 10px 0;
+  .refreshCardIcon {
+    margin: 0 0 8px;
     display: flex;
-    justify-content: space-between;
-    .ivu-checkbox-wrapper {
-      font-size: 12px;
-    }
-  }
-  .formItem {
-    margin-bottom: 8px;
-  }
-
-  //  关闭效果
-  .rightCloseIcon2 {
-    margin-top: 34px;
-    text-align: center;
-    i {
-      font-size: 30px;
-    }
-  }
-  .rightCloseIcon {
-    text-align: center;
-    margin: 34px 0;
+    justify-content: center;
+    align-items: center;
+    top: 80px;
     cursor: pointer;
     svg {
-      width: 100%;
-      height: 100%;
-      max-width: 30px;
-      max-height: 30px;
-    }
-    svg path {
-      stroke: $subscribe-close-icon-color;
+      cursor: pointer;
+      path {
+        stroke: $subscribe-close-icon-color;
+      }
     }
   }
-  .rightCloseIcon:hover svg path {
+  .refreshCardIcon :hover svg path {
     stroke: $subscribe-underline-color;
   }
-}
-.refreshCardIcon {
-  margin: 0 0 8px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  top: 80px;
-  cursor: pointer;
-  svg {
+  .lowerCard {
+    top: 160px;
+  }
+  .rightCardOpenArrow {
+    color: $subscribe-close-icon-color;
+    transform: rotateY(0deg);
     cursor: pointer;
-    path {
-      stroke: $subscribe-close-icon-color;
-    }
+  }
+  .rightCardOpenArrow:hover {
+    color: $subscribe-underline-color;
   }
 }
-.refreshCardIcon :hover svg path {
-  stroke: $subscribe-underline-color;
-}
-.lowerCard {
-  top: 160px;
-}
-.rightCardOpenArrow {
-  color: $subscribe-close-icon-color;
-  transform: rotateY(0deg);
-  cursor: pointer;
-}
-.rightCardOpenArrow:hover {
-  color: $subscribe-underline-color;
+
+//设置页
+.settingPage {
+  .settingSwitchCard {
+    border-radius: $subscribe-border-radius;
+    margin-bottom: 20px;
+    .ivu-switch:not(.ivu-switch-disabled):focus {
+      box-shadow: none;
+    }
+    .openSubscribeText {
+      font-size: 16px;
+    }
+  }
+  .card-border {
+    border-radius: $subscribe-border-radius;
+  }
 }
 //global style
 .fade-in {
