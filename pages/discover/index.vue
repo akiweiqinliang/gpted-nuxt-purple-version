@@ -116,6 +116,7 @@
                         size="small"
                         multiple
                         class="withHotTag"
+                        :filterable="true"
                       >
                         <Option
                           v-for="(
@@ -151,6 +152,7 @@
                     size="small"
                     multiple
                     class="selectOptionsWidth"
+                    :filterable="true"
                   >
                     <Option
                       v-for="(organization, index) in organizationData()"
@@ -309,9 +311,6 @@
         <div class="rightTop">
           <span v-if="!searchParams.searchText">{{ latestMsg }}</span>
           <span v-else>搜索"{{ searchParams.searchText }}" 结果如下</span>
-          <span class="changeList"
-            ><Icon type="ios-refresh" size="18"></Icon>换一换</span
-          >
         </div>
         <RightBox
           :search-data1="searchData"
@@ -345,7 +344,7 @@ export default {
       formDisabled: true,
 
       searchParams: {
-        searchText: null,
+        searchText: '',
         selectOption: '标题搜索',
         active: 'all',
         type: '',
@@ -459,7 +458,7 @@ export default {
   background-repeat: no-repeat;
   background-size: cover;
   //background-color: $discover-bg-color;
-  padding: 50px 0;
+  padding: 100px 0;
 }
 .rightTop {
   display: flex;
@@ -476,7 +475,7 @@ export default {
   position: relative;
   .innerLeftBox {
     position: sticky;
-    top: 50px;
+    top: 100px;
   }
 }
 .keyWordStyle {

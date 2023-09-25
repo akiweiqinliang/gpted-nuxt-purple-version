@@ -63,3 +63,17 @@ $home-bg-img-url: '@/assets/home/home-bg.png';
 $home-map-url: '@/assets/home/map.png';
 //subscribePage页面圆角弧度
 $subscribe-border-radius: 10px;
+
+#__nuxt {
+  min-width: 1400px;
+}
+
+.bidDetailPage .ivu-progress-inner {
+  border: 1px solid globalColor.$bid-green-text-color;
+  background: globalColor.$white;
+}
+.ivu-radio-checked {
+  .ivu-radio-inner:after {
+    background: globalColor.$decorate-purple-color;
+  }
+}

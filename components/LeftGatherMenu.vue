@@ -3,7 +3,6 @@
     :active-name="firstMenuActiveName"
     width="auto"
     class="leftGatherMenuStyle"
-    @on-select="handleActiveName"
   >
     <div class="menuChildren">
       <MenuItem name="logo" class="menuLogo">
@@ -14,12 +13,11 @@
         :key="item.code"
         :name="item.code"
         :to="{ name: item.code }"
-        @click="handleActiveName(item.code)"
       >
         <div class="leftMenuItem">
           <!--          <Icon :type="item.icon" />-->
           <SvgIcon :svgIcon="item.svgIcon"></SvgIcon>
-          {{ item.name }}
+          {{ $t(item.name) }}
         </div>
       </MenuItem>
     </div>
@@ -45,11 +43,6 @@ export default {
   mounted() {
     this.firstMenuActiveName = this.$route.name;
   },
-  methods: {
-    handleActiveName(name) {
-      localStorage.setItem('pageCode', name);
-    },
-  },
 };
 </script>
 
@@ -61,6 +54,10 @@ export default {
   height: 100%;
   position: relative;
   text-align: center;
+  .leftMenuItem {
+    //text-align: start;
+    //margin: auto;
+  }
   .menuChildren {
     position: sticky;
     top: 0;
@@ -83,7 +80,7 @@ export default {
 .ivu-menu-vertical .ivu-menu-item,
 .ivu-menu-vertical .ivu-menu-submenu-title {
   padding: 12px;
-  margin: 16px 0;
+  margin: 16px 24px;
 }
 .ivu-menu-light.ivu-menu-vertical
   .ivu-menu-item-active:not(.ivu-menu-submenu):after {

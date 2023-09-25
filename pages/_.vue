@@ -1,9 +1,13 @@
 <template>
-  <div>
+  <div style="background: #02051f">
     <Row>
       <div class="left">
         404
         <button class="ui button">返回</button>
+        <!--          <div class="content__item">-->
+        <button class="button button--rhea"><span>Delete</span></button>
+        <!--          </div>-->
+
         <a class="ui teal tag label">Featured</a>
         <div class="row ui" style="padding: 20px 60px">
           <div class="ui grid">
@@ -30,13 +34,14 @@
       <div class="colorCard color1">
         <div class="miniBoxs">
           <div class="miniBox rotate1">
-            <img src="~~/assets/discoverPage.png" alt="发现页" />
+            <!--            <img src="~/assets/discoverPage.png" alt="发现页" />-->
+            <h2>更多优惠</h2>
           </div>
           <div class="miniBox rotate2">
-            <img src="~~/assets/discoverPage.png" alt="" />
+            <img src="~/assets/discoverPage.png" alt="" />
           </div>
           <div class="miniBox rotate3">
-            <img src="~~/assets/discoverPage.png" alt="" />
+            <img src="~/assets/discoverPage.png" alt="" />
           </div>
         </div>
         <h1>title1</h1>
@@ -152,7 +157,7 @@ export default {
   }
   .rotate1 {
     transform: rotate(-14deg) translate(-50px, -150px);
-    background: lightblue;
+    //background: lightblue;
   }
   .rotate2 {
     transform: rotate(0deg) translate(0px, -150px);
@@ -184,5 +189,154 @@ export default {
 }
 .rightCardBtn:hover {
   box-shadow: 7px 7px 0 rgba(0, 0, 0, 0.2);
+}
+
+//----------------------
+
+.button {
+  pointer-events: auto;
+  cursor: pointer;
+  background: #e7e7e7;
+  border: none;
+  padding: 1.5rem 3rem;
+  margin: 0;
+  font-family: inherit;
+  font-size: inherit;
+  position: relative;
+  display: inline-block;
+}
+.button--rhea {
+  font-family: freight-display-pro, serif;
+  font-weight: 900;
+  font-style: normal;
+  width: 180px;
+  height: 180px;
+  color: #000;
+  background: none;
+}
+.button--rhea::before {
+  content: '';
+  z-index: -1;
+  background: #e7e7e7;
+  -webkit-clip-path: polygon(
+    20% 30%,
+    0 30%,
+    0 50%,
+    0 70%,
+    20% 70%,
+    50% 70%,
+    80% 70%,
+    100% 70%,
+    100% 50%,
+    100% 30%,
+    80% 30%,
+    50% 30%
+  );
+  clip-path: polygon(
+    20% 30%,
+    0 30%,
+    0 50%,
+    0 70%,
+    20% 70%,
+    50% 70%,
+    80% 70%,
+    100% 70%,
+    100% 50%,
+    100% 30%,
+    80% 30%,
+    50% 30%
+  );
+  transition: clip-path 0.4s cubic-bezier(0.3, 1, 0.2, 1),
+    -webkit-clip-path 0.4s cubic-bezier(0.3, 1, 0.2, 1),
+    transform 0.4s cubic-bezier(0.3, 1, 0.2, 1), background 0.4s ease;
+}
+.button::before,
+.button::after {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.button--rhea span {
+  display: block;
+  transition: transform 0.4s cubic-bezier(0.3, 1, 0.2, 1), opacity 0.05s;
+}
+
+.button--rhea:hover::before {
+  background: #000;
+  transform: scale3d(0.7, 0.7, 1);
+  -webkit-clip-path: polygon(
+    30% 10%,
+    10% 30%,
+    30% 50%,
+    10% 70%,
+    30% 90%,
+    50% 70%,
+    70% 90%,
+    90% 70%,
+    70% 50%,
+    90% 30%,
+    70% 10%,
+    50% 30%
+  );
+  clip-path: polygon(
+    30% 10%,
+    10% 30%,
+    30% 50%,
+    10% 70%,
+    30% 90%,
+    50% 70%,
+    70% 90%,
+    90% 70%,
+    70% 50%,
+    90% 30%,
+    70% 10%,
+    50% 30%
+  );
+}
+.button--rhea::before {
+  content: '';
+  z-index: -1;
+  background: #e7e7e7;
+  -webkit-clip-path: polygon(
+    20% 30%,
+    0 30%,
+    0 50%,
+    0 70%,
+    20% 70%,
+    50% 70%,
+    80% 70%,
+    100% 70%,
+    100% 50%,
+    100% 30%,
+    80% 30%,
+    50% 30%
+  );
+  clip-path: polygon(
+    20% 30%,
+    0 30%,
+    0 50%,
+    0 70%,
+    20% 70%,
+    50% 70%,
+    80% 70%,
+    100% 70%,
+    100% 50%,
+    100% 30%,
+    80% 30%,
+    50% 30%
+  );
+  transition: clip-path 0.4s cubic-bezier(0.3, 1, 0.2, 1),
+    -webkit-clip-path 0.4s cubic-bezier(0.3, 1, 0.2, 1),
+    transform 0.4s cubic-bezier(0.3, 1, 0.2, 1), background 0.4s ease;
+}
+.button::before,
+.button::after {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
 </style>

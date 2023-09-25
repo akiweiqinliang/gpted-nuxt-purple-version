@@ -8,10 +8,11 @@
         :wrap="true"
       >
         <div class="leftSearchBox">
-          <h1>GPTED全球招标</h1>
+          <h1>GPTED {{ $t('全球招标') }}</h1>
           <span>这里是slogan</span>
           <Input
             v-model.trim="searchText"
+            :autofocus="true"
             icon="ios-search"
             placeholder="请输入中英文关键词"
             class="leftSearchInput"
@@ -19,7 +20,7 @@
             @on-click="handleSearch"
           />
           <Row type="flex" justify="space-between" class="contactMsg">
-            <Col>微信公众号：123456</Col>
+            <Col>{{ $t('微信公众号') }}：123456</Col>
             <Col>新浪微博：GPTED招标</Col>
           </Row>
         </div>
@@ -361,16 +362,16 @@ export default {
         font-size: 50px;
         text-align: center;
       }
-      @media screen and (max-width: 1400px) {
-        h1 {
-          font-size: 44px;
-        }
-      }
-      @media screen and (max-width: 1200px) {
-        h1 {
-          font-size: 40px;
-        }
-      }
+      //@media screen and (max-width: 1400px) {
+      //  h1 {
+      //    font-size: 44px;
+      //  }
+      //}
+      //@media screen and (max-width: 1200px) {
+      //  h1 {
+      //    font-size: 40px;
+      //  }
+      //}
       span {
         display: block;
         width: 100%;
@@ -460,6 +461,7 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: center;
+    flex-wrap: nowrap;
     h1,
     p {
       width: 100%;

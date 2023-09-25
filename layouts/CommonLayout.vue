@@ -11,27 +11,33 @@
     >
       <Icon type="md-headset" />
     </div>
-    <Menu mode="horizontal" :active-name="activeRouterName">
+    <!--    <Affix :offset-top="0">-->
+    <Menu
+      ref="floatMainMenu"
+      mode="horizontal"
+      :active-name="activeRouterName"
+      class="floatMainMenu"
+    >
       <Row type="flex" justify="space-around">
         <Col class="commonLogo"> LOGO </Col>
         <Col class="commonMenuContainer">
           <MenuItem :name="pageCode.HOME" :to="{ name: pageCode.HOME }">
-            <Icon type="ios-home-outline" />首页
+            <Icon type="ios-home-outline" />{{ $t('home') }}
           </MenuItem>
           <MenuItem :name="pageCode.DISCOVER" :to="{ name: pageCode.DISCOVER }">
-            <Icon type="ios-search-outline" />搜索
+            <Icon type="ios-search-outline" />{{ $t('search') }}
           </MenuItem>
           <MenuItem :name="pageCode.PROMOTE" :to="{ name: pageCode.PROMOTE }">
-            <Icon type="ios-globe-outline" />资源
+            <Icon type="ios-globe-outline" />{{ $t('resources') }}
           </MenuItem>
           <MenuItem
             :name="pageCode.GATHER_SUBSCRIBE"
             :to="{ name: pageCode.GATHER_SUBSCRIBE }"
           >
-            <Icon type="ios-card-outline" />工作台
+            <Icon type="ios-card-outline" />{{ $t('dashboard') }}
           </MenuItem>
           <MenuItem name="huiyuan">
-            <Icon type="ios-card-outline" />会员
+            <Icon type="ios-card-outline" />{{ $t('member') }}
           </MenuItem>
         </Col>
         <Col>
@@ -43,16 +49,14 @@
             </Col>
             <Col>
               <nuxt-link v-if="loginActive" :to="{ name: pageCode.LOGIN }">
-                <Button shape="circle" class="loginBtn"> 登录 </Button>
+                <Button class="loginBtn">
+                  {{ $t('login') }}
+                </Button>
               </nuxt-link>
-              <Button v-else shape="circle" class="loginBtn" @click="logout"
-                >退出登录</Button
-              >
+              <Button v-else class="loginBtn" @click="logout">退出登录</Button>
             </Col>
             <Col>
-              <div class="topMenuIcon">
-                <!--                <Icon type="ios-repeat" />-->
-                <!--                <img src="~/assets/layoutIcons/language-switch.svg">-->
+              <div class="topMenuIcon" @click="changeLanguage">
                 <svg
                   width="30"
                   height="30"
@@ -77,8 +81,6 @@
             </Col>
             <Col>
               <div class="topMenuIcon">
-                <!--                <Icon type="ios-help-circle-outline" />-->
-                <!--                <img src="~/assets/layoutIcons/help-center.svg">-->
                 <svg
                   width="30"
                   height="30"
@@ -105,6 +107,7 @@
         </Col>
       </Row>
     </Menu>
+    <!--    </Affix>-->
     <nuxt keep-alive />
     <CommonFooter />
   </div>
@@ -112,7 +115,6 @@
 
 <script>
 import pageCode from '~/enums/pageCodes';
-
 export default {
   name: 'CommonLayout',
   data() {
@@ -134,11 +136,28 @@ export default {
       this.activeRouterName = to.name;
     },
   },
+  mounted() {
+    window.addEventListener('scroll', this.addFixedStyle);
+  },
+  beforeDestroy() {
+    window.removeEventListener('scroll', this.addFixedStyle);
+  },
   methods: {
+    addFixedStyle() {
+      const top = window.scrollY;
+      this.$refs.floatMainMenu.$el.classList.toggle('fixed', top > 0);
+    },
     logout() {
       this.$store.commit('setToken', '');
       sessionStorage.setItem('token', '');
       this.$router.push({ name: pageCode.HOME });
+    },
+    changeLanguage() {
+      if (this.$i18n.locale === 'zh') {
+        this.$i18n.setLocale('en');
+      } else {
+        this.$i18n.setLocale('zh');
+      }
     },
   },
 };
@@ -185,6 +204,24 @@ export default {
   }
 }
 .commonLayout {
+  .ivu-menu-horizontal.ivu-menu-light:after {
+    display: none;
+  }
+  .floatMainMenu {
+    position: absolute;
+    background: transparent;
+    transition: all 0.3s ease;
+    width: 100%;
+    top: 0;
+    box-shadow: none;
+    z-index: 99;
+  }
+  .fixed {
+    box-shadow: 0 4px 6px 0 rgba(51, 57, 75, 0.1);
+    transition: all 0.3s ease;
+    position: fixed;
+    background: $white;
+  }
   .topMenuIcon {
     cursor: pointer;
     display: flex;
@@ -246,17 +283,17 @@ export default {
   font-weight: bold;
 }
 .loginBtn {
-  background: $home-theme-color;
-  border: 0;
-  color: $white;
+  border: 1px solid $home-theme-color;
+  background: transparent;
+  color: $home-theme-color;
   transition: all 0.3s;
 }
 .loginBtn:hover,
 .loginBtn:active,
 .loginBtn:focus {
-  border: 0;
   box-shadow: none;
-  background: rgba($home-theme-color, 0.7);
+  background: $home-theme-color;
+  color: $white;
 }
 .promoteImgBtn {
   display: flex;

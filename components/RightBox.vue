@@ -1,13 +1,16 @@
 <template>
   <div>
     <template v-if="searchData1.length > 0">
+      <!--      <Scroll :on-reach-bottom="handleReachBottom">-->
       <Card
         v-for="(item, index) in sortData"
         :key="`card-${index}-${item.id}`"
         shadow
         class="card"
       >
-        <div>
+        <NuxtLink
+          :to="{ name: pageCode.DETAIL_BID, params: { bidId: item.id } }"
+        >
           <Row type="flex">
             <Col span="2" class="left">
               <img
@@ -23,17 +26,15 @@
             </Col>
             <Col span="22" class="rightContent">
               <Row>
-                <nuxt-link
-                  :to="{
-                    name: pageCode.DETAIL_BID,
-                    params: { bidId: item.id },
-                  }"
-                >
-                  <h3
-                    ref="bidTitle"
-                    v-html="highlightKeywords(item.title)"
-                  ></h3>
-                </nuxt-link>
+                <!--                <nuxt-link-->
+                <!--                  :to="{-->
+                <!--                    name: pageCode.DETAIL_BID,-->
+                <!--                    params: { bidId: item.id },-->
+                <!--                    props: { bidId: item.id }-->
+                <!--                  }"-->
+                <!--                >-->
+                <h3 ref="bidTitle" v-html="highlightKeywords(item.title)"></h3>
+                <!--                </nuxt-link>-->
               </Row>
               <Row
                 >Improving Growth balabalabalabala Improving Growth
@@ -42,20 +43,20 @@
             </Col>
             <Col span="24">
               <Row>
-                <nuxt-link
-                  :to="{
-                    name: pageCode.DETAIL_BID,
-                    params: { bidId: item.id },
-                  }"
-                >
-                  <p
-                    v-html="
-                      selectOption === '全文搜索'
-                        ? highlightKeywords(item.content)
-                        : item.content
-                    "
-                  ></p>
-                </nuxt-link>
+                <!--                <nuxt-link-->
+                <!--                  :to="{-->
+                <!--                    name: pageCode.DETAIL_BID,-->
+                <!--                    params: { bidId: item.id },-->
+                <!--                  }"-->
+                <!--                >-->
+                <p
+                  v-html="
+                    selectOption === '全文搜索'
+                      ? highlightKeywords(item.content)
+                      : item.content
+                  "
+                ></p>
+                <!--                </nuxt-link>-->
               </Row>
               <Divider class="dividerMarginStyle" />
               <Row type="flex" align="middle">
@@ -98,8 +99,10 @@
               </Row>
             </Col>
           </Row>
-        </div>
+        </NuxtLink>
       </Card>
+      <!--      </Scroll>-->
+      <Page :total="100" show-total show-elevator />
     </template>
     <template v-else>
       <Card shadow class="card"> 无数据 </Card>
@@ -113,26 +116,27 @@ import pageCode from '@/enums/pageCodes';
 import { tagOptions } from '@/enums/common';
 import { addCollection, collectionIds } from '@/utils/setCollectIds';
 import { formatTime } from '@/utils/formatTime';
+import _bidId from '~/pages/detail/_bidId.vue';
 
 export default {
   name: 'RightBox',
   props: {
     searchData1: {
-      require: true,
+      required: true,
       type: Array,
       default() {
         return [];
       },
     },
     searchText: {
-      require: true,
+      required: true,
       type: String,
       default() {
         return '';
       },
     },
     selectOption: {
-      require: true,
+      required: true,
       type: String,
       default() {
         return '';
@@ -153,6 +157,17 @@ export default {
     },
   },
   methods: {
+    // handleReachBottom () {
+    //   return new Promise(resolve => {
+    //     setTimeout(() => {
+    //       const last = this.sortData[this.sortData.length - 1];
+    //       for (let i = 1; i < 11; i++) {
+    //         this.sortData.push(last + i);
+    //       }
+    //       resolve();
+    //     }, 2000);
+    //   });
+    // },
     addCollection,
     formatTime,
     highlightKeywords(sentence) {
@@ -166,6 +181,16 @@ export default {
         (matchedKeyword) => `<span class="highlight">${matchedKeyword}</span>`
       );
     },
+    toDetail(item) {
+      console.log(item.id);
+      this.$router.push({
+        name: pageCode.DETAIL_BID,
+        params: { bidId: item.id },
+        component: _bidId,
+        props: true,
+        // props: route => ({ bidId: route.params.bidId })
+      });
+    },
   },
 };
 </script>
@@ -174,6 +199,12 @@ export default {
 @import '@/assets/css/globalColor.scss';
 .card {
   margin: 16px 0;
+  a {
+    text-decoration: none;
+    color: $black;
+    position: relative;
+    z-index: 10;
+  }
 }
 .card h3 {
   @include ellipsis-style(1);
@@ -204,6 +235,8 @@ export default {
 }
 .collectIcon {
   cursor: pointer;
+  position: relative;
+  z-index: 999;
 }
 .left img {
   width: 100%;

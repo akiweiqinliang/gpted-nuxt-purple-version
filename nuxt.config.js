@@ -12,21 +12,37 @@ export default {
     name: 'layout',
     mode: 'out-in',
   },
-  head: {
-    title: 'GPTED全球招标',
-    htmlAttrs: {
-      lang: 'en',
-    },
-    meta: [
-      { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: '' },
-      { name: 'format-detection', content: 'telephone=no' },
-      { name: '招标', content: 'GPTED全球招标' },
-    ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
+  head() {
+    const i18nHead = this.$nuxtI18nHead({ addSeoAttributes: true }) || {};
+    const metaTags =
+      this.$i18n.locale === 'zh'
+        ? [{ name: '招标', content: 'GPTED全球招标' }]
+        : [{ name: 'Tender', content: 'GPTED global tender' }];
+    const routerName = this.$route.name;
+    return {
+      title:
+        this.$i18n.locale === 'zh'
+          ? routerName + ' | GPTED全球招标'
+          : routerName + ' | GPTED global tender',
+      htmlAttrs: {
+        lang: this.$i18n.locale,
+        ...i18nHead.htmlAttrs,
+      },
+      meta: [
+        { charset: 'utf-8' },
+        { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+        { hid: 'description', name: 'description', content: '' },
+        { name: 'format-detection', content: 'telephone=no' },
+        // { name: '招标', content: 'GPTED全球招标' },
+        ...metaTags,
+        ...i18nHead.meta,
+      ],
+      link: [
+        { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+        ...i18nHead.link,
+      ],
+    };
   },
-
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
     'view-design/dist/styles/iview.css',
@@ -39,7 +55,6 @@ export default {
     '@/assets/css/customFlatpickr.scss',
     '@/assets/css/theme/index.less',
   ],
-  // less: ['@/assets/css/theme/index.less'],
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
     '@/plugins/view-ui',
@@ -68,12 +83,41 @@ export default {
   modules: [
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
+    '@nuxtjs/i18n',
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
     baseURL: process.env.BASE_URL || 'https://test.gpted.cn/api/private/v1/',
+  },
+  i18n: {
+    /* module options */
+    locales: [
+      {
+        code: 'en',
+        iso: 'en-US',
+        file: 'en-US.js',
+      },
+      {
+        code: 'zh',
+        iso: 'zh-CN',
+        file: 'zh-CN.js',
+      },
+    ],
+    defaultLocale: 'zh',
+    strategy: 'no_prefix',
+    lazy: true,
+    langDir: 'lang/',
+    detectBrowserLanguage: {
+      fallbackLocale: 'zh',
+      redirectOn: 'root',
+      useCookie: true,
+      cookieKey: 'i18n_redirected',
+    },
+    vueI18n: {
+      fallbackLocale: 'zh',
+    },
   },
   loading: {
     color: '#7E3AF7',
@@ -85,6 +129,7 @@ export default {
         javascriptEnabled: true,
       },
     },
+
     analyse: true,
     extend(config, { isDev, isClient }) {
       // config.module.rules.push({
