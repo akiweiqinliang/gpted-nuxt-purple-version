@@ -1,6 +1,6 @@
 <template>
   <Row type="flex" :wrap="false" class="gatherLayout">
-    <Col class="leftNav" span="4" :xs="0" :sm="4">
+    <Col class="leftNav" span="4">
       <!--      左侧导航-->
       <LeftGatherMenu />
     </Col>
@@ -16,7 +16,7 @@
           </Col>
           <Col>
             <Row type="flex" class="fullHeight">
-              <Col class="topMenuIcon">
+              <Col class="topMenuIcon" @click.native="changeLanguage">
                 <!--                <div class="topMenuIcon">-->
                 <svg
                   width="30"
@@ -89,6 +89,15 @@ export default {
       return pageCode;
     },
   },
+  methods: {
+    changeLanguage() {
+      if (this.$i18n.locale === 'zh') {
+        this.$i18n.setLocale('en');
+      } else {
+        this.$i18n.setLocale('zh');
+      }
+    },
+  },
 };
 </script>
 
@@ -157,7 +166,7 @@ export default {
     border-radius: 3px;
     bottom: -4px;
     left: 0;
-    background: $subscribe-underline-color;
+    background: $decorate-purple-color;
   }
   .rightTopMenu .ivu-menu-item-selected > i:after {
     width: 100%;

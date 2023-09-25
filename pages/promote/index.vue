@@ -177,7 +177,9 @@ export default {
   display: flex;
   .topBgContainer {
     background-image: url($top-bg-url);
-    background-repeat: round;
+    background-repeat: no-repeat;
+    background-position: top;
+    background-size: cover;
     position: absolute;
     z-index: 2;
     width: 100%;

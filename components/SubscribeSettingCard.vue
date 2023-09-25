@@ -239,7 +239,7 @@ export default {
         background: $white;
       }
       .dotActive::after {
-        background: $home-theme-color;
+        background: $decorate-purple-color;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.23);
       }
     }

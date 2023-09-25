@@ -1,6 +1,6 @@
 <template>
-  <!--  <nuxt />-->
-  <div></div>
+  <nuxt />
+  <!--  <div></div>-->
 </template>
 
 <script>

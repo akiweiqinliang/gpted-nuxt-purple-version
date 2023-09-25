@@ -1,7 +1,6 @@
 <template>
   <div>
     collection
-    {{ collectRes }}
     <Button @click="getCollectList">查看收藏</Button>
   </div>
 </template>

@@ -2,17 +2,15 @@
   <div>
     <Row>
       <Col span="14" class="leftLoginImgBox"> </Col>
-      <Col span="10" class="rightLoginBox">
+      <Col v-show="login" span="10" class="rightLoginBox">
         <span> Sign in to GPTED </span>
-        <p>
-          Don’t have an account?<nuxt-link :to="{ name: pageCode.SIGNUP }"
-            >Create a free account</nuxt-link
-          >
-        </p>
+        <p>Don’t have an account?</p>
+        <a @click="login = !login"> Create a free account </a>
         <Form ref="formInline" :model="loginForm" :rules="ruleInline">
           <FormItem prop="username">
             <Input
               v-model="loginForm.username"
+              :autofocus="true"
               type="text"
               placeholder="username"
             >
@@ -48,6 +46,55 @@
           </FormItem>
         </Form>
       </Col>
+      <Col v-show="!login" span="10" class="rightLoginBox">
+        <span> Create a free account </span>
+        <p>Or</p>
+        <a @click="login = !login"> Sign in an existing account </a>
+        <Form ref="formInline" :model="loginForm" :rules="ruleInline">
+          <FormItem prop="username">
+            <Input
+              v-model="loginForm.username"
+              :autofocus="true"
+              type="text"
+              placeholder="username"
+            >
+            </Input>
+          </FormItem>
+          <FormItem prop="password">
+            <Input
+              v-model="loginForm.password"
+              type="password"
+              placeholder="password"
+            >
+            </Input>
+          </FormItem>
+          <FormItem prop="accept">
+            <Radio v-model="loginForm.accept" class="ruleStyle"
+              >Accept the rules</Radio
+            >
+          </FormItem>
+          <FormItem class="btnBoxItemMargin signUpBtn">
+            <div style="position: relative" class="loginBtnItem">
+              <div class="loginBtnBox"></div>
+              <Button
+                class="loginBtn"
+                size="large"
+                long
+                type="primary"
+                @click="handleSubmit('loginForm')"
+                >Sign up</Button
+              >
+            </div>
+          </FormItem>
+          <FormItem>
+            <p class="backToHome">
+              <nuxt-link :to="{ name: pageCode.HOME }"
+                >Back to homepage</nuxt-link
+              >
+            </p>
+          </FormItem>
+        </Form>
+      </Col>
     </Row>
   </div>
 </template>
@@ -61,10 +108,11 @@ export default {
   data() {
     return {
       text: '',
+      login: true,
       loginForm: {
         username: '',
         password: '',
-        // accept: false,
+        accept: false,
       },
       msgShow: false,
       isPwd: true,
@@ -100,6 +148,10 @@ export default {
   methods: {
     ...mapMutations(['setToken']),
     handleSubmit(name) {
+      if (!this.login && !this.loginForm.accept) {
+        this.$Message.info('View agreement');
+        return;
+      }
       if (this.loginForm.username === '' || this.loginForm.password === '') {
         console.log('error');
         return;
@@ -136,8 +188,10 @@ export default {
     transition: all 0.3s;
     display: block;
   }
-  p {
+  p,
+  a {
     margin-bottom: 16px;
+    display: inline-block;
   }
   a {
     margin-left: 10px;
@@ -151,6 +205,9 @@ export default {
   }
   .btnBoxItemMargin {
     margin: 40px 0 20px;
+  }
+  .signUpBtn {
+    margin: -10px 0 20px;
   }
   .loginBtn {
     background: #000;

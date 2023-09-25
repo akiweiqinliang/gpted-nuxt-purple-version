@@ -5,7 +5,7 @@
       <Col span="10" class="rightLoginBox">
         <span> Create a free account </span>
         <p>
-          Or<nuxt-link :to="{ name: pageCode.LOGIN }"
+          Or<nuxt-link replace :to="{ name: pageCode.LOGIN }"
             >Sign in an existing account</nuxt-link
           >
         </p>
@@ -13,6 +13,7 @@
           <FormItem prop="username">
             <Input
               v-model="loginForm.username"
+              :autofocus="true"
               type="text"
               placeholder="username"
             >

@@ -6,14 +6,16 @@
         :class="pageContent === 0 ? 'pageActive' : ''"
         @click="pageContent = 0"
       >
-        <span>订阅推送</span>
+        <!--        <span>订阅推送</span>-->
+        <span>{{ $t('forwardNews') }}</span>
       </div>
       <div
         class="pageSmallTitle"
         :class="pageContent === 1 ? 'pageActive' : ''"
         @click="pageContent = 1"
       >
-        <span>推送设置</span>
+        <!--        <span>推送设置</span>-->
+        <span>{{ $t('pushSettings') }}</span>
       </div>
     </Row>
     <div
@@ -22,7 +24,7 @@
       class="subscribeDataPage"
     >
       <Row class="countCards" :gutter="16" type="flex" :wrap="true">
-        <Col :xs="24" :sm="12" :lg="6">
+        <Col span="6">
           <div class="countCard card1">
             <div class="leftIcon">
               <img src="~assets/logos/regionIcon.png" />
@@ -33,7 +35,7 @@
             </div>
           </div>
         </Col>
-        <Col :xs="24" :sm="12" :lg="6">
+        <Col span="6">
           <div class="countCard card2">
             <div class="leftIcon">
               <img src="~assets/logos/regionIcon.png" />
@@ -44,7 +46,7 @@
             </div>
           </div>
         </Col>
-        <Col :xs="24" :sm="12" :lg="6">
+        <Col span="6">
           <div class="countCard card3">
             <div class="leftIcon">
               <img src="~assets/logos/regionIcon.png" />
@@ -55,7 +57,7 @@
             </div>
           </div>
         </Col>
-        <Col :xs="24" :sm="12" :lg="6">
+        <Col span="6">
           <div class="countCard card4">
             <div class="leftIcon">
               <img src="~assets/logos/regionIcon.png" />
@@ -549,7 +551,7 @@
           ><Col flex="1"
             ><i-switch
               v-model="settingSwitch"
-              true-color="#7433f6"
+              true-color="#666BEF"
               size="small"
               @on-change="setSwitch"
           /></Col>
@@ -728,11 +730,11 @@ export default {
         margin: 0 10px;
         display: flex;
         align-items: baseline;
-        @media (min-width: 1200px) {
-          span {
-            font-size: 50px;
-          }
-        }
+        //@media (min-width: 1200px) {
+        //  span {
+        font-size: 50px;
+        //}
+        //}
         span {
           display: inline;
           font-weight: 600;
@@ -905,7 +907,7 @@ export default {
       }
     }
     .rightCloseIcon:hover svg path {
-      stroke: $subscribe-underline-color;
+      stroke: $decorate-purple-color;
     }
   }
   .refreshCardIcon {
@@ -923,7 +925,7 @@ export default {
     }
   }
   .refreshCardIcon :hover svg path {
-    stroke: $subscribe-underline-color;
+    stroke: $decorate-purple-color;
   }
   .lowerCard {
     top: 160px;
@@ -934,7 +936,7 @@ export default {
     cursor: pointer;
   }
   .rightCardOpenArrow:hover {
-    color: $subscribe-underline-color;
+    color: $decorate-purple-color;
   }
 }
 
@@ -968,19 +970,19 @@ export default {
   width: 100%;
 }
 
-@media (max-width: 1200px) {
-  .rightNumber span {
-    font-size: 40px;
-  }
-}
-@media (max-width: 1000px) {
-  .rightNumber span {
-    font-size: 30px;
-  }
-}
-@media (max-width: 768px) {
-  .rightNumber span {
-    font-size: 28px;
-  }
-}
+//@media (max-width: 1200px) {
+//  .rightNumber span {
+//    font-size: 40px;
+//  }
+//}
+//@media (max-width: 1000px) {
+//  .rightNumber span {
+//    font-size: 30px;
+//  }
+//}
+//@media (max-width: 768px) {
+//  .rightNumber span {
+//    font-size: 28px;
+//  }
+//}
 </style>

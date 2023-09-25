@@ -178,7 +178,7 @@ export default {
     svgIcon: {
       default: '',
       type: String,
-      require: true,
+      required: true,
     },
   },
 };
