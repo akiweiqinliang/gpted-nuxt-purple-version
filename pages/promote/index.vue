@@ -13,7 +13,7 @@
             <a href="#">了解详情<Icon type="md-arrow-down" /></a>
           </div>
           <div class="rightImg">
-            <img src="../../assets/promote/top-right-img.png" alt="活动专区" />
+            <img src="~assets/promote/top-right-img.png" alt="活动专区" />
           </div>
         </div>
       </Col>

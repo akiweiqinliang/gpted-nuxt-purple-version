@@ -1,5 +1,5 @@
 <template>
-  <div class="bidDetailPage">
+  <div id="bidDetailPage">
     <div :class="currentObj.type === 0 ? 'greenTop' : 'redTop'">
       <div class="page-margin">
         <Row>
@@ -402,13 +402,13 @@ export default {
   // },
   asyncData({ $axios, params }) {
     console.log(params);
-    try {
-      return $axios.post(`/detail/${params.bidId}`).then((res) => {
-        return { currentObj1: res.data };
-      });
-    } catch (e) {
-      console.log(e);
-    }
+    // try {
+    //   return $axios.post(`/detail/${params.bidId}`).then((res) => {
+    //     return { currentObj1: res.data };
+    //   });
+    // } catch (e) {
+    //   console.log(e);
+    // }
   },
   data() {
     return {

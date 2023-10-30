@@ -1,6 +1,10 @@
+// eslint-disable-next-line nuxt/no-cjs-in-config
+const TerserPlugin = require('terser-webpack-plugin');
+// import TerserPlugin from "terser-webpack-plugin";
 export default {
   env: {
-    baseURL: process.env.BASE_URL || 'http://localhost:3000',
+    BASE_URL: process.env.BASE_URL || 'http://localhost:3000',
+    NODE_ENV: process.env.NODE_ENV,
   },
   dev: process.env.NODE_ENV !== 'production',
   // Global page headers: https://go.nuxtjs.dev/config-head
@@ -49,6 +53,7 @@ export default {
     'swiper/css/swiper.css',
     'flatpickr/dist/flatpickr.min.css',
     '@/assets/css/promote.scss',
+    '@/assets/css/member.scss',
     '@/assets/css/global.scss',
     '@/assets/css/globalColor.scss',
     '@/assets/css/page404.scss',
@@ -69,23 +74,19 @@ export default {
     { src: '@/plugins/chart.js', ssr: false },
     '@/plugins/axios',
   ],
-
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
-
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
     // https://go.nuxtjs.dev/eslint
     '@nuxtjs/eslint-module',
   ],
-
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
     '@nuxtjs/i18n',
   ],
-
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
@@ -122,22 +123,57 @@ export default {
   loading: {
     color: '#7E3AF7',
   },
+  server: {
+    port: process.env.PORT, // default: 3000
+    host: 'localhost', // default: localhost,
+    timing: false,
+    // hot: true,
+  },
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
+    filenames: {
+      chunk: ({ isDev }) => (isDev ? '[name].js' : '[id].[contenthash].js'),
+    },
     loaders: {
       less: {
         javascriptEnabled: true,
       },
     },
-
+    optimization: {
+      // minimize: true,
+      minimizer: [
+        // terser-webpack-plugin
+        // optimize-css-assets-webpack-plugin
+      ],
+      // splitChunks: {
+      //   chunks: 'all',
+      //   automaticNameDelimiter: '.',
+      //   name: undefined,
+      //   cacheGroups: {}
+      // }
+    },
     analyse: true,
+    babel: {
+      presets: ['@nuxt/babel-preset-app'],
+    },
     extend(config, { isDev, isClient }) {
-      // config.module.rules.push({
-      //   test: /\.(ttf|eot|svg|woff(2)?)(\?[a-z0-9=&.]+)?$/,
-      //   loader: 'file-loader',
-      // })
+      config.module.rules.push({
+        test: /\.(ogg|mp3|wav|mpe?g)$/i,
+        loader: 'file-loader',
+        options: {
+          name: '[path][name].[ext]',
+        },
+      });
       if (isDev) {
-        config.mode = 'development';
+        // config.mode = 'development';
+        config.devtool = 'eval-cheap-source-map';
+      }
+      if (isClient) {
+        // config.mode = 'production';
+        config.devtool = 'source-map';
+        config.optimization.splitChunks.maxSize = 200000;
+        config.optimization.minimize = true;
+        config.optimization.minimizer.push(new TerserPlugin());
       }
     },
   },

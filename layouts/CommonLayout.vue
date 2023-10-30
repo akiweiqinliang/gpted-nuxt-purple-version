@@ -36,7 +36,7 @@
           >
             <Icon type="ios-card-outline" />{{ $t('dashboard') }}
           </MenuItem>
-          <MenuItem name="huiyuan">
+          <MenuItem :name="pageCode.MEMBER" :to="{ name: pageCode.MEMBER }">
             <Icon type="ios-card-outline" />{{ $t('member') }}
           </MenuItem>
         </Col>
