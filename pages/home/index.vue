@@ -44,7 +44,7 @@
             <Col class="numberBox">
               <span>
                 4,530
-                {{ projectCount }}
+                <!--                {{ projectCount }}-->
                 <p>件</p>
               </span>
               <p>收录项目</p>
@@ -186,9 +186,9 @@ export default {
   layout: 'CommonLayout',
   async asyncData({ $axios }) {
     // 标讯条数
-    const projectCount = await $axios.get('/getProjectCount').then((res) => {
-      return res.data.meta.status;
-    });
+    // const projectCount = await $axios.get('/getProjectCount').then((res) => {
+    //   return res.data.meta.status;
+    // });
     const allBidNum = await new Promise((resolve) => resolve(32607)).then(
       (value) => {
         return value.toLocaleString();
@@ -201,7 +201,8 @@ export default {
       return { name: item.name, num: item.bidNumber };
     });
     chartData.sort((a, b) => b.num - a.num);
-    return { chartData, allBidNum, projectCount, countryArray };
+    // return { chartData, allBidNum, projectCount, countryArray };
+    return { chartData, allBidNum, countryArray };
   },
   data() {
     return {
