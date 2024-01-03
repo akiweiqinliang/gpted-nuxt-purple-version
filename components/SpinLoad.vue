@@ -1,5 +1,5 @@
 <template>
-  <Spin v-if="spinShow" size="large" fix></Spin>
+  <Spin v-if="spinShow" size="large" fix class="spinBlur"></Spin>
 </template>
 
 <script>
@@ -22,4 +22,8 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.spinBlur {
+  backdrop-filter: blur(5px);
+}
+</style>

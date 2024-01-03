@@ -1,6 +1,9 @@
 // eslint-disable-next-line nuxt/no-cjs-in-config
 const TerserPlugin = require('terser-webpack-plugin');
-// import TerserPlugin from "terser-webpack-plugin";
+// eslint-disable-next-line nuxt/no-cjs-in-config
+const ImageminPlugin = require('imagemin-webpack-plugin').default;
+// eslint-disable-next-line nuxt/no-cjs-in-config
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 export default {
   env: {
     BASE_URL: process.env.BASE_URL || 'http://localhost:3000',
@@ -34,6 +37,10 @@ export default {
       },
       meta: [
         { charset: 'utf-8' },
+        {
+          'http-equiv': 'Content-Security-Policy',
+          content: 'child-src https:',
+        },
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
         { hid: 'description', name: 'description', content: '' },
         { name: 'format-detection', content: 'telephone=no' },
@@ -48,18 +55,7 @@ export default {
     };
   },
   // Global CSS: https://go.nuxtjs.dev/config-css
-  css: [
-    'view-design/dist/styles/iview.css',
-    'swiper/css/swiper.css',
-    'flatpickr/dist/flatpickr.min.css',
-    '@/assets/css/promote.scss',
-    '@/assets/css/member.scss',
-    '@/assets/css/global.scss',
-    '@/assets/css/globalColor.scss',
-    '@/assets/css/page404.scss',
-    '@/assets/css/customFlatpickr.scss',
-    '@/assets/css/theme/index.less',
-  ],
+  css: ['@/assets/css/main.scss', '@/assets/css/theme/index.less'],
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
     '@/plugins/view-ui',
@@ -69,11 +65,14 @@ export default {
     },
     {
       src: '@/plugins/flatPickr.js',
-      ssr: false,
     },
-    { src: '@/plugins/chart.js', ssr: false },
-    '@/plugins/axios',
+    {
+      src: '@/plugins/axios',
+      ssr: true, // 默认为true，会同时在服务端（asyncData（{$axios}））和客户端（this.$axios）同时拦截axios请求，设为false就只会拦截客户端
+    },
+    { src: '@/plugins/highlight.js', mode: 'client' },
   ],
+
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
@@ -86,6 +85,8 @@ export default {
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
     '@nuxtjs/i18n',
+    // 'nuxt-aos',
+    // 'nuxt-lazy-load',
   ],
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
@@ -120,9 +121,49 @@ export default {
       fallbackLocale: 'zh',
     },
   },
-  loading: {
-    color: '#7E3AF7',
-  },
+  // aos: {
+  //   // Global settings:
+  //   disable: false, // accepts following values: 'phone', 'tablet', 'mobile', boolean, expression or function
+  //   startEvent: 'DOMContentLoaded', // name of the event dispatched on the document, that AOS should initialize on
+  //   initClassName: 'aos-init', // class applied after initialization
+  //   animatedClassName: 'aos-animate', // class applied on animation
+  //   useClassNames: false, // if true, will add content of `data-aos` as classes on scroll
+  //   disableMutationObserver: false, // disables automatic mutations' detections (advanced)
+  //   debounceDelay: 50, // the delay on debounce used while resizing window (advanced)
+  //   throttleDelay: 99, // the delay on throttle used while scrolling the page (advanced)
+  //
+  //
+  //   // Settings that can be overridden on per-element basis, by `data-aos-*` attributes:
+  //   offset: 120, // offset (in px) from the original trigger point
+  //   delay: 0, // values from 0 to 3000, with step 50ms
+  //   duration: 400, // values from 0 to 3000, with step 50ms
+  //   easing: 'ease', // default easing for AOS animations
+  //   once: false, // whether animation should happen only once - while scrolling down
+  //   mirror: false, // whether elements should animate out while scrolling past them
+  //   anchorPlacement: 'top-bottom', // defines which position of the element regarding to window should trigger the animation
+  // },
+  // lazyLoad: {
+  //   // These are the default values
+  //   images: true,
+  //   videos: true,
+  //   audios: true,
+  //   iframes: true,
+  //   native: false,
+  //   directiveOnly: false,
+  //
+  //   // Default image must be in the public folder
+  //   // defaultImage: '/images/default-image.jpg',
+  //
+  //   // To remove class set value to false
+  //   loadingClass: 'isLoading',
+  //   loadedClass: 'isLoaded',
+  //   appendClass: 'lazyLoad',
+  //
+  //   observerConfig: {
+  //     // See IntersectionObserver documentation
+  //   }
+  // },
+  loading: {},
   server: {
     port: process.env.PORT, // default: 3000
     host: 'localhost', // default: localhost,
@@ -131,6 +172,27 @@ export default {
   },
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
+    // postcss: {
+    //   plugins: {
+    //     'postcss-px-to-viewport-8-plugin': {
+    //       unitToConvert: 'px', // 需要转换的单位，默认为"px"
+    //       viewportWidth: 1440, // 设计稿的视口宽度
+    //       unitPrecision: 5, // 单位转换后保留的精度
+    //       propList: ['*', '!min-width', 'font-size'], // 能转化为vw的属性列表,!font-size表示font-size后面的单位不会被转换
+    //       viewportUnit: 'vw', // 希望使用的视口单位
+    //       fontViewportUnit: 'vw', // 字体使用的视口单位
+    //       // 需要忽略的CSS选择器，不会转为视口单位，使用原有的px等单位。
+    //       // 下面配置表示类名中含有'keep-px'都不会被转换
+    //       selectorBlackList: ['keep-px'],
+    //       minPixelValue: 1, // 设置最小的转换数值，如果为1的话，只有大于1的值会被转换
+    //       mediaQuery: false, // 媒体查询里的单位是否需要转换单位
+    //       replace: true, //  是否直接更换属性值，而不添加备用属性
+    //       exclude: [/node_modules/], // 忽略某些文件夹下的文件或特定文件，例如 'node_modules' 下的文件
+    //       include: [/src/], // 如果设置了include，那将只有匹配到的文件才会被转换
+    //       landscape: false, // 是否添加根据 landscapeWidth 生成的媒体查询条件 @media (orientation: landscape)
+    //     },
+    //   },
+    // },
     filenames: {
       chunk: ({ isDev }) => (isDev ? '[name].js' : '[id].[contenthash].js'),
     },
@@ -139,41 +201,106 @@ export default {
         javascriptEnabled: true,
       },
     },
-    optimization: {
-      // minimize: true,
-      minimizer: [
-        // terser-webpack-plugin
-        // optimize-css-assets-webpack-plugin
-      ],
-      // splitChunks: {
-      //   chunks: 'all',
-      //   automaticNameDelimiter: '.',
-      //   name: undefined,
-      //   cacheGroups: {}
-      // }
-    },
-    analyse: true,
-    babel: {
-      presets: ['@nuxt/babel-preset-app'],
-    },
-    extend(config, { isDev, isClient }) {
-      config.module.rules.push({
+    rules: [
+      // {
+      //   test: /\.(vue|jsx?)$/,
+      //   loader: 'postcss-style-px-to-viewport',
+      //   options: {
+      //     unitToConvert: 'px',
+      //     ignoreUnitCase: true, // 默认会忽略大小写来转换unitToConvert的匹配值 如px、PX、Px、pX各个情况。如果设置为false 则只匹配 px
+      //     viewportWidth: 1440,
+      //     propList: ['*'],
+      //     unitPrecision: 5,
+      //     viewportUnit: 'vw',
+      //     fontViewportUnit: 'vw',
+      //     minPixelValue: 1,
+      //     exclude: [/node_modules/],
+      //   }
+      // },
+      {
         test: /\.(ogg|mp3|wav|mpe?g)$/i,
         loader: 'file-loader',
         options: {
           name: '[path][name].[ext]',
         },
-      });
+      },
+      {
+        test: /\.(png|jpe?g|gif|svg)$/i,
+        use: [
+          {
+            loader: 'image-webpack-loader',
+            options: {
+              disable: process.env.NODE_ENV !== 'production',
+              optipng: {
+                optimizationLevel: 5,
+              },
+            },
+          },
+        ],
+      },
+    ],
+    plugins: [
+      new HtmlWebpackPlugin(),
+      new ImageminPlugin({
+        disable: process.env.NODE_ENV !== 'production',
+        test: /.(jpe?g|png|gif|svg)$/i,
+        optipng: {
+          optimizationLevel: 5,
+        },
+      }),
+    ],
+    optimization: {
+      minimizer: [],
+      splitChunks: {
+        chunks: 'all', // 提取所有模块
+        minSize: 30000, // 模块的最小大小
+        minChunks: 1, // 模块的最小引用次数
+        maxAsyncRequests: 5, // 并行加载的最大请求数量
+        maxInitialRequests: 3, // 入口模块的最大请求数量
+        maxSize: 200000,
+        cacheGroups: {
+          vendor: {
+            test: /[\\/]node_modules[\\/]/, // 匹配node_modules目录下的模块
+            name: 'vendor', // 提取出的公共模块的名称
+            chunks: 'all', // 提取所有模块
+          },
+        },
+      },
+    },
+    analyse: true,
+    babel: {
+      presets: ['@nuxt/babel-preset-app'],
+    },
+    publicPath: '/static/', // 配置打包的静态资源文件目录。可以是cdn地址
+    // devtools: true,
+    extend(config, { isDev, isClient }) {
+      // if (isDev && isClient) {
+      //   config.module.rules.push({
+      //     enforce: 'pre',
+      //     test: /\.(js|vue)$/,
+      //     loader: 'eslint-loader',
+      //     exclude: /(node_modules)/
+      //   })
+      // }
       if (isDev) {
-        // config.mode = 'development';
-        config.devtool = 'eval-cheap-source-map';
+        // config.devtool = 'eval-source-map';
       }
       if (isClient) {
-        // config.mode = 'production';
-        config.devtool = 'source-map';
-        config.optimization.splitChunks.maxSize = 200000;
+        // config.devtool = 'none';
         config.optimization.minimize = true;
-        config.optimization.minimizer.push(new TerserPlugin());
+        config.optimization.minimizer.push(
+          new TerserPlugin({
+            terserOptions: {
+              compress: {
+                // drop_console: true, // 移除console语句
+              },
+              output: {
+                // 是否保留代码注释
+                comments: false,
+              },
+            },
+          })
+        );
       }
     },
   },

@@ -33,7 +33,7 @@
             >
           </FormItem>
           <FormItem class="btnBoxItemMargin">
-            <div style="position: relative" class="loginBtnItem">
+            <div class="loginBtnItem">
               <div class="loginBtnBox"></div>
               <Button
                 class="loginBtn"
@@ -192,6 +192,7 @@ export default {
   .loginBtnItem:hover .loginBtnBox {
     transform: scale(1);
     opacity: 1;
+    position: relative;
     //background: linear-gradient(to right,blue,green,orange);
     transition: all 0.3s;
   }

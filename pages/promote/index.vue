@@ -39,7 +39,7 @@
         </div>
         <div class="innerContainer">
           <Col class="newLeft">
-            <Swiper :options="leftSwiperOption" class="swiper-container">
+            <MySwiper :options="leftSwiperOption" class="swiper-container">
               <SwiperSlide
                 v-for="step in newHandEventSteps"
                 :key="`newHand-step-${step.id}`"
@@ -48,12 +48,12 @@
                 <span>{{ step.title }}</span>
                 <p>{{ step.context }}</p>
               </SwiperSlide>
-            </Swiper>
+            </MySwiper>
             <div class="swiper-button-next swiperArrowBtn"></div>
           </Col>
           <Col class="newRight">
             <div class="imgList">
-              <Swiper :options="rightSwiperOption" class="swiper-container">
+              <MySwiper :options="rightSwiperOption" class="swiper-container">
                 <SwiperSlide
                   v-for="step in newHandEventSteps"
                   :key="`newHand-step-${step.id}`"
@@ -61,7 +61,7 @@
                 >
                   {{ step.imgUrl }}
                 </SwiperSlide>
-              </Swiper>
+              </MySwiper>
             </div>
           </Col>
         </div>
@@ -93,14 +93,8 @@
 </template>
 
 <script>
-import { Swiper, SwiperSlide } from 'vue-awesome-swiper';
-
 export default {
   name: 'PromotePage',
-  components: {
-    Swiper,
-    SwiperSlide,
-  },
   layout: 'CommonLayout',
   data() {
     return {

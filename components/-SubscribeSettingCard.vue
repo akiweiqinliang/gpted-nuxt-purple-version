@@ -3,14 +3,14 @@
     <div class="swiper-button-next nextBtn arrowBtn"></div>
     <div class="swiper-button-prev prevBtn arrowBtn"></div>
     <div class="swiper-pagination dots"></div>
-    <Swiper :options="settingSwiperOption" class="swiperContainer swiper">
+    <MySwiper :options="settingSwiperOption" class="swiperContainer swiper">
       <SwiperSlide>
         <Row class="slideTitle">推送频率和时段</Row>
         <Row type="flex" justify="center" class="slideGuideText"
           >根据您自身的需求可自定义推送的频率与时段</Row
         >
         <Row type="flex" justify="center" class="timeBox">
-          <div class="line" style=""></div>
+          <div class="line"></div>
           <div class="frequencyBox">
             <div
               class="dot"
@@ -84,18 +84,18 @@
         >4
         <Row style="height: 300px"> </Row>
       </SwiperSlide>
-    </Swiper>
+    </MySwiper>
   </div>
 </template>
 
 <script>
-import { Swiper, SwiperSlide } from 'vue-awesome-swiper';
+// import { Swiper, SwiperSlide } from 'vue-awesome-swiper';
 export default {
   name: 'SubscribeSettingCard',
-  components: {
-    Swiper,
-    SwiperSlide,
-  },
+  // components: {
+  //   Swiper,
+  //   SwiperSlide,
+  // },
   data() {
     return {
       frequency: 'twice',

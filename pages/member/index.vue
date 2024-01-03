@@ -229,8 +229,6 @@
         </Collapse>
       </Col>
     </Row>
-
-    <Row class="other" style="height: 500px"></Row>
   </div>
 </template>
 
@@ -487,9 +485,7 @@ export default {
     changeShowFloatChoice() {
       const windowScrollHeight = window.innerHeight / 2 + window.scrollY;
       const tableBottomToTopHeight =
-        this.$refs.memberTable.offsetTop +
-        this.$refs.memberTable.offsetHeight -
-        100;
+        this.$refs.memberTable.offsetTop + this.$refs.memberTable.offsetHeight;
       this.showFloatChoice = windowScrollHeight < tableBottomToTopHeight;
     },
   },

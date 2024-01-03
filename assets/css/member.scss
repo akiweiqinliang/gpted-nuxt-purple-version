@@ -4,7 +4,7 @@ $top-right-img: '@/assets/promote/top-right-img.png';
 @use 'global';
 $member-bg-url: global.$home-bg-img-url;
 //页面主题色
-$theme-color: #7e3af7;
+$theme-color: #7b62de;
 $white: globalColor.$white;
 $black: globalColor.$black;
 
@@ -65,5 +65,8 @@ $problem-title-color: #292929;
   .ivu-collapse-simple,
   .ivu-collapse-content {
     background: transparent;
+  }
+  .ivu-card-head {
+    display: none;
   }
 }

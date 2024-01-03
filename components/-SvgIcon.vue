@@ -17,12 +17,6 @@
         stroke-width="2"
         stroke-linejoin="round"
       />
-      <path
-        d="M16.5996 8L12.5996 12"
-        stroke="#FC8195"
-        stroke-width="2"
-        stroke-linecap="round"
-      />
     </svg>
 
     <svg

@@ -3,40 +3,69 @@
     :active-name="firstMenuActiveName"
     width="auto"
     class="leftGatherMenuStyle"
+    :open-names="openNames"
   >
     <div class="menuChildren">
       <MenuItem name="logo" class="menuLogo">
         <div class="menuTitle">LOGO</div>
       </MenuItem>
+      <Submenu name="subscribe">
+        <template slot="title">
+          <Icon type="ios-heart-outline" />
+          {{ $t('subscribe') }}
+        </template>
+        <MenuItem
+          name="dashboard-subscribe"
+          :to="{ name: 'dashboard-subscribe' }"
+          >订阅推送</MenuItem
+        >
+        <MenuItem
+          name="dashboard-subscribe-subscribeSetting"
+          :to="{ name: 'dashboard-subscribe-subscribeSetting' }"
+          >订阅设置</MenuItem
+        >
+        <MenuItem
+          name="dashboard-subscribe-pushSetting"
+          :to="{ name: 'dashboard-subscribe-pushSetting' }"
+          >推送设置</MenuItem
+        >
+      </Submenu>
       <MenuItem
-        v-for="item in subscribeMenu"
-        :key="item.code"
-        :name="item.code"
-        :to="{ name: item.code }"
+        name="dashboard-collection"
+        :to="{ name: 'dashboard-collection' }"
       >
-        <div class="leftMenuItem">
-          <!--          <Icon :type="item.icon" />-->
-          <SvgIcon :svgIcon="item.svgIcon"></SvgIcon>
-          {{ $t(item.name) }}
-        </div>
+        <Icon type="ios-heart-outline" />
+        {{ $t('collection') }}
+      </MenuItem>
+      <MenuItem name="dashboard-message" :to="{ name: 'dashboard-message' }">
+        <Icon type="ios-heart-outline" />
+        {{ $t('message') }}
+      </MenuItem>
+      <MenuItem name="dashboard-center" :to="{ name: 'dashboard-center' }">
+        <Icon type="ios-heart-outline" />
+        {{ $t('center') }}
+      </MenuItem>
+      <MenuItem name="dashboard-reward" :to="{ name: 'dashboard-reward' }">
+        <Icon type="ios-heart-outline" />
+        {{ $t('reward') }}
       </MenuItem>
     </div>
   </Menu>
 </template>
 
 <script>
-import subscribeMenu from '@/enums/subscribeMenu';
 export default {
   name: 'LeftGatherMenu',
   layout: 'GatherLayout',
   data() {
     return {
-      subscribeMenu,
-      firstMenuActiveName: subscribeMenu.getSubscribeMenu()[0].code,
+      firstMenuActiveName: 'dashboard-subscribe',
+      openNames: ['subscribe'],
     };
   },
   watch: {
     $route(to, from) {
+      // console.log(to)
       this.firstMenuActiveName = to.name;
     },
   },
@@ -54,10 +83,6 @@ export default {
   height: 100%;
   position: relative;
   text-align: center;
-  .leftMenuItem {
-    //text-align: start;
-    //margin: auto;
-  }
   .menuChildren {
     position: sticky;
     top: 0;
@@ -77,32 +102,7 @@ export default {
     }
   }
 }
-.ivu-menu-vertical .ivu-menu-item,
-.ivu-menu-vertical .ivu-menu-submenu-title {
-  padding: 12px;
-  margin: 16px 24px;
-}
-.ivu-menu-light.ivu-menu-vertical
-  .ivu-menu-item-active:not(.ivu-menu-submenu):after {
-  border-radius: 4px;
-  width: 4px;
-  right: 1px;
-  display: none;
-}
-.ivu-menu-light.ivu-menu-vertical .ivu-menu-item-active:not(.ivu-menu-submenu) {
-  background: $gather-menu-active-bg-color;
-  border-radius: $subscribe-border-radius;
-  margin: 0 24px;
-  color: $black;
-  font-weight: 600;
-}
-.ivu-menu-vertical .ivu-menu-item:hover,
-.ivu-menu-vertical .ivu-menu-submenu-title:hover {
-  color: $black;
-  font-weight: 600;
-}
-.ivu-menu-vertical .ivu-menu-item,
-.ivu-menu-vertical .ivu-menu-submenu-title {
-  transition: color 0.2s ease-in-out;
+.ivu-menu-vertical.ivu-menu-light:after {
+  z-index: -1;
 }
 </style>

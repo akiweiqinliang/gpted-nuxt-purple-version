@@ -2,6 +2,10 @@
 html {
   scroll-behavior: smooth;
 }
+//全局高亮样式
+.highlighted {
+  color: red;
+}
 //文本行数省略样式
 @mixin ellipsis-style($line: 1) {
   display: -webkit-box;
@@ -29,7 +33,7 @@ html {
   justify-content: center;
 }
 //淡入淡出效果
-%fade-in {
+.fade-in {
   opacity: 0; /* 初始状态为透明 */
   animation: fade-in 1s forwards; /* 使用动画效果，持续 3 秒，并在结束时保持状态 */
   margin-bottom: 60px;
@@ -42,7 +46,7 @@ html {
     opacity: 1; /* 动画结束状态为完全显示 */
   }
 }
-%fade-out {
+.fade-out {
   opacity: 1;
   animation: fade-out 1s forwards; /* 使用动画效果，持续 3 秒，并在结束时保持状态 */
 }
@@ -65,7 +69,7 @@ $home-map-url: '@/assets/home/map.png';
 $subscribe-border-radius: 10px;
 
 #__nuxt {
-  min-width: 1400px;
+  min-width: 1440px;
 }
 
 #bidDetailPage .ivu-progress-inner {
@@ -76,4 +80,13 @@ $subscribe-border-radius: 10px;
   .ivu-radio-inner:after {
     background: globalColor.$decorate-purple-color;
   }
+}
+.ivu-card-head {
+  display: none;
+}
+#discover .ivu-card-head {
+  display: block;
+}
+.ivu-checkbox {
+  margin-right: 8px;
 }

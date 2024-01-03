@@ -6,7 +6,7 @@
 export default {
   name: 'Gather',
   asyncData({ redirect }) {
-    return redirect('/gather/subscribe');
+    return redirect('/dashboard/subscribe');
   },
 };
 </script>

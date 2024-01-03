@@ -8,7 +8,6 @@
               <div
                 :class="currentObj.type === 0 ? 'green' : 'red'"
                 class="title"
-                style="display: inline-block"
               >
                 {{ currentObj.title }}
 
@@ -17,10 +16,6 @@
                   <Tag v-if="currentObj.type === 0" color="#248f6c">招标</Tag>
                 </div>
               </div>
-              <!--              <div class="tags">-->
-              <!--                <Tag v-if="currentObj.type === 1" color="#f66368">中标</Tag>-->
-              <!--                <Tag v-if="currentObj.type === 0" color="#248f6c">招标</Tag>-->
-              <!--              </div>-->
             </div>
             <div
               class="titleTranslation"
@@ -157,7 +152,7 @@
               <li class="briefCardItem" style="border-top-left-radius: 16px">
                 <Row type="flex" align="middle">
                   <Col span="2">
-                    <img src="~assets/logos/regionIcon.png" />
+                    <img src="~assets/logos/regionIcon.png" alt="所属区域" />
                   </Col>
                   <Col flex="1" class="summary-card-margin-left">
                     <h6>所属区域：</h6>
@@ -168,7 +163,7 @@
               <li class="briefCardItem">
                 <Row type="flex" align="middle">
                   <Col span="2">
-                    <img src="~assets/logos/countryIcon.png" />
+                    <img src="~assets/logos/countryIcon.png" alt="所属国家" />
                   </Col>
                   <Col flex="1" class="summary-card-margin-left">
                     <h6>所属国家：</h6>
@@ -183,7 +178,7 @@
               >
                 <Row type="flex" align="middle">
                   <Col span="2">
-                    <img src="~assets/logos/countryIcon.png" />
+                    <img src="~assets/logos/countryIcon.png" alt="招标金额" />
                   </Col>
                   <Col flex="1" class="summary-card-margin-left">
                     <h6>招标金额：</h6>
@@ -198,7 +193,7 @@
               >
                 <Row type="flex" align="middle">
                   <Col span="2">
-                    <img src="~assets/logos/countryIcon.png" />
+                    <img src="~assets/logos/countryIcon.png" alt="中标金额" />
                   </Col>
                   <Col flex="1" class="summary-card-margin-left">
                     <h6>中标金额：</h6>
@@ -209,7 +204,7 @@
               <li class="briefCardItem">
                 <Row type="flex" align="middle">
                   <Col span="2">
-                    <img src="~assets/logos/publishIcon.png" />
+                    <img src="~assets/logos/publishIcon.png" alt="采购单位" />
                   </Col>
                   <Col flex="1" class="summary-card-margin-left">
                     <h6>采购单位：</h6>
@@ -220,7 +215,7 @@
               <li v-if="currentObj.type === 0" class="briefCardItem">
                 <Row type="flex" align="middle">
                   <Col span="2">
-                    <img src="~assets/logos/timeIcon.png" />
+                    <img src="~assets/logos/timeIcon.png" alt="开始时间" />
                   </Col>
                   <Col flex="1" class="summary-card-margin-left">
                     <h6>开始时间：</h6>
@@ -231,7 +226,7 @@
               <li v-else class="briefCardItem">
                 <Row type="flex" align="middle">
                   <Col span="2">
-                    <img src="~assets/logos/timeIcon.png" />
+                    <img src="~assets/logos/timeIcon.png" alt="公示时间" />
                   </Col>
                   <Col flex="1" class="summary-card-margin-left">
                     <h6>公示时间：</h6>
@@ -242,7 +237,7 @@
               <li v-if="currentObj.type === 0" class="briefCardItem">
                 <Row type="flex" align="middle">
                   <Col span="2">
-                    <img src="~assets/logos/connectIcon.png" />
+                    <img src="~assets/logos/connectIcon.png" alt="联系方式" />
                   </Col>
                   <Col flex="1" class="summary-card-margin-left">
                     <h6>联系方式：</h6>
@@ -258,7 +253,7 @@
               >
                 <Row type="flex" align="middle">
                   <Col span="2">
-                    <img src="~assets/logos/timeIcon.png" />
+                    <img src="~assets/logos/timeIcon.png" alt="行业分类" />
                   </Col>
                   <Col flex="1" class="summary-card-margin-left">
                     <h6>行业分类：</h6>
@@ -280,6 +275,7 @@
                     <img
                       src="~assets/logos/buyIcon.png"
                       class="gotBidCompanyImgSize"
+                      alt="中标公司"
                     />
                   </Col>
                   <Col class="summary-card-margin-left">
@@ -291,7 +287,7 @@
               <li v-if="currentObj.type === 0" class="briefCardItem">
                 <Row type="flex" align="middle">
                   <Col span="2">
-                    <img src="~assets/logos/timeIcon.png" />
+                    <img src="~assets/logos/timeIcon.png" alt="截止时间" />
                   </Col>
                   <Col flex="1" class="summary-card-margin-left">
                     <h6>截止时间：</h6>
@@ -306,7 +302,7 @@
               >
                 <Row type="flex" align="middle">
                   <Col span="2">
-                    <img src="~assets/logos/buyIcon.png" />
+                    <img src="~assets/logos/buyIcon.png" alt="采购方式" />
                   </Col>
                   <Col flex="1" class="summary-card-margin-left">
                     <h6>采购方式：</h6>
@@ -465,10 +461,7 @@ export default {
     currentObj() {
       // console.log(this.$props)
       const bidId = +this.$route.params.bidId;
-
-      const bidItem = cardData.filter((el) => el.id === bidId)[0];
-      console.log(bidItem);
-      return bidItem;
+      return cardData.find((el) => el.id === bidId);
       //   axios
     },
     currentBidProgress() {
@@ -605,6 +598,7 @@ export default {
 .topBidsBrief .title {
   font-size: 20px;
   font-weight: bold;
+  display: inline-block;
 }
 .topBidsBrief .tags {
   margin-left: 8px;
@@ -627,7 +621,6 @@ export default {
   list-style: none;
   display: flex;
   flex-wrap: wrap;
-  /*margin-bottom: 36px;*/
 }
 
 .briefCardList li {
@@ -647,10 +640,6 @@ export default {
   box-shadow: 0 1px 6px rgba(0, 0, 0, 0.2);
   border-color: #eee;
   cursor: pointer;
-}
-.briefCardList li:nth-child(odd) {
-  /*margin-right: 4px;*/
-  /*margin-left: 0px;*/
 }
 .floatBtnsRowRed,
 .floatBtnsRowGreen {
@@ -672,7 +661,6 @@ export default {
   margin: 0 100px;
 }
 .briefCardItem img {
-  //width: 100%;
   height: auto;
   display: block;
 }
@@ -715,10 +703,7 @@ export default {
   font-size: 14px;
   position: relative;
   border: 1px solid;
-  //color: $bid-green-text-color;
   border-radius: 8px;
-  //left: 50%;
-  //transform: translateX(-50%);
 }
 .briefDetail {
   position: relative;
@@ -761,31 +746,5 @@ export default {
 .analysisPolicyBtn {
   font-size: 12px;
   background: transparent;
-}
-.fade-in {
-  opacity: 0; /* 初始状态为透明 */
-  animation: fade-in 1s forwards; /* 使用动画效果，持续 3 秒，并在结束时保持状态 */
-  margin-bottom: 60px;
-}
-
-@keyframes fade-in {
-  from {
-    opacity: 0; /* 动画起始状态为透明 */
-  }
-  to {
-    opacity: 1; /* 动画结束状态为完全显示 */
-  }
-}
-.fade-out {
-  opacity: 1;
-  animation: fade-out 1s forwards; /* 使用动画效果，持续 3 秒，并在结束时保持状态 */
-}
-@keyframes fade-out {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
-  }
 }
 </style>

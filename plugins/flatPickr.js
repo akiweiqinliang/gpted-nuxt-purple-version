@@ -5,3 +5,4 @@ import { Mandarin } from 'flatpickr/dist/l10n/zh';
 Vue.use(flatPickr, {
   Mandarin,
 });
+Vue.component('MyFlatPickr', flatPickr);

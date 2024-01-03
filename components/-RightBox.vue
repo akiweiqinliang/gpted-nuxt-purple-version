@@ -102,7 +102,7 @@
         </NuxtLink>
       </Card>
       <!--      </Scroll>-->
-      <Page :total="100" show-total show-elevator />
+      <Page :total="100" simple />
     </template>
     <template v-else>
       <Card shadow class="card"> 无数据 </Card>

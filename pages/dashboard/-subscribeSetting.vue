@@ -1,11 +1,14 @@
 <template>
-  <div>follow</div>
+  <Card> subscribe </Card>
 </template>
 
 <script>
 export default {
-  name: 'FollowPage',
+  // name: "subscribeSetting",
   layout: 'GatherLayout',
+  data() {
+    return {};
+  },
 };
 </script>
 
