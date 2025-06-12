@@ -103,7 +103,7 @@ export default {
 @import '@/assets/css/global.scss';
 @import '@/assets/css/globalColor.scss';
 .containerPadding {
-  padding: 28px;
+  padding: 38px;
 }
 .gatherLayout {
   position: relative;

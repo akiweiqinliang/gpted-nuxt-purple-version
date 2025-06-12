@@ -13,7 +13,7 @@ const pageCode = {
   DASHBOARD_FOLLOW: 'dashboard-follow',
   DASHBOARD_MESSAGE: 'dashboard-message',
   DASHBOARD_REWARD: 'dashboard-reward',
-  DASHBOARD_CENTER: 'dashboard-center',
+  DASHBOARD_MEMBERCENTER: 'dashboard-memberCenter',
   DASHBOARD_HISTORY: 'dashboard-history',
   DASHBOARD_ACCOUNT: 'dashboard-account',
 

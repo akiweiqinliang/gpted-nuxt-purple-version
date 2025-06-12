@@ -138,6 +138,13 @@ export default {
         this.priceRange.start = this.priceRange.end = '';
       }
     },
+    // new
+    checkAllGroup(val) {
+      if (val) {
+        console.log(val);
+        this.checkAllGroupChange(val);
+      }
+    },
   },
   methods: {
     // checkbox
@@ -179,7 +186,10 @@ export default {
         this.showTagInput = false;
         return;
       }
-      if (this.newTags.includes(this.newTagText)) {
+      if (
+        this.newTags.includes(this.newTagText) ||
+        this.checkAllGroup.includes(this.newTagText)
+      ) {
         this.$Message.info('该标签已存在');
         this.newTagText = '';
         this.showTagInput = false;

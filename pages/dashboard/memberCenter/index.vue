@@ -1,4 +1,5 @@
 <template>
+  <!--  会员中心-->
   <Card
     id="memberCenter"
     :dis-hover="true"
@@ -9,7 +10,7 @@
     <Row class="pageTop">
       <Col span="13" class="personalInformation">
         <img
-          src="~assets/image/dashboard/center/personalInfoBg.png"
+          src="~~/assets/image/dashboard/center/personalInfoBg.png"
           class="bgImg"
         />
         <Row type="flex" align="middle" class="infoContainer">
@@ -18,6 +19,7 @@
             <Row class="infoItem MemberCategory" type="flex" align="middle">
               会员类别 ：
               <svg
+                v-if="userinfo.userType !== 1"
                 xmlns="http://www.w3.org/2000/svg"
                 width="14"
                 height="14"
@@ -41,19 +43,40 @@
                   </clipPath>
                 </defs>
               </svg>
-              标准版
+              {{
+                userinfo.userType === 1
+                  ? '普通版'
+                  : userinfo.userType === 2
+                  ? '标准版'
+                  : '专业版'
+              }}
             </Row>
-            <Row class="infoItem">到期时间 ： 2024 - 11 - 20</Row>
-            <Row class="infoItem">团队管理 ： 点击进入团队管理</Row>
+            <Row class="infoItem"
+              >到期时间 ：
+              {{ userinfo.userType === 1 ? '无' : userinfo.expireDate }}</Row
+            >
+            <Row
+              v-if="userinfo.userType === 2"
+              class="infoItem darkToTeamManage"
+              >团队管理 ： 点击进入团队管理</Row
+            >
+            <Row
+              v-if="userinfo.userType === 3"
+              class="infoItem lightToTeamManage"
+              ><nuxt-link
+                :to="{ name: 'dashboard-memberCenter-teamManagement' }"
+                >团队管理 ： 点击进入团队管理</nuxt-link
+              ></Row
+            >
           </div>
-          <Button type="primary" shape="circle" size="large" class="renewalBtn"
-            >立即续费</Button
-          >
+          <Button type="primary" shape="circle" size="large" class="renewalBtn">
+            {{ userinfo.userType === 1 ? '立即开通' : '立即续费' }}
+          </Button>
         </Row>
       </Col>
       <Col span="11" class="iconList">
         <img
-          src="~assets/image/dashboard/center/bidTarget.png"
+          src="~~/assets/image/dashboard/center/bidTarget.png"
           class="rightBgImg"
         />
         <Row type="flex" class="iconRow" justify="space-between">
@@ -96,7 +119,7 @@
       <div class="partTitle equityRecord">权益记录</div>
       <Row class="equityList">
         <Row
-          v-for="equityItem in equityData"
+          v-for="equityItem in userEquityData"
           :key="`equityData-${equityItem.id}`"
           class="equityItemStyle"
           type="flex"
@@ -104,8 +127,16 @@
         >
           <Col class="leftIcon">
             <img
+              v-if="userinfo.userType !== 1"
               :src="
                 require(`assets/image/dashboard/center/equity0${equityItem.id}.png`)
+              "
+              alt=""
+            />
+            <img
+              v-else
+              :src="
+                require(`assets/image/dashboard/center/${equityItem.icon}-icon.png`)
               "
               alt=""
             />
@@ -143,15 +174,33 @@
                 </div>
               </Col>
               <Col span="4">
-                <Row
-                  v-if="equityItem.total === equityItem.used"
-                  justify="end"
-                  class="upgrade"
-                  >立即升级</Row
-                >
-                <Row v-else type="flex" justify="end"
-                  >{{ equityItem.used }} / {{ equityItem.total }}</Row
-                >
+                <div v-if="userinfo.userType === 1">
+                  <div v-if="equityItem.isDone">
+                    <Row
+                      v-if="equityItem.total === equityItem.used"
+                      justify="end"
+                      class="upgrade"
+                      >立即开通</Row
+                    >
+                    <Row v-else type="flex" justify="end"
+                      >{{ equityItem.used }} / {{ equityItem.total }}</Row
+                    >
+                  </div>
+                  <div v-else>
+                    <Row justify="end" class="upgrade">去完成</Row>
+                  </div>
+                </div>
+                <div v-else>
+                  <Row
+                    v-if="equityItem.total === equityItem.used"
+                    justify="end"
+                    class="upgrade"
+                    >{{ userinfo.userType === 2 ? '立即升级' : '' }}</Row
+                  >
+                  <Row v-else type="flex" justify="end"
+                    >{{ equityItem.used }} / {{ equityItem.total }}</Row
+                  >
+                </div>
               </Col>
             </Row>
           </Col>
@@ -160,7 +209,7 @@
       <Divider class="dividerStyle" />
     </Row>
     <Row class="pageBottom expensesRecord">
-      <Collapse v-model="expensesRecordOpenState" simple class="collapseStyle">
+      <Collapse simple class="collapseStyle">
         <Panel name="expensesRecords">
           消费记录
           <div slot="content">
@@ -186,8 +235,135 @@ export default {
   layout: 'GatherLayout',
   data() {
     return {
-      // 用户权益记录数据
-      equityData: [
+      userinfo: {
+        userType: 3, // 免费版-1, 标准版-2， 专业版-3
+        expireDate: '2024 - 11 - 20',
+      },
+      // 普通版免费权益 免费版-1
+      freeEquityData: [
+        {
+          id: 0,
+          title: '注册',
+          icon: 'free-register',
+          isDone: true,
+          total: 3,
+          used: 2,
+          countText: '+3次查看标讯',
+          equityDetailList: [
+            {
+              id: 0,
+              content: '开通会员，即可获得更多权益',
+            },
+          ],
+        },
+        {
+          id: 1,
+          title: '填写企业信息',
+          icon: 'free-corporateInfo',
+          isDone: false,
+          total: 3,
+          used: 0,
+          countText: '+3次查看标讯',
+          equityDetailList: [
+            {
+              id: 0,
+              content: '开通会员，即可获得更多权益',
+            },
+          ],
+        },
+        {
+          id: 2,
+          title: '关注公众号',
+          icon: 'free-follow',
+          isDone: true,
+          total: 3,
+          used: 3,
+          countText: '+3次查看标讯',
+          equityDetailList: [
+            {
+              id: 0,
+              content: '开通会员，即可获得更多权益',
+            },
+          ],
+        },
+        {
+          id: 3,
+          title: '下载移动端',
+          icon: 'free-download',
+          isDone: true,
+          total: 3,
+          used: 2,
+          countText: '+3次查看标讯',
+          equityDetailList: [
+            {
+              id: 0,
+              content: '开通会员，即可获得更多权益',
+            },
+          ],
+        },
+        {
+          id: 4,
+          title: '绑定邮箱',
+          icon: 'free-email',
+          isDone: true,
+          total: 3,
+          used: 3,
+          countText: '+3次查看标讯',
+          equityDetailList: [
+            {
+              id: 0,
+              content: '开通会员，即可获得更多权益',
+            },
+          ],
+        },
+        {
+          id: 5,
+          title: '填写调研问卷',
+          icon: 'free-questionnaire',
+          isDone: true,
+          total: 3,
+          used: 1,
+          countText: '+3次查看标讯',
+          equityDetailList: [
+            {
+              id: 0,
+              content: '开通会员，即可获得更多权益',
+            },
+          ],
+        },
+        {
+          id: 6,
+          title: '每日签到',
+          icon: 'free-signIn',
+          isDone: true,
+          total: 1,
+          used: 1,
+          countText: '+1次查看标讯',
+          equityDetailList: [
+            {
+              id: 0,
+              content: '开通会员，即可获得更多权益',
+            },
+          ],
+        },
+        {
+          id: 7,
+          title: '分享标讯',
+          icon: 'free-share',
+          isDone: false,
+          total: 1,
+          used: 0,
+          countText: '+1次查看标讯',
+          equityDetailList: [
+            {
+              id: 0,
+              content: '开通会员，即可获得更多权益',
+            },
+          ],
+        },
+      ],
+      // 用户权益记录数据 标准版-2
+      normalEquityData: [
         {
           id: 0,
           title: '查看附件文件',
@@ -274,17 +450,78 @@ export default {
           equityDetailList: [
             {
               id: 0,
-              content: '等待次日早上5:00恢复权益',
-            },
-            {
-              id: 1,
               content: '升级为专业版会员，即可获得更多权益',
             },
           ],
         },
       ],
+      // 用户权益记录数据 专业版-3
+      majorEquityData: [
+        {
+          id: 0,
+          title: '查看附件文件',
+          total: 100,
+          used: 100,
+          countText: '100次/天',
+          equityDetailList: [
+            {
+              id: 0,
+              content: '等待次日早上5:00恢复权益',
+            },
+          ],
+        },
+        {
+          id: 1,
+          title: '附件文件翻译',
+          total: 10,
+          used: 5,
+          countText: '10次/天',
+          equityDetailList: [
+            {
+              id: 0,
+              content: '等待次日早上5:00恢复权益',
+            },
+          ],
+        },
+        {
+          id: 2,
+          title: '关键词订阅',
+          total: 500,
+          used: 500,
+          countText: '500/个',
+          equityDetailList: [],
+        },
+        {
+          id: 3,
+          title: '导出数据',
+          total: 500,
+          used: 50,
+          countText: '500次/天',
+          equityDetailList: [
+            {
+              id: 0,
+              content: '等待次日早上5:00恢复权益',
+            },
+          ],
+        },
+        {
+          id: 4,
+          title: '企业情报监控',
+          total: 50,
+          used: 50,
+          countText: '50家/同时',
+          equityDetailList: [],
+        },
+        {
+          id: 5,
+          title: '项目进度监控',
+          total: 10,
+          used: 5,
+          countText: '50项/同时',
+          equityDetailList: [],
+        },
+      ],
       // 用户消费记录数据
-      expensesRecordOpenState: '',
       expensesRecordColumn: [
         {
           title: '订单号',
@@ -347,11 +584,20 @@ export default {
       ],
     };
   },
+  computed: {
+    userEquityData() {
+      return this.userinfo.userType === 1
+        ? this.freeEquityData
+        : this.userinfo.userType === 2
+        ? this.normalEquityData
+        : this.majorEquityData;
+    },
+  },
 };
 </script>
 
 <style scoped lang="scss">
-@import 'assets/css/globalColor.scss';
+@import '../../../assets/css/globalColor';
 $tipsYellowColor: #ffbe55;
 $blackColor1: #010101; // title 查看附件文件
 $blackColor2: #323232; // small text next to title 10次/天
@@ -393,6 +639,15 @@ $grayColor: #757575; //  升级为专业版会员，即可获得更多权益
           }
           .infoItem {
             margin: 20px 0;
+          }
+          .darkToTeamManage {
+            color: $home-contact-msg-color;
+            cursor: not-allowed;
+          }
+          .lightToTeamManage {
+            a {
+              color: $home-theme-color;
+            }
           }
         }
         .renewalBtn {

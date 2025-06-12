@@ -1,6 +1,6 @@
 <template>
   <Menu
-    :active-name="firstMenuActiveName"
+    :active-name="menuActiveName"
     width="auto"
     class="leftGatherMenuStyle"
     :open-names="openNames"
@@ -41,13 +41,23 @@
         <Icon type="ios-heart-outline" />
         {{ $t('message') }}
       </MenuItem>
-      <MenuItem name="dashboard-center" :to="{ name: 'dashboard-center' }">
+      <MenuItem
+        name="dashboard-memberCenter"
+        :to="{ name: 'dashboard-memberCenter' }"
+      >
         <Icon type="ios-heart-outline" />
-        {{ $t('center') }}
+        {{ $t('memberCenter') }}
       </MenuItem>
       <MenuItem name="dashboard-reward" :to="{ name: 'dashboard-reward' }">
         <Icon type="ios-heart-outline" />
         {{ $t('reward') }}
+      </MenuItem>
+      <MenuItem
+        name="dashboard-personalCenter"
+        :to="{ name: 'dashboard-personalCenter' }"
+      >
+        <Icon type="ios-heart-outline" />
+        {{ $t('personalCenter') }}
       </MenuItem>
     </div>
   </Menu>
@@ -59,18 +69,32 @@ export default {
   layout: 'GatherLayout',
   data() {
     return {
-      firstMenuActiveName: 'dashboard-subscribe',
-      openNames: ['subscribe'],
+      menuActiveName: 'dashboard-subscribe',
+      // openNames: ['subscribe'],
     };
+  },
+  computed: {
+    openNames() {
+      if (!this.$route.name.includes('subscribe')) {
+        return [];
+      }
+      return ['subscribe'];
+    },
   },
   watch: {
     $route(to, from) {
-      // console.log(to)
-      this.firstMenuActiveName = to.name;
+      // console.log(from,to)
+      this.menuActiveName = to.name;
+      if (to.name.includes('memberCenter')) {
+        this.menuActiveName = 'dashboard-memberCenter';
+      }
     },
   },
   mounted() {
-    this.firstMenuActiveName = this.$route.name;
+    this.menuActiveName = this.$route.name;
+    if (this.$route.name.includes('memberCenter')) {
+      this.menuActiveName = 'dashboard-memberCenter';
+    }
   },
 };
 </script>

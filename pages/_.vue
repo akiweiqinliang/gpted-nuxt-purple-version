@@ -1,63 +1,72 @@
 <template>
-  <div style="background: #02051f">
-    <Row>
-      <div class="left">
-        404
-        <button class="ui button">返回</button>
-        <!--          <div class="content__item">-->
-        <button class="button button--rhea"><span>Delete</span></button>
-        <!--          </div>-->
+  <!--  <div style="background: #02051f">-->
+  <!--    <Row>-->
+  <!--      <div class="left">-->
+  <!--        404-->
+  <!--        <button class="ui button">返回</button>-->
+  <!--        &lt;!&ndash;          <div class="content__item">&ndash;&gt;-->
+  <!--        <button class="button button&#45;&#45;rhea"><span>Delete</span></button>-->
+  <!--        &lt;!&ndash;          </div>&ndash;&gt;-->
 
-        <a class="ui teal tag label">Featured</a>
-        <div class="row ui" style="padding: 20px 60px">
-          <div class="ui grid">
-            <div class="column">
-              <div class="ui raised segment">
-                <a class="ui red ribbon label">Overview</a>
-                <span>Account Details</span>
-                <p></p>
-                <a class="ui teal ribbon label">Community</a> User Reviews
-                <p></p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="right">
-        <div class="imgBox">
-          <img class="hovering-photo" src="~~/assets/discoverPage.png" />
-        </div>
-      </div>
-    </Row>
+  <!--        <a class="ui teal tag label">Featured</a>-->
+  <!--        <div class="row ui" style="padding: 20px 60px">-->
+  <!--          <div class="ui grid">-->
+  <!--            <div class="column">-->
+  <!--              <div class="ui raised segment">-->
+  <!--                <a class="ui red ribbon label">Overview</a>-->
+  <!--                <span>Account Details</span>-->
+  <!--                <p></p>-->
+  <!--                <a class="ui teal ribbon label">Community</a> User Reviews-->
+  <!--                <p></p>-->
+  <!--              </div>-->
+  <!--            </div>-->
+  <!--          </div>-->
+  <!--        </div>-->
+  <!--      </div>-->
+  <!--      <div class="right">-->
+  <!--        <div class="imgBox">-->
+  <!--          <img class="hovering-photo" src="~~/assets/discoverPage.png" />-->
+  <!--        </div>-->
+  <!--      </div>-->
+  <!--    </Row>-->
 
-    <Row class="colorCards">
-      <div class="colorCard color1">
-        <div class="miniBoxs">
-          <div class="miniBox rotate1">
-            <!--            <img src="~/assets/discoverPage.png" alt="发现页" />-->
-            <h2>更多优惠</h2>
-          </div>
-          <div class="miniBox rotate2">
-            <img src="~/assets/discoverPage.png" alt="" />
-          </div>
-          <div class="miniBox rotate3">
-            <img src="~/assets/discoverPage.png" alt="" />
-          </div>
-        </div>
-        <h1>title1</h1>
-        <button class="button inverted olive ui">button1</button>
-      </div>
-      <div class="colorCard color2">
-        <h1>title2</h1>
-        <button class="button secondary ui rightCardBtn">Learn More</button>
-      </div>
-    </Row>
+  <!--    <Row class="colorCards">-->
+  <!--      <div class="colorCard color1">-->
+  <!--        <div class="miniBoxs">-->
+  <!--          <div class="miniBox rotate1">-->
+  <!--            &lt;!&ndash;            <img src="~/assets/discoverPage.png" alt="发现页" />&ndash;&gt;-->
+  <!--            <h2>更多优惠</h2>-->
+  <!--          </div>-->
+  <!--          <div class="miniBox rotate2">-->
+  <!--            <img src="~/assets/discoverPage.png" alt="" />-->
+  <!--          </div>-->
+  <!--          <div class="miniBox rotate3">-->
+  <!--            <img src="~/assets/discoverPage.png" alt="" />-->
+  <!--          </div>-->
+  <!--        </div>-->
+  <!--        <h1>title1</h1>-->
+  <!--        <button class="button inverted olive ui">button1</button>-->
+  <!--      </div>-->
+  <!--      <div class="colorCard color2">-->
+  <!--        <h1>title2</h1>-->
+  <!--        <button class="button secondary ui rightCardBtn">Learn More</button>-->
+  <!--      </div>-->
+  <!--    </Row>-->
+  <!--  </div>-->
+  <div class="errorPage">
+    <div class="outline-text">404</div>
+    <Button type="primary" size="large" @click="handleBack">Back</Button>
   </div>
 </template>
 
 <script>
 export default {
   name: 'ErrorPage404',
+  methods: {
+    handleBack() {
+      this.$router.push({ name: 'home' });
+    },
+  },
 };
 </script>
 
@@ -338,5 +347,14 @@ export default {
   left: 0;
   width: 100%;
   height: 100%;
+}
+
+.errorPage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #fff;
 }
 </style>

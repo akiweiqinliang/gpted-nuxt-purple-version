@@ -66,7 +66,7 @@ const subscribeMenu = new SubscribeItems([
     '会员中心',
     'center',
     'ios-cube-outline',
-    pageCode.DASHBOARD_CENTER
+    pageCode.DASHBOARD_MEMBERCENTER
   ),
   new MenuItem(
     '历史记录',

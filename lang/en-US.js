@@ -14,9 +14,9 @@ export default {
   follow: 'My tracking',
   message: 'My message',
   reward: 'Promotional rewards',
-  center: 'Member Centre',
+  memberCenter: 'Member Center',
   history: 'History record',
-  account: 'Account information',
+  personalCenter: 'Personal Center',
   // home page
   globalTender: 'Global Tender',
   weChat: 'WeChat public account',

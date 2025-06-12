@@ -16,9 +16,9 @@ export default {
   follow: '我的跟踪',
   message: '我的消息',
   reward: '推广奖励',
-  center: '会员中心',
+  memberCenter: '会员中心',
   history: '历史记录',
-  account: '账户信息',
+  personalCenter: '个人中心',
   // home page
   globalTender: '全球招标',
   weChat: '微信公众号',
