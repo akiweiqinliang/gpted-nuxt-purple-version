@@ -78,12 +78,10 @@
 </template>
 
 <script>
-import LeftGatherMenu from '@/components/LeftGatherMenu.vue';
 import pageCode from '@/enums/pageCodes';
 
 export default {
   name: 'GatherLayout',
-  components: { LeftGatherMenu },
   computed: {
     pageCode() {
       return pageCode;
@@ -105,7 +103,7 @@ export default {
 @import '@/assets/css/global.scss';
 @import '@/assets/css/globalColor.scss';
 .containerPadding {
-  padding: 28px;
+  padding: 38px;
 }
 .gatherLayout {
   position: relative;

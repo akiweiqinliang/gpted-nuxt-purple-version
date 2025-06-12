@@ -2,6 +2,9 @@ import cardData from '@/enums/cardData';
 export const state = () => ({
   showData: cardData,
   token: '',
+  userinfo: {
+    keywords: [],
+  },
 });
 export const actions = {
   initToken({ commit }) {

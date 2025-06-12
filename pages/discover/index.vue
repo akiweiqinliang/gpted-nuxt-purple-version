@@ -1,6 +1,6 @@
 <template>
-  <Row type="flex" justify="center" class-name="bgColor">
-    <Col span="6" class="discoverLeftBox">
+  <Row id="discover" type="flex" justify="center" class-name="bgColor">
+    <Col class="discoverLeftBox">
       <div class="innerLeftBox">
         <!------------------------left start-------------------->
         <Radio-group v-model="searchParams.selectOption" class="radioStyle">
@@ -39,15 +39,14 @@
         <Row>
           <Card class="ivu-col ivu-col-span-24" :dis-hover="true">
             <p slot="title">筛选条件</p>
-            <Button
-              slot="extra"
-              size="small"
-              type="primary"
-              shape="circle"
-              :disabled="formDisabled"
-              @click="resetSearchForm"
-              >重置</Button
-            >
+            <p slot="extra">
+              <Button class="active" size="small" @click="resetSearchForm"
+                >重置</Button
+              >
+              <Button size="small" type="primary" @click="searchCard"
+                >筛选</Button
+              >
+            </p>
             <div>
               <Form
                 ref="searchForm"
@@ -60,30 +59,34 @@
                     v-model="searchParams.type"
                     placeholder="请选择公告类型"
                     size="small"
-                    class="selectOptionsWidth"
+                    class="fullWidth"
                   >
                     <Option value="招标">招标</Option>
                     <Option value="中标">中标</Option>
                   </Select>
                 </Form-item>
-                <Form-item label="状态：" class="formItem" prop="state">
+                <Form-item
+                  label="状 态："
+                  class="formItem extraWordSpace"
+                  prop="state"
+                >
                   <Select
                     v-model="searchParams.state"
                     placeholder="请选择状态"
                     size="small"
-                    class="selectOptionsWidth"
+                    class="fullWidth"
                   >
                     <Option :value="0">活跃中</Option>
                     <Option :value="1">已结束</Option>
                   </Select>
                 </Form-item>
                 <Form-item
-                  label="区域："
-                  class="formItem flexFormItem"
+                  label="区 域："
+                  class="formItem extraWordSpace"
                   prop="region"
                 >
                   <Row type="flex" align="middle">
-                    <Col span="11">
+                    <Col flex="1">
                       <Cascader
                         v-model="searchParams.region"
                         placeholder="请选择区域"
@@ -92,24 +95,15 @@
                         class="withHotTag"
                       ></Cascader>
                     </Col>
-                    <Col span="12" class="ivu-col-offset-1">
-                      <div class="hotKeyWordStyle">
-                        <Badge text="hot" class-name="hotBadge">
-                          <span>东南亚</span>
-                        </Badge>
-                        <Badge text="hot" class-name="hotBadge">
-                          <span>南非</span>
-                        </Badge>
-                        <Badge class-name="hotBadge">
-                          <span>北美</span>
-                        </Badge>
-                      </div>
-                    </Col>
                   </Row>
                 </Form-item>
-                <Form-item label="国家：" class="formItem" prop="country">
+                <Form-item
+                  label="国 家："
+                  class="formItem extraWordSpace"
+                  prop="country"
+                >
                   <Row>
-                    <Col span="11">
+                    <Col flex="1">
                       <Select
                         v-model="searchParams.country"
                         placeholder="请选择国家"
@@ -121,23 +115,13 @@
                         <Option
                           v-for="(
                             country, index
-                          ) in countryOptions().getCountryArray()"
+                          ) in countryOptions.getCountryArray()"
                           :key="`country-${index}-${country.id}`"
                           :value="country.value"
                         >
                           {{ country.name }}
                         </Option>
                       </Select>
-                    </Col>
-                    <Col span="12" class="ivu-col-offset-1">
-                      <div class="hotKeyWordStyle">
-                        <Badge text="hot" class-name="hotBadge">
-                          <span>英国</span>
-                        </Badge>
-                        <Badge class-name="hotBadge">
-                          <span>意大利</span>
-                        </Badge>
-                      </div>
                     </Col>
                   </Row>
                 </Form-item>
@@ -151,72 +135,86 @@
                     placeholder="请选择国际组织"
                     size="small"
                     multiple
-                    class="selectOptionsWidth"
+                    class="fullWidth"
                     :filterable="true"
                   >
                     <Option
-                      v-for="(organization, index) in organizationData()"
+                      v-for="(organization, index) in organizationData"
                       :key="`organization-${index}-${organization.id}`"
                       :value="organization.value"
                       >{{ organization.name }}</Option
                     >
                   </Select>
                 </Form-item>
-                <Form-item label="行业：" class="formItem" prop="industry">
+                <Form-item
+                  label="行 业："
+                  class="formItem extraWordSpace"
+                  prop="industry"
+                >
                   <Select
                     v-model="searchParams.industry"
                     placeholder="请选择行业分类"
                     size="small"
                     multiple
-                    class="selectOptionsWidth"
+                    class="fullWidth"
                   >
                     <Option value="energy">能源</Option>
                   </Select>
                 </Form-item>
-                <Form-item label="内容：" class="formItem" prop="content">
-                  <Row>
-                    <Col>
-                      <Button
-                        type="text"
-                        class="formContentBtn"
-                        size="small"
-                        :class="searchParams.content === 'all' ? 'active' : ''"
-                        @click="searchParams.content = 'all'"
-                        >全部</Button
-                      >
-                      <Button
-                        shape="circle"
-                        class="formContentBtn"
-                        size="small"
-                        :class="
-                          searchParams.content === 'engineer' ? 'active' : ''
-                        "
-                        @click="searchParams.content = 'engineer'"
-                        >工程</Button
-                      >
-                      <Button
-                        shape="circle"
-                        class="formContentBtn"
-                        size="small"
-                        :class="searchParams.content === 'good' ? 'active' : ''"
-                        @click="searchParams.content = 'good'"
-                        >货物</Button
-                      >
-                      <Button
-                        shape="circle"
-                        size="small"
-                        :class="
-                          searchParams.content === 'server' ? 'active' : ''
-                        "
-                        @click="searchParams.content = 'server'"
-                        >服务</Button
-                      >
-                    </Col>
+                <Form-item label="采购方式：" class="formItem" prop="buy">
+                  <Select
+                    v-model="searchParams.buy"
+                    placeholder="请选择采购方式"
+                    size="small"
+                    class="fullWidth"
+                  >
+                    <Option value="online">线上</Option>
+                  </Select>
+                </Form-item>
+                <Form-item
+                  label="内 容："
+                  class="formItem extraWordSpace"
+                  prop="content"
+                >
+                  <Row type="flex" justify="space-between">
+                    <Button
+                      type="text"
+                      class="formContentBtn"
+                      size="small"
+                      :class="searchParams.content === 'all' ? 'active' : ''"
+                      @click="searchParams.content = 'all'"
+                      >全部</Button
+                    >
+                    <Button
+                      shape="circle"
+                      class="formContentBtn"
+                      size="small"
+                      :class="
+                        searchParams.content === 'engineer' ? 'active' : ''
+                      "
+                      @click="searchParams.content = 'engineer'"
+                      >工程</Button
+                    >
+                    <Button
+                      shape="circle"
+                      class="formContentBtn"
+                      size="small"
+                      :class="searchParams.content === 'good' ? 'active' : ''"
+                      @click="searchParams.content = 'good'"
+                      >货物</Button
+                    >
+                    <Button
+                      shape="circle"
+                      size="small"
+                      :class="searchParams.content === 'server' ? 'active' : ''"
+                      @click="searchParams.content = 'server'"
+                      >服务</Button
+                    >
                   </Row>
                 </Form-item>
                 <Form-item label="价格区间：" class="formItem">
                   <Row type="flex">
-                    <Col span="4">
+                    <Col flex="1">
                       <Button
                         type="text"
                         size="small"
@@ -232,7 +230,7 @@
                         >全部
                       </Button>
                     </Col>
-                    <Col span="9" class="ivu-col-offset-0">
+                    <Col flex="4">
                       <form-item prop="lowestPrice">
                         <Input-number
                           v-model="searchParams.lowestPrice"
@@ -242,10 +240,10 @@
                         ></Input-number>
                       </form-item>
                     </Col>
-                    <Col span="2"
-                      ><Row type="flex" justify="center">一</Row></Col
+                    <Col flex="1"
+                      ><Row type="flex" justify="center">-</Row></Col
                     >
-                    <Col span="9">
+                    <Col flex="4">
                       <form-item prop="highestPrice">
                         <Input-number
                           v-model="searchParams.highestPrice"
@@ -286,17 +284,6 @@
                     </Col>
                   </Row>
                 </Form-item>
-
-                <Form-item label="采购方式：" class="formItem" prop="buy">
-                  <Select
-                    v-model="searchParams.buy"
-                    placeholder="请选择采购方式"
-                    size="small"
-                    class="selectOptionsWidth"
-                  >
-                    <Option value="online">线上</Option>
-                  </Select>
-                </Form-item>
               </Form>
             </div>
           </Card>
@@ -304,21 +291,20 @@
         <!------------------------left end--------------------->
       </div>
     </Col>
-    <Col span="1"></Col>
-    <Col span="13">
+    <!--    <Col span="1"></Col>-->
+    <Col class="discoverRightBox">
       <div>
         <SpinLoad ref="spinLoad" />
         <div class="rightTop">
           <span v-if="!searchParams.searchText">{{ latestMsg }}</span>
           <span v-else>搜索"{{ searchParams.searchText }}" 结果如下</span>
         </div>
-        <RightBox
-          :search-data1="searchData"
-          :search-text="searchParams.searchText"
-          :select-option="searchParams.selectOption"
-        ></RightBox>
+        <Card :padding="0" :dis-hover="true" class="bidList">
+          <BidList :bid-list="bidData" />
+        </Card>
       </div>
     </Col>
+    <CommonFooter />
   </Row>
 </template>
 
@@ -329,6 +315,7 @@ import { ruleValidate } from '~/utils/ruleValidate';
 import regionData from '~/enums/regionData';
 import { countryOptions } from '~/enums/common';
 import organizationData from '~/enums/organizationData';
+import bidData from '~/enums/bidData';
 
 export default {
   name: 'DiscoverPage',
@@ -336,10 +323,13 @@ export default {
 
   data() {
     return {
+      bidData,
       searchData: cardData,
-      latestMsg: '今日最新资讯',
+      latestMsg: '今日最新标讯',
       keyWords,
       regionData,
+      organizationData,
+      countryOptions,
       ruleValidate,
       formDisabled: true,
 
@@ -393,13 +383,8 @@ export default {
     }
   },
   methods: {
-    organizationData() {
-      return organizationData;
-    },
-    countryOptions() {
-      return countryOptions;
-    },
     searchCard() {
+      console.log(this.searchParams);
       if (this.searchParams.searchText === '') {
         this.searchData = cardData;
         return;
@@ -458,11 +443,14 @@ export default {
   background-repeat: no-repeat;
   background-size: cover;
   //background-color: $discover-bg-color;
-  padding: 100px 0;
+  padding: 0 40px;
+}
+.bidList {
+  padding: 16px 0;
 }
 .rightTop {
   display: flex;
-  justify-content: space-between;
+  margin-bottom: 12px;
   .changeList {
     cursor: pointer;
   }
@@ -470,14 +458,25 @@ export default {
     color: $home-theme-color;
   }
 }
+.discoverLeftBox,
+.discoverRightBox {
+  margin-top: 100px;
+}
 /*left*/
 .discoverLeftBox {
   position: relative;
+  width: calc(30% - 30px);
+  margin-right: 30px;
   .innerLeftBox {
     position: sticky;
     top: 100px;
   }
 }
+//right
+.discoverRightBox {
+  width: 70%;
+}
+
 .keyWordStyle {
   display: flex;
   flex-wrap: wrap;
@@ -525,10 +524,7 @@ export default {
   font-size: 12px;
   margin-top: 2px;
 }
-.fullWidth {
-  width: 100%;
-}
-.selectOptionsWidth {
-  width: 60%;
+.extraWordSpace {
+  word-spacing: 24px;
 }
 </style>
